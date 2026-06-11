@@ -10,6 +10,7 @@ from database.memory import (
 )
 from personalization.store import store as personalization_store
 from coaching.cycles import get_cycle, get_level, estimate_starting_level
+from coaching.plans import generate_periodized_plan
 from config import TIERS
 from ui.theme import coach_meta, tier_meta, coach_hero
 from ui.voice import (
@@ -48,10 +49,16 @@ def render_chat_page():
 
     coach_hero(coach_style, tier, tier_info["name"])
 
-    tab_chat, tab_memory, tab_cycle, tab_log, tab_activity = st.tabs(
-        ["💬 Chat", "🧠 Coach's Memory", "🎯 Training Cycle", "📊 Training Log", "📡 Activity"]
+    tab_dash, tab_cal, tab_builder, tab_chat, tab_memory, tab_cycle, tab_log, tab_activity = st.tabs(
+        ["📊 Dashboard", "📅 Calendar & Workouts", "🗺️ Plan Builder", "💬 AI Coach Chat", "🧠 Coach's Memory", "🎯 Training Cycle", "📊 Training Log", "📡 Activity"]
     )
 
+    with tab_dash:
+        _render_dashboard_tab(user, profile)
+    with tab_cal:
+        _render_calendar_tab(user)
+    with tab_builder:
+        _render_plan_builder_tab(user, profile)
     with tab_chat:
         _render_chat_tab(user, profile, cm, coach_style, tier_info)
     with tab_memory:
@@ -530,3 +537,267 @@ def _render_threads_panel(user):
                     st.session_state["thread_id"] = None
                     st.session_state.pop("messages", None)
                     st.rerun()
+
+
+# ----------------------------------------------------------- dashboard tab
+def _render_dashboard_tab(user, profile):
+    st.markdown("### 📊 Runner Dashboard")
+    
+    # 1. Load data
+    data = personalization_store.get_personalization(user["id"])
+    log = personalization_store.get_training_log(user["id"])
+    plan = personalization_store.get_active_plan(user["id"])
+    ml_dl = data.get("ml_dl_performance_analysis")
+    
+    # 2. Key Metrics Row
+    total_runs = len(log)
+    total_km = sum(float(e.get("distance_km") or 0) for e in log)
+    
+    avg_pace_str = "N/A"
+    if total_runs > 0:
+        total_min = sum(float(e.get("duration_minutes") or 0) for e in log)
+        if total_km > 0:
+            avg_pace_sec = int((total_min * 60) / total_km)
+            avg_pace_str = f"{avg_pace_sec // 60}:{avg_pace_sec % 60:02d}/km"
+            
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Weekly Mileage (Total)", f"{total_km:.1f} km")
+    m2.metric("Total Runs", total_runs)
+    m3.metric("Average Pace", avg_pace_str)
+    m4.metric("Active Level", f"Level {data.get('training_level', {}).get('level', 1)}")
+    
+    col1, col2 = st.columns([3, 2])
+    
+    with col1:
+        st.markdown("#### 🏃 Active Training Program")
+        if plan:
+            st.markdown(
+                f"<div class='ss-card' style='border-left: 4px solid #8b5cf6; margin-bottom: 15px;'>"
+                f"🎯 <b>Goal:</b> {plan.get('goal')} Plan ({plan.get('total_weeks')} Weeks)<br>"
+                f"🗓️ <b>Generated At:</b> {plan.get('generated_at', '?')[:10]} | <b>VDOT:</b> {plan.get('vdot', '?')}"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+            
+            # Find next scheduled workout
+            next_workout = None
+            completed_count = 0
+            total_count = 0
+            next_workout_week = 1
+            for week in plan.get("weeks", []):
+                for workout in week.get("schedule", []):
+                    if workout["type"] != "rest":
+                        total_count += 1
+                        if workout["status"] == "completed":
+                            completed_count += 1
+                        elif workout["status"] == "scheduled" and next_workout is None:
+                            next_workout = workout
+                            next_workout_week = week["week_number"]
+                            
+            progress_pct = completed_count / total_count if total_count > 0 else 0.0
+            st.progress(progress_pct, text=f"Program Progress: {completed_count}/{total_count} runs completed ({progress_pct*100:.1f}%)")
+            
+            if next_workout:
+                st.markdown(f"##### 📅 Next Scheduled Workout (Week {next_workout_week})")
+                color_map = {"easy": "#2e86ff", "tempo": "#8b5cf6", "interval": "#ff2d55", "recovery": "#ff8c00", "long": "#3ddc84"}
+                type_color = color_map.get(next_workout["type"], "#9aa0a6")
+                
+                st.markdown(
+                    f"<div class='ss-card' style='border-left: 4px solid {type_color};'>"
+                    f"<span class='ss-pill' style='background:{type_color};'>{next_workout['type'].upper()}</span> "
+                    f"<b>{next_workout['day']}</b> — {next_workout['distance_km']}km @ {next_workout['target_pace']}<br>"
+                    f"<p style='margin-top: 5px; font-size: 0.9rem;'>{next_workout['description']}</p>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
+                
+                with st.expander("⚡ Quick Log: Mark Next Workout as Completed"):
+                    with st.form(f"quick_log_form_{next_workout['id']}"):
+                        actual_dist = st.number_input("Actual Distance (km)", 0.0, 100.0, next_workout["distance_km"])
+                        actual_dur = st.number_input("Actual Duration (minutes)", 1, 600, next_workout["duration_minutes"])
+                        feel = st.text_input("How did it feel?", placeholder="strong, tired, sore knee...")
+                        notes = st.text_area("Notes", placeholder="Any details...", height=70)
+                        if st.form_submit_button("Complete Run", type="primary"):
+                            logged_run = {
+                                "distance_km": actual_dist,
+                                "duration_minutes": actual_dur,
+                                "type": next_workout["type"],
+                                "feel": feel,
+                                "notes": notes,
+                            }
+                            personalization_store.complete_workout(
+                                user["id"], 
+                                next_workout["id"], 
+                                logged_run, 
+                                thread_id=st.session_state.get("thread_id")
+                            )
+                            st.success(f"Log saved! Workout {next_workout['id']} marked completed. 🎉")
+                            st.rerun()
+            else:
+                st.info("🎉 All workouts in your training plan are completed!")
+        else:
+            st.warning("⚠️ You do not have an active training plan yet. Use the **🗺️ Plan Builder** tab to create one!")
+            
+    with col2:
+        st.markdown("#### 🧬 Physiological Predictions (ML/DL)")
+        if ml_dl:
+            zone = ml_dl.get("readiness_zone", "Unknown")
+            zone_color = "🟢" if zone == "Green" else "🟡" if zone == "Yellow" else "🔴"
+            st.markdown(
+                f"<div class='ss-card' style='border-top: 3px solid #3ddc84;'>"
+                f"<b>Readiness Level:</b> {zone_color} <b>{zone}</b><br><br>"
+                f"• <b>Injury Risk:</b> {ml_dl.get('injury_risk_percent', 0.0):.1f}%<br>"
+                f"• <b>Future VDOT:</b> {ml_dl.get('predicted_future_vdot', 0.0):.1f}<br>"
+                f"• <b>Last Analysed:</b> {ml_dl.get('analyzed_at','?')[:19].replace('T',' ')}<br><br>"
+                f"<span style='font-size:0.8rem;' class='ss-muted'>Random Forest Classifier evaluates injury patterns, and Multi-Layer Perceptron estimates performance capacity.</span>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.info("Log your first training run to trigger the ML/DL physiological readiness pipeline!")
+
+        st.markdown("#### 🩹 Active Injuries & Cues")
+        active_inj = [i for i in data.get("injuries", []) if i.get("status") == "active"]
+        if active_inj:
+            for i in active_inj:
+                st.markdown(
+                    f"<div class='ss-card' style='border-left: 4px solid #ff2d55; background: rgba(255,45,85,0.05); padding: 0.8rem;'>"
+                    f"🔴 <b>Active Niggle:</b> {i['area'].upper()}<br>"
+                    f"<span style='font-size:0.8rem;'>First reported: {i.get('first_seen','?')[:10]} ({i.get('mentions', 1)} mentions)</span>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
+        else:
+            st.markdown(
+                f"<div class='ss-card' style='border-left: 4px solid #3ddc84; background: rgba(61,220,132,0.05); padding: 0.8rem;'>"
+                f"🟢 <b>No Active Injuries:</b> You are cleared to train! Keep monitoring volume transitions."
+                f"</div>",
+                unsafe_allow_html=True
+            )
+
+
+# ----------------------------------------------------------- calendar tab
+def _render_calendar_tab(user):
+    st.markdown("### 📅 Training Calendar")
+    plan = personalization_store.get_active_plan(user["id"])
+    
+    if not plan:
+        st.warning("⚠️ No active training plan found. Build one in the **🗺️ Plan Builder** tab first.")
+        return
+        
+    weeks_count = plan.get("total_weeks", 12)
+    selected_week = st.slider("Select Plan Week", 1, weeks_count, 1)
+    
+    week_data = plan["weeks"][selected_week - 1]
+    st.markdown(f"#### Week {selected_week} Schedule (Target: {week_data['target_volume_km']} km)")
+    if week_data.get("is_deload"):
+        st.info("🧘 **Deload Week:** Training volume is reduced by 25% for muscular/physiological adaptation and recovery.")
+    elif week_data.get("is_taper"):
+        st.success("⚡ **Taper Week:** Tapering volume to peak for race day while maintaining intensity.")
+        
+    for workout in week_data["schedule"]:
+        w_id = workout["id"]
+        w_day = workout["day"]
+        w_type = workout["type"]
+        w_dist = workout["distance_km"]
+        w_dur = workout["duration_minutes"]
+        w_pace = workout["target_pace"]
+        w_desc = workout["description"]
+        w_status = workout["status"]
+        
+        color_map = {
+            "easy": "#2e86ff", 
+            "tempo": "#8b5cf6", 
+            "interval": "#ff2d55", 
+            "recovery": "#ff8c00", 
+            "long": "#3ddc84",
+            "rest": "rgba(255,255,255,0.1)",
+        }
+        color = color_map.get(w_type, "#9aa0a6")
+        
+        status_text = "🟢 Completed" if w_status == "completed" else "🟡 Scheduled" if w_status == "scheduled" else "⚪ Rest Day"
+        border_style = f"border-left: 4px solid {color};"
+        
+        st.markdown(
+            f"<div class='ss-card' style='{border_style}'>"
+            f"<div style='display:flex; justify-content:space-between; align-items:center;'>"
+            f"<span><b>{w_day}</b> — <span class='ss-pill' style='background:{color}; font-size:0.75rem;'>{w_type.upper()}</span></span>"
+            f"<span style='font-size:0.85rem; font-weight:600;'>{status_text}</span>"
+            f"</div>"
+            f"<div style='margin-top: 5px; font-size: 0.95rem;'>"
+            f"Pace Target: <b>{w_pace}</b> | Target Distance: <b>{w_dist} km</b> | Target Time: <b>{w_dur} mins</b>"
+            f"<p style='margin-top: 4px; font-size: 0.85rem;' class='ss-muted'>{w_desc}</p>"
+            f"</div>"
+            f"</div>",
+            unsafe_allow_html=True
+        )
+        
+        if w_status == "scheduled" and w_type != "rest":
+            with st.expander(f"📝 Log Completed Run for {w_day} (Week {selected_week})", expanded=False):
+                with st.form(f"log_run_cal_{w_id}"):
+                    c1, c2 = st.columns(2)
+                    with c1:
+                        act_dist = st.number_input("Logged Distance (km)", 0.0, 100.0, w_dist)
+                    with c2:
+                        act_dur = st.number_input("Logged Duration (minutes)", 1, 600, w_dur)
+                    feel = st.text_input("Run feel (e.g. strong, heavy legs, soreness)", key=f"feel_{w_id}")
+                    notes = st.text_area("Notes", key=f"notes_{w_id}", height=60)
+                    
+                    if st.form_submit_button("Complete Workout"):
+                        logged_run = {
+                            "distance_km": act_dist,
+                            "duration_minutes": act_dur,
+                            "type": w_type,
+                            "feel": feel,
+                            "notes": notes,
+                        }
+                        personalization_store.complete_workout(
+                            user_id=user["id"],
+                            workout_id=w_id,
+                            logged_run=logged_run,
+                            thread_id=st.session_state.get("thread_id")
+                        )
+                        st.success(f"Logged! Week {selected_week} {w_day} marked completed.")
+                        st.rerun()
+                        
+        elif w_status == "completed":
+            logged = workout.get("logged_run", {})
+            st.markdown(
+                f"<div style='margin-left: 20px; font-size:0.85rem; background: rgba(61,220,132,0.05); padding: 5px 10px; border-radius: 8px; border: 1px dashed #3ddc84;'>"
+                f"✅ <b>Logged Run:</b> {logged.get('distance_km')} km in {logged.get('duration_minutes')} mins | <b>Feel:</b> {logged.get('feel','?')} | <b>Notes:</b> {logged.get('notes','')}"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+            st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
+
+
+# ----------------------------------------------------------- plan builder tab
+def _render_plan_builder_tab(user, profile):
+    st.markdown("### 🗺️ Running Plan Builder")
+    st.caption("Generate a structured periodized training plan with custom goals, VDOT-based target paces, and build/recovery phases.")
+    
+    # Check current plan if exists
+    plan = personalization_store.get_active_plan(user["id"])
+    if plan:
+        st.info(f"💡 You already have an active plan for **{plan.get('goal')}** ({plan.get('total_weeks')} weeks). Generating a new plan will replace it.")
+        
+    with st.form("plan_generator_form"):
+        goal = st.selectbox("Select Goal", ["5K Prep", "10K Prep", "Half Marathon Prep", "Marathon Prep", "Base Building"])
+        weeks = st.selectbox("Plan Duration (Weeks)", [8, 12, 16], index=1)
+        days = st.slider("Run Frequency (Days/Week)", 3, 5, 3)
+        
+        # Pull 5k time from profile or set fallback
+        default_5k = profile.get("recent_5k_time", 25.0) or 25.0
+        five_k_input = st.number_input("Recent 5K Race Time (minutes)", 10.0, 60.0, float(default_5k), step=0.5, help="Used to calculate Jack Daniels VDOT score and pacing zones.")
+        
+        if st.form_submit_button("Generate & Activate Program", type="primary"):
+            # Update temporary profile with form 5K time for calculation
+            calc_profile = {**profile, "recent_5k_time": five_k_input}
+            goal_key = goal.split()[0].lower() # E.g. 5k, 10k, half, marathon, base
+            if "base" in goal_key:
+                goal_key = "base"
+                
+            new_plan = generate_periodized_plan(calc_profile, goal_key, weeks=weeks, days_per_week=days)
+            personalization_store.save_active_plan(user["id"], new_plan)
+            st.success(f"🎉 New {weeks}-week {goal} plan activated! Paces computed successfully. Go to Calendar to view your schedule.")
+            st.rerun()

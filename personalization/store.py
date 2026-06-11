@@ -460,5 +460,42 @@ class PersonalizationStore:
                 
             self._write_json(pers_path, data)
 
+    def get_active_plan(self, user_id: int) -> dict | None:
+        path = self._file(user_id, "active_plan.json")
+        return self._read_json(path, None)
+
+    def save_active_plan(self, user_id: int, plan_data: dict) -> None:
+        path = self._file(user_id, "active_plan.json")
+        self._write_json(path, plan_data)
+        self.log_event(user_id, "plan_updated", {"goal": plan_data.get("goal")})
+
+    def complete_workout(self, user_id: int, workout_id: str, logged_run: dict, thread_id: int | None = None) -> dict | None:
+        plan = self.get_active_plan(user_id)
+        if not plan:
+            return None
+            
+        updated = False
+        for week in plan.get("weeks", []):
+            for workout in week.get("schedule", []):
+                if workout.get("id") == workout_id:
+                    workout["status"] = "completed"
+                    workout["logged_run"] = {
+                        "ts": _now(),
+                        "distance_km": logged_run.get("distance_km"),
+                        "duration_minutes": logged_run.get("duration_minutes"),
+                        "feel": logged_run.get("feel"),
+                        "notes": logged_run.get("notes"),
+                    }
+                    updated = True
+                    break
+            if updated:
+                break
+                
+        if updated:
+            self.save_active_plan(user_id, plan)
+            self.add_training_log(user_id, logged_run, thread_id=thread_id)
+            return plan
+        return None
+
 
 store = PersonalizationStore()
