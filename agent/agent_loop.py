@@ -15,6 +15,16 @@ def get_client() -> OpenAI:
     return OpenAI(api_key=config.get_groq_api_key(), base_url=GROQ_BASE_URL)
 
 
+def _complete(client, model, messages, use_tools: bool):
+    """One chat completion. `use_tools=False` omits tools entirely so the model
+    answers in plain text (used as a fallback when tool-calling misfires)."""
+    kwargs = dict(model=model, messages=messages, temperature=0.7, max_tokens=1024)
+    if use_tools:
+        kwargs["tools"] = TOOL_DEFINITIONS
+        kwargs["tool_choice"] = "auto"
+    return client.chat.completions.create(**kwargs)
+
+
 def format_profile_summary(profile: dict) -> str:
     """Create a concise profile summary for the system prompt."""
     if not profile:
@@ -84,22 +94,34 @@ def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> 
 
     tool_calls_made = []
     iterations = 0
+    tools_disabled = False
 
     while iterations < MAX_AGENT_ITERATIONS:
         iterations += 1
 
         try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                tools=TOOL_DEFINITIONS,
-                tool_choice="auto",
-                temperature=0.7,
-                max_tokens=1024,
-            )
+            response = _complete(client, model, messages, use_tools=not tools_disabled)
         except Exception as e:
-            error_msg = f"Error calling Groq API: {str(e)}"
-            return {"response": error_msg, "tool_calls": [], "error": True}
+            # Llama on Groq occasionally emits a malformed text tool-call (e.g.
+            # "<function=retrieve_knowledge {...}>") that the server rejects with
+            # a 400 tool_use_failed. Disable tools and retry once so the runner
+            # still gets a real answer instead of a raw error.
+            if not tools_disabled:
+                tools_disabled = True
+                try:
+                    response = _complete(client, model, messages, use_tools=False)
+                except Exception as e2:
+                    return {
+                        "response": "Sorry, I hit a snag generating that. Please try rephrasing or ask again.",
+                        "tool_calls": tool_calls_made,
+                        "error": True,
+                    }
+            else:
+                return {
+                    "response": "Sorry, I hit a snag generating that. Please try rephrasing or ask again.",
+                    "tool_calls": tool_calls_made,
+                    "error": True,
+                }
 
         choice = response.choices[0]
 
