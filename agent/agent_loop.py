@@ -1,4 +1,4 @@
-﻿import json
+import json
 from openai import OpenAI
 import config
 from config import GROQ_BASE_URL, TIERS, MAX_AGENT_ITERATIONS
@@ -140,7 +140,7 @@ def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> 
                 tool_calls_made.append({
                     "tool": func_name,
                     "args": func_args,
-                    "result": result[:500],
+                    "result": result,
                 })
 
                 messages.append({

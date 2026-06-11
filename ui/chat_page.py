@@ -84,6 +84,7 @@ def _render_chat_tab(user, profile, cm, coach_style, tier_info):
         with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
             if msg.get("tool_calls"):
+                _render_citations_and_sources(msg["tool_calls"])
                 _render_tool_calls(msg["tool_calls"])
 
     spoken = None
@@ -119,6 +120,7 @@ def _handle_prompt(user, cm, coach_style, prompt):
             result = run_agent(user["id"], prompt, thread_id=thread_id)
         st.markdown(result["response"])
         if result.get("tool_calls"):
+            _render_citations_and_sources(result["tool_calls"])
             _render_tool_calls(result["tool_calls"])
 
     st.session_state["messages"].append({
@@ -132,6 +134,65 @@ def _handle_prompt(user, cm, coach_style, prompt):
         speak(result["response"], nonce=len(st.session_state["messages"]), style=style)
 
     st.rerun()
+
+
+def _render_citations_and_sources(tool_calls):
+    if not tool_calls:
+        return
+        
+    knowledge_sources = []
+    web_sources = []
+    
+    for tc in tool_calls:
+        tool_name = tc.get("tool")
+        result_val = tc.get("result")
+        
+        if not result_val:
+            continue
+            
+        parsed_result = None
+        if isinstance(result_val, str):
+            try:
+                parsed_result = json.loads(result_val)
+            except Exception:
+                continue
+        elif isinstance(result_val, list):
+            parsed_result = result_val
+            
+        if not parsed_result:
+            continue
+            
+        if tool_name == "retrieve_knowledge" and isinstance(parsed_result, list):
+            knowledge_sources.extend(parsed_result)
+        elif tool_name == "search_web" and isinstance(parsed_result, list):
+            web_sources.extend(parsed_result)
+            
+    if not knowledge_sources and not web_sources:
+        return
+        
+    st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
+    with st.expander("📚 Sources & Citations Used (RAG + Web Scraper)", expanded=True):
+        if knowledge_sources:
+            st.markdown("##### 📖 Knowledge Corpus Chunks (Metadata & Principles)")
+            for src in knowledge_sources:
+                st.markdown(
+                    f"<div class='ss-card' style='border-left: 3px solid #0ea5e9; margin-bottom: 8px; padding: 10px; font-size: 0.85rem;'>"
+                    f"<b>{src.get('title')}</b> <span class='ss-muted'>(Source: {src.get('source')}, Score: {src.get('relevance_score', 0.0)})</span><br>"
+                    f"<div style='margin-top: 5px; color: #e2e8f0;'>{src.get('content')}</div>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
+                
+        if web_sources:
+            st.markdown("##### 🌐 Live Web Search Results")
+            for src in web_sources:
+                st.markdown(
+                    f"<div class='ss-card' style='border-left: 3px solid #a855f7; margin-bottom: 8px; padding: 10px; font-size: 0.85rem;'>"
+                    f"🔗 <a href='{src.get('url')}' target='_blank' style='color: #38bdf8; font-weight: bold; text-decoration: underline;'>{src.get('title')}</a><br>"
+                    f"<div style='margin-top: 5px; color: #e2e8f0;'>{src.get('snippet')}</div>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
 
 
 def _render_tool_calls(tool_calls):

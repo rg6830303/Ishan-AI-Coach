@@ -48,6 +48,17 @@ def scrape_web(query: str) -> list[dict]:
             link_match = re.search(r'<a class="result__url"[^>]*>(.+?)</a>', block, re.DOTALL)
             
             url_str = url_match.group(1) if url_match else ""
+            if url_str:
+                if "uddg=" in url_str or "/l/?" in url_str:
+                    try:
+                        if url_str.startswith("//"):
+                            url_str = "https:" + url_str
+                        parsed_url = urllib.parse.urlparse(url_str)
+                        query_params = urllib.parse.parse_qs(parsed_url.query)
+                        if "uddg" in query_params:
+                            url_str = query_params["uddg"][0]
+                    except Exception:
+                        pass
             
             # Clean HTML tags from parsed strings
             title_raw = link_match.group(1) if link_match else "Search Result"
