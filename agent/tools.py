@@ -144,7 +144,7 @@ TOOL_DEFINITIONS = [
 ]
 
 
-def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
+def execute_tool(tool_name: str, arguments: dict, user_id: int, thread_id: int | None = None) -> str:
     """Execute a tool call and return the result as a string."""
     try:
         if tool_name == "get_runner_profile":
@@ -234,7 +234,7 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
                 "notes": arguments.get("notes", ""),
             }
             entry = {k: v for k, v in entry.items() if v not in (None, "")}
-            personalization_store.add_training_log(user_id, entry)
+            personalization_store.add_training_log(user_id, entry, thread_id=thread_id)
             return json.dumps({"logged": True, "entry": entry})
 
         else:

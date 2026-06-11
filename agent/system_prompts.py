@@ -42,6 +42,29 @@ You are coaching a COMPETITIVE runner chasing PRs with data-driven precision.
 }
 
 
+COACH_PHILOSOPHIES = {
+    "scientist": """SPECIALIZED ABILITIES: PHYSIOLOGICAL ANALYTICS & SCIENCE
+- Focus: Metabolic pacing, cardiac drift, ACWR ratios, VO2max/VDOT estimation, HRV trends, and biomechanics.
+- Coaching Strategy: When writing a plan, explain the cellular adaptations, mitochondrial density, lactate clearance, and glycogen utilization.
+- Data Utilisation: Treat the runner's logs and ML/DL physiological predictions as quantitative variables to formulate progression paths. Explain their paces using VDOT calculations.""",
+
+    "energizer": """SPECIALIZED ABILITIES: HABIT FORMATION & POSITIVE PSYCHOLOGY
+- Focus: Consistency hacks, gamified goals, recovery feedback, enjoyment, and burnout prevention.
+- Coaching Strategy: Incorporate training variety, motivational run variations, and visual progress milestones.
+- Motivation: Turn training logs into achievements, build enthusiasm around small wins, and frame rest as 'earning a breakthrough' to keep motivation high.""",
+
+    "warrior": """SPECIALIZED ABILITIES: DISCIPLINE, ACCOUNTABILITY & MENTAL GRIT
+- Focus: Character building, strict consistency, mental toughness limits, and overcoming training friction.
+- Coaching Strategy: Enforce structured microcycle pacing, daily run checklists, and accountability windows.
+- Motivation: Directly ask user to confirm workout completion ("Did you complete the run? Yes or no."), call out inconsistent habits respectfully, and teach user to rely on disciplined habits over fleeting motivation.""",
+
+    "sage": """SPECIALIZED ABILITIES: MINDFULNESS, HOLISTIC HEALTH & STRESS INTEGRATION
+- Focus: Breathing mechanics, body scan self-awareness, life-stress factors, and recovery cycles.
+- Coaching Strategy: Integrate restorative runs, breathing zones, and sleep/hydration checkpoints.
+- Motivation: Teach the runner to listen to somatic cues (e.g. running by perceived exertion rather than GPS paces), correlate training load with life stress, and focus on long-term lifecycle growth rather than short-term race panic."""
+}
+
+
 def build_system_prompt(
     tier: str,
     coach_style: str,
@@ -51,6 +74,7 @@ def build_system_prompt(
 ) -> str:
     """Assemble the full system prompt for the agent, enforcing detailed, cited, and RAG-driven responses."""
     persona_block = get_persona_prompt(coach_style)
+    coach_philosophy = COACH_PHILOSOPHIES.get(coach_style, COACH_PHILOSOPHIES["energizer"])
     tier_block = TIER_INSTRUCTIONS.get(tier, TIER_INSTRUCTIONS["pace"])
     guardrails_block = get_guardrails_summary(tier)
     tier_info = TIERS.get(tier, TIERS["pace"])
@@ -66,6 +90,10 @@ def build_system_prompt(
     return f"""You are a Sprint Society AI Running Coach ({tier_info['name']} tier).
 
 {persona_block}
+
+---
+
+{coach_philosophy}
 
 ---
 

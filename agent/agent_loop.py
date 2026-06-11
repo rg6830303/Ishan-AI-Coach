@@ -69,7 +69,7 @@ def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> 
     # message before building the prompt so the coach reacts in the same turn.
     if profile:
         personalization_store.sync_profile(user_id, profile)
-    personalization_store.update_from_message(user_id, user_message, role="user")
+    personalization_store.update_from_message(user_id, user_message, role="user", thread_id=thread_id)
     personalization_block = personalization_store.build_prompt_block(user_id)
 
     # Per-coach 10-level training cycle: place the runner and guide progression.
@@ -135,7 +135,7 @@ def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> 
                 except json.JSONDecodeError:
                     func_args = {}
 
-                result = execute_tool(func_name, func_args, user_id)
+                result = execute_tool(func_name, func_args, user_id, thread_id=thread_id)
 
                 tool_calls_made.append({
                     "tool": func_name,
@@ -155,6 +155,7 @@ def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> 
             personalization_store.log_event(user_id, "assistant_message", {
                 "preview": final_text[:160],
                 "tools_used": [tc["tool"] for tc in tool_calls_made],
+                "thread_id": thread_id,
             })
 
             return {

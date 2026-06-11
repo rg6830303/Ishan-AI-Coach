@@ -134,11 +134,11 @@ class PersonalizationStore:
         return self._read_jsonl(self._file(user_id, "events.jsonl"), limit=limit)
 
     # ----------------------------------------------------------- training log
-    def add_training_log(self, user_id: int, entry: dict) -> None:
-        record = {"ts": _now(), "date": entry.get("date", _today()), **entry}
+    def add_training_log(self, user_id: int, entry: dict, thread_id: int | None = None) -> None:
+        record = {"ts": _now(), "date": entry.get("date", _today()), "thread_id": thread_id, **entry}
         with _LOCK:
             self._append_jsonl(self._file(user_id, "training_log.jsonl"), record)
-        self.log_event(user_id, "training_log", {"distance_km": entry.get("distance_km")})
+        self.log_event(user_id, "training_log", {"distance_km": entry.get("distance_km"), "thread_id": thread_id})
         
         # Trigger live ML/DL performance and safety analysis
         try:
@@ -179,7 +179,7 @@ class PersonalizationStore:
         return level
 
     # ------------------------------------------------- continuous self-update
-    def update_from_message(self, user_id: int, text: str, role: str = "user") -> dict:
+    def update_from_message(self, user_id: int, text: str, role: str = "user", thread_id: int | None = None) -> dict:
         """Extract signals from a message and merge them into the model.
 
         Returns the updated personalization dict. Called on every turn.
@@ -257,6 +257,7 @@ class PersonalizationStore:
             "preview": (text or "")[:160],
             "sentiment": signals.get("sentiment"),
             "topics": signals.get("topics"),
+            "thread_id": thread_id,
         })
         return data
 
@@ -340,6 +341,124 @@ class PersonalizationStore:
         if not lines:
             return ""
         return "CONTINUOUS PERSONALIZATION (learned from past chats):\n" + "\n".join(f"- {l}" for l in lines)
+
+    def delete_thread_data(self, user_id: int, thread_id: int) -> None:
+        """
+        Deletes all logged events and training log entries associated with thread_id
+        from the local JSONL files, then rebuilds personalization.json from the
+        remaining conversations and training logs.
+        """
+        with _LOCK:
+            # 1. Clean training_log.jsonl
+            log_path = self._file(user_id, "training_log.jsonl")
+            remaining_runs = []
+            if os.path.exists(log_path):
+                runs = self._read_jsonl(log_path)
+                for run in runs:
+                    if run.get("thread_id") != thread_id:
+                        remaining_runs.append(run)
+                
+                # Rewrite file
+                tmp = log_path + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    for run in remaining_runs:
+                        f.write(json.dumps(run, ensure_ascii=False) + "\n")
+                os.replace(tmp, log_path)
+
+            # 2. Clean events.jsonl
+            events_path = self._file(user_id, "events.jsonl")
+            remaining_events = []
+            if os.path.exists(events_path):
+                events = self._read_jsonl(events_path)
+                for ev in events:
+                    payload = ev.get("payload", {})
+                    if payload.get("thread_id") != thread_id:
+                        remaining_events.append(ev)
+                
+                # Rewrite file
+                tmp = events_path + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    for ev in remaining_events:
+                        f.write(json.dumps(ev, ensure_ascii=False) + "\n")
+                os.replace(tmp, events_path)
+
+            # 3. Reset personalization.json
+            pers_path = self._file(user_id, "personalization.json")
+            data = self._default_personalization(user_id)
+            
+            # 4. Reconstruct personalization.json from remaining SQLite chat history
+            try:
+                from database.models import get_connection
+                conn = get_connection()
+                rows = conn.execute(
+                    "SELECT role, content FROM conversations WHERE user_id = ? ORDER BY created_at ASC",
+                    (user_id,)
+                ).fetchall()
+                conn.close()
+            except Exception:
+                rows = []
+            
+            now = _now()
+            data["updated_at"] = now
+            for row in rows:
+                role = row["role"]
+                text = row["content"]
+                
+                from personalization.extractor import extract_signals
+                signals = extract_signals(text or "")
+                
+                if role == "user":
+                    data["interaction_count"] = data.get("interaction_count", 0) + 1
+                    data["sentiment_trend"].append({"ts": now, "sentiment": signals.get("sentiment", "neutral")})
+                    data["sentiment_trend"] = data["sentiment_trend"][-MAX_TREND_POINTS:]
+                
+                for g in signals.get("goals", []):
+                    self._upsert_named(data["goals"], g, now)
+                for a in signals.get("achievements", []):
+                    if not any(x["text"].lower() == a.lower() for x in data["achievements"]):
+                        data["achievements"].append({"text": a, "ts": now})
+                for inj in signals.get("injuries", []):
+                    area = inj.get("area")
+                    status = inj.get("status", "active")
+                    if area:
+                        existing = next((i for i in data["injuries"] if i["area"] == area), None)
+                        if existing:
+                            existing["last_seen"] = now
+                            existing["mentions"] = existing.get("mentions", 1) + 1
+                            existing["status"] = status
+                        else:
+                            data["injuries"].append({
+                                "area": area, 
+                                "status": status,
+                                "first_seen": now, 
+                                "last_seen": now, 
+                                "mentions": 1,
+                            })
+                for pref in signals.get("preferences", []):
+                    kind = pref.get("kind")
+                    val = pref.get("value")
+                    if kind and val:
+                        bucket = "likes" if kind == "like" else "dislikes"
+                        if val.lower() not in [v.lower() for v in data["preferences"][bucket]]:
+                            data["preferences"][bucket].append(val)
+                for t in signals.get("topics", []):
+                    data["topics"][t] = data["topics"].get(t, 0) + 1
+                for km in signals.get("mileage", []):
+                    data["mileage_mentions"].append({"ts": now, "km": km})
+                data["mileage_mentions"] = data["mileage_mentions"][-MAX_TREND_POINTS:]
+
+            self._derive_adjustments(data)
+            data["summary"] = self._build_summary(data)
+            
+            # Re-run ML/DL predictions
+            try:
+                from engine.ml_models import ml_dl_engine
+                analysis = ml_dl_engine.analyze_runner(user_id)
+                data["ml_dl_performance_analysis"] = analysis
+            except Exception:
+                pass
+                
+            self._write_json(pers_path, data)
 
 
 store = PersonalizationStore()

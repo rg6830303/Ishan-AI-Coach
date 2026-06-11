@@ -1,19 +1,29 @@
-﻿import bcrypt
+import bcrypt
 import json
 from database.models import get_connection
 
 
 def signup(name: str, email: str, password: str) -> dict | None:
+    email_normalized = email.strip().lower() if email else ""
+    if not email_normalized:
+        return None
     conn = get_connection()
     try:
+        # Check uniqueness case-insensitively
+        existing = conn.execute(
+            "SELECT id FROM users WHERE LOWER(email) = ?", (email_normalized,)
+        ).fetchone()
+        if existing:
+            return None
+
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         cursor = conn.execute(
             "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
-            (name, email, password_hash),
+            (name, email_normalized, password_hash),
         )
         conn.commit()
         user_id = cursor.lastrowid
-        return {"id": user_id, "name": name, "email": email}
+        return {"id": user_id, "name": name, "email": email_normalized}
     except Exception:
         return None
     finally:
@@ -21,8 +31,11 @@ def signup(name: str, email: str, password: str) -> dict | None:
 
 
 def login(email: str, password: str) -> dict | None:
+    email_normalized = email.strip().lower() if email else ""
+    if not email_normalized:
+        return None
     conn = get_connection()
-    row = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+    row = conn.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email_normalized,)).fetchone()
     conn.close()
     if row is None:
         return None

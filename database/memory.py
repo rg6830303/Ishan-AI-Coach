@@ -1,4 +1,4 @@
-﻿import json
+import json
 import math
 import re
 from datetime import datetime
@@ -54,6 +54,13 @@ def delete_thread(user_id: int, thread_id: int):
     conn.execute("DELETE FROM threads WHERE id = ? AND user_id = ?", (thread_id, user_id))
     conn.commit()
     conn.close()
+    
+    # Delete local JSON/JSONL personalization data and rebuild personalization model
+    try:
+        from personalization.store import store as personalization_store
+        personalization_store.delete_thread_data(user_id, thread_id)
+    except Exception as e:
+        print(f"Error cleaning personalization files for thread {thread_id}: {e}")
 
 
 def _touch_thread(conn, thread_id: int):
