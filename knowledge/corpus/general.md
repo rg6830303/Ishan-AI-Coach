@@ -1,115 +1,114 @@
-﻿# General Running Science & Coaching Methodology
+# General Running Science & Coaching Methodology
 
-## Periodization Models
+## Periodization Models & Physiology
 
 ### Linear Periodization
-Progressive increase in training intensity while decreasing volume over a macrocycle. Ideal for beginners building a base. Phases: General Preparation (high volume, low intensity) -> Specific Preparation (moderate both) -> Competition (low volume, high intensity) -> Recovery.
+Linear periodization is the traditional structure of training. It starts with high volume and low intensity, progressively shifting to lower volume and higher intensity over a macrocycle (typically 12 to 24 weeks).
+- **Physiological Objective:** Build cellular and structural durability first, then build speed. It is ideal for beginner and intermediate runners building a base for a specific race.
+- **Phases:**
+  1. *Aerobic Preparation (Weeks 1-8):* Focuses on capillary density, mitochondrial biogenesis, and slow-twitch muscle fiber hypertrophy. High volume, low intensity.
+  2. *Specific Build (Weeks 9-16):* Introduces lactate threshold runs, hill power repeats, and moderate speed work while stabilizing volume.
+  3. *Peaking & Tapering (Weeks 17-20):* Race-pace specific repeats and volume reduction (30-50%) to allow muscular recovery and glycogen supercompensation.
+  4. *Transition (Post-Race):* Complete recovery, active rest, and rebuilding movement patterns.
 
 ### Block Periodization
-Concentrated training loads in short blocks (2-4 weeks) focusing on one quality. Block types: Accumulation (aerobic volume), Transmutation (race-specific intensity), Realization (taper + peak). Superior for experienced runners with limited training time.
+Concentrates training load on a single physiological quality (e.g., VO2max, anaerobic capacity, or aerobic threshold) in short, intense blocks of 2 to 4 weeks, followed by a deload.
+- **Physiological Objective:** Provide a concentrated stimulus that breaks through training plateaus. Best suited for advanced and elite runners who have adapted to linear models.
+- **Block Types:**
+  1. *Accumulation:* High-volume aerobic threshold runs to build cardiovascular stroke volume.
+  2. *Transmutation:* Lactate threshold and high-intensity interval training (HIIT) to push the anaerobic ceiling.
+  3. *Realization:* Recovery, neuromuscular sharpening (strides), and race-day tapering.
 
-### Polarized Training (80/20)
-Research shows elite endurance athletes spend approximately 80% of training time below ventilatory threshold 1 (easy) and 20% above ventilatory threshold 2 (hard). The "threshold trap" of moderate intensity (zone 3) provides insufficient stimulus for either aerobic or anaerobic adaptation while accumulating excessive fatigue.
+### Polarized Training (The 80/20 Rule)
+Based on research of elite endurance athletes. 80% of training runs are performed at low intensity (below Ventilatory Threshold 1, VT1, or Zone 2) and 20% at high intensity (above Ventilatory Threshold 2, VT2, or Zone 4/5).
+- **The Threshold Trap:** Many runners fall into the "black hole" of Zone 3 (tempo/moderate). This effort is too fast to allow recovery and build aerobic base, yet too slow to stimulate maximal VO2max adaptations. It yields chronic fatigue without high-quality adaptations.
+- **Polarization Benefit:** Running slow on easy days allows the athlete to be fully recovered and execute high-intensity workouts at true target workloads.
 
 ### Undulating Periodization
-Daily or weekly variation in volume and intensity. Prevents accommodation and maintains multiple fitness qualities simultaneously. Example: Monday easy, Tuesday intervals, Wednesday off, Thursday tempo, Friday easy, Saturday long run, Sunday off.
+Involves weekly or daily variations in training volume and intensity. It stimulates multiple energetic systems in a single microcycle, preventing neuromuscular accommodation. Example:
+- Monday: Zone 1 Recovery Jog
+- Tuesday: Zone 4 VO2Max Intervals
+- Wednesday: Complete Rest / Mobility
+- Thursday: Zone 3 Lactate Threshold Tempo
+- Friday: Zone 2 Easy Base Run
+- Saturday: Zone 2 Aerobic Long Run (with fast finish)
+- Sunday: Complete Rest
 
-## Workout Type Taxonomy
+---
 
-### Easy Run
-60-75% max HR. Conversational pace. Builds aerobic base, capillary density, mitochondrial development. Should feel genuinely easy. Most common mistake: running easy days too fast. Benefits accumulate over months, not days.
+## Workout Type Taxonomy & Pace Guidelines
 
-### Tempo Run (Lactate Threshold)
-83-88% max HR. "Comfortably hard" - sustainable for 45-60 minutes in trained runners. Improves lactate clearance, raises anaerobic threshold. Classic session: 20-40 minutes continuous at tempo pace. Progression: start with 2x10 min with 2 min recovery.
+### Easy Run (Aerobic Base)
+- **Intensity:** 60-70% Heart Rate Reserve (HRR) or 65-75% Max HR. RPE 3-4.
+- **Purpose:** Builds slow-twitch muscle fibers, increases capillary bed density around muscles, and expands heart chamber volume (eccentric cardiac hypertrophy).
+- **Execution:** Conversational pace. The runner must be able to speak in complete sentences without gasping. Most common error is running easy runs too fast, which raises cortisol and delays recovery.
 
-### Interval Training (VO2max)
-95-100% max HR during work intervals. 3-5 minute repeats with equal recovery. Maximizes oxygen uptake capacity. Classic Daniels session: 5x1000m at VO2max pace with 3 min jog recovery. Total hard running: 8-10% of weekly volume.
+### Tempo Run (Lactate Threshold / T-Pace)
+- **Intensity:** 80-85% HRR or 85-90% Max HR. RPE 6-7.
+- **Purpose:** Increases the lactate threshold—the point at which lactate accumulation in the blood increases exponentially. Trains the body to clear lactate at faster running velocities.
+- **Execution:** "Comfortably hard." Classic sessions include 20-40 minutes continuous at tempo pace, or "cruise intervals" (e.g., 4 x 2km at T-pace with 90 seconds walking recovery).
 
-### Long Run
-The cornerstone of distance training. 20-30% of weekly volume in a single run. Develops fat oxidation, glycogen storage, mental resilience, musculoskeletal durability. Progressive long run: last 20-30% at marathon pace or faster.
+### Interval Training (VO2max / I-Pace)
+- **Intensity:** 90-95% HRR or 95-100% Max HR. RPE 8-9.
+- **Purpose:** Expands the maximum volume of oxygen the athlete can consume per minute (VO2max). Improves cardiac contractility (stroke volume).
+- **Execution:** Hard efforts lasting 3 to 5 minutes (e.g., 5 x 1000m at VO2max pace) with 1:1 or 1:0.8 active jog recovery. Total interval volume should not exceed 8% of weekly volume.
 
-### Fartlek
-Unstructured speed play mixing easy and hard efforts. Lower psychological stress than formal intervals. Ideal for introducing speedwork to developing runners or maintaining fitness between structured cycles.
+### Long Run (LSD - Long Slow Distance)
+- **Intensity:** 60-72% Max HR. RPE 3-4.
+- **Purpose:** Builds muscular skeletal endurance, trains the liver and muscles to store glycogen, and adapts the body to utilize fat as a primary fuel source (fat oxidation).
+- **Execution:** Run at a steady, comfortable pace. A long run should comprise 20% to 30% of total weekly volume. For advanced athletes, the final miles can include race-pace segments.
 
-### Hill Repeats
-Short (60-90 sec) uphill efforts at 5K effort or harder. Develops running-specific power, improves cadence, reduces injury risk compared to flat intervals (reduced eccentric loading). 6-12 repeats with jog-down recovery.
+### Hill repeats
+- **Intensity:** High effort (90-98% Max HR on final repeats). RPE 8-9.
+- **Purpose:** Builds running-specific strength and power, improves stride power, and reduces joint impact compared to flat sprints (decreased eccentric loading).
+- **Execution:** 6 to 10 repeats of 30-90 seconds up a 4-8% grade, focusing on high knee drive and strong arm swing. Walk or jog down for full recovery.
 
-### Strides
-Short accelerations (80-100m) at near-sprint speed with full recovery. Neuromuscular activation, running economy improvement. 4-8 strides after easy runs 2-3x per week. Not fatiguing but improves leg turnover.
+### Neuromuscular Strides
+- **Intensity:** Fast, non-fatiguing accelerations (90% effort).
+- **Purpose:** Improves running economy, recruits fast-twitch muscle fibers, and recalibrates gait coordination.
+- **Execution:** 4 to 6 repeats of 80-100 meters at the end of an easy run. Focus on smooth leg turnover and relaxed shoulders. Not a sprint; focus on form.
 
-### Recovery Run
-Below 65% max HR. Very short (20-30 min). Promotes blood flow without adding training stress. Only appropriate for runners training 5+ days per week. Beginners should take complete rest instead.
+---
 
-## Recovery Principles
+## Recovery, Adaptation, & Supercompensation
 
-### Supercompensation
-Training creates fatigue and fitness simultaneously. During recovery, fitness is retained while fatigue dissipates. The "supercompensation window" is when fitness exceeds baseline. Training again too soon accumulates fatigue; too late loses the fitness gain.
+### Supercompensation Curve
+Every training session applies a stress that induces fatigue and decreases performance. During the recovery window, the body over-compensates for the damage, rebuilding tissues stronger than baseline (the supercompensation peak).
+- **Overtraining:** If a hard workout is applied before the athlete reaches the supercompensation peak (under-recovery), fitness declines and injury risk spikes.
+- **Detraining:** If the rest between sessions is too long, the supercompensation effect decays back to baseline.
 
-### Sleep
-7-9 hours is non-negotiable for adaptation. Growth hormone release peaks in deep sleep (stages 3-4). Sleep debt is cumulative and impairs performance, reaction time, and injury risk. One night of poor sleep = 10-30% reduction in time to exhaustion.
-
-### Active Recovery
-Easy movement (walking, cycling, swimming) below 60% max HR promotes blood flow for waste removal without adding training stress. More effective than complete rest for reducing delayed-onset muscle soreness (DOMS).
+### Sleep and Musculoskeletal Adaptation
+Deep sleep (stages 3-4) is the primary window for cellular repair. Growth hormone (HGH) peaks during deep sleep cycles, repairing micro-tears in muscles and strengthening bone matrices. Sleep deprivation increases cortisol (stress hormone) levels, which inhibits protein synthesis and reduces aerobic capacity (VO2max) by up to 15%. Target 8+ hours per night during heavy cycles.
 
 ### Deload Weeks
-Reduce volume 30-50% every 3-4 weeks while maintaining intensity. Allows structural adaptation (tendons, bones lag behind muscular fitness). Critical for injury prevention in runners building toward a goal.
+Muscles adapt to stress in 1-2 weeks, but tendons, ligaments, and bones take 4-6 weeks to strengthen due to lower blood supply. Deload weeks (reducing mileage by 30-40% every 3rd or 4th week while maintaining light intensity) are mandatory to allow structural tissues to catch up to cardiovascular gains.
 
-## Nutrition Fundamentals
+---
 
-### Daily Fueling
-Endurance runners need 5-7 g/kg/day carbohydrates (moderate training) to 8-12 g/kg/day (heavy training). Protein: 1.4-1.8 g/kg/day for repair and adaptation. Fat: minimum 20% of calories for hormone production.
+## Nutrition, Hydration, & Fueling Science
 
-### Pre-Run Nutrition
-2-4 hours before: 1-4 g/kg carbohydrate meal. 30-60 min before: small easily digestible snack (banana, toast with honey). Avoid high fiber, high fat, high protein immediately before running.
+### Daily Macronutrient Balance
+- **Carbohydrates:** The primary fuel source. 5-7g per kg of body weight for moderate training; 8-10g per kg for marathon preparation.
+- **Protein:** Essential for muscle protein synthesis (MPS). 1.4-1.8g per kg of body weight daily.
+- **Fats:** Required for hormone regulation and absorption of fat-soluble vitamins (A, D, E, K). 20-30% of daily caloric intake.
 
-### During-Run Fueling
-Not needed for runs under 60 minutes. 60-90 min: 30-60g carbs/hour. Over 90 min: up to 90g/hour with trained gut (glucose + fructose transporters). Practice race nutrition during training.
+### Fueling During Long Runs
+For runs exceeding 60-75 minutes, runners must ingest exogenous carbohydrates to prevent liver glycogen depletion ("bonking").
+- **Target Rate:** 30 to 60 grams of carbohydrates per hour for half-marathons; 60 to 90 grams per hour for full marathons.
+- **Format:** Energy gels, chews, or sports drinks containing a 2:1 ratio of glucose to fructose to optimize gut absorption transporters (SGLT1 and GLUT5).
+- **Hydration:** Aim for 400-800ml of water containing electrolytes (sodium, potassium) per hour, adjusting for sweat rate.
 
-### Post-Run Recovery
-Within 30-60 minutes: 1-1.2 g/kg carbohydrate + 20-40g protein. The "anabolic window" is real but wider than once thought. Chocolate milk is a legitimate recovery drink (4:1 carb:protein ratio).
+---
 
-### Hydration
-Pre-run: 5-7 ml/kg body weight 2-4 hours before. During: drink to thirst (not over-drink). Post: 1.5L per kg of body weight lost. Sodium replacement important in runs over 60 minutes or in heat.
+## Heart Rate Zone Calculations (Karvonen Method)
 
-## Heart Rate Zone Training
+The Karvonen formula calculates target heart rate zones based on Heart Rate Reserve (HRR), accounting for resting heart rate:
+1. **Heart Rate Reserve (HRR):** $HRR = Max HR - Resting HR$
+2. **Target HR:** $Target HR = (HRR \times Target Intensity \%) + Resting HR$
 
-### Five-Zone Model (Karvonen Method)
-- Zone 1 (50-60% HRR): Recovery. Active rest, warm-up, cool-down.
-- Zone 2 (60-70% HRR): Aerobic base. Fat burning, endurance foundation. Most training volume here.
-- Zone 3 (70-80% HRR): Tempo/Threshold. "Gray zone" - avoid excessive time here.
-- Zone 4 (80-90% HRR): VO2max development. Intervals, hard repeats.
-- Zone 5 (90-100% HRR): Neuromuscular. Sprints, short hills. Brief efforts only.
-
-### Heart Rate Reserve (HRR) Calculation
-HRR = Max HR - Resting HR. Target HR = (HRR x intensity%) + Resting HR. More accurate than simple percentage of max HR because it accounts for individual fitness level.
-
-## Injury Prevention
-
-### Common Running Injuries
-Runner's knee (patellofemoral pain), IT band syndrome, plantar fasciitis, Achilles tendinopathy, shin splints (medial tibial stress syndrome), stress fractures. Most are overuse injuries caused by training errors.
-
-### The 10% Rule
-Never increase weekly running volume by more than 10% week-over-week. This applies to distance AND time. After a break of 2+ weeks, resume at 50% of previous volume and rebuild gradually.
-
-### Strength Training
-2-3 sessions per week focusing on: single-leg exercises (lunges, step-ups, single-leg deadlifts), hip stability (clamshells, side-lying leg raises), calf raises (eccentric emphasis), core stability (planks, dead bugs). Prevents the majority of running injuries.
-
-### Warning Signs (Red Flags)
-- Pain that worsens during a run (not just initial stiffness that resolves)
-- Sharp, localized pain (vs dull, diffuse soreness)
-- Pain that alters your gait
-- Swelling, warmth, or redness at a joint
-- Night pain or pain at rest
-- Pain that persists more than 2 weeks despite rest
-ALWAYS recommend professional assessment for red flags. Never coach through sharp pain.
-
-## RPE Scale (Rate of Perceived Exertion)
-
-Scale of 1-10:
-- 1-2: Very light. Walking pace. Could do this all day.
-- 3-4: Light. Easy conversational jog.
-- 5-6: Moderate. Can speak in short sentences. Tempo effort.
-- 7-8: Hard. Few words at a time. Interval effort.
-- 9-10: Maximum. Cannot speak. Sprint/race finish effort.
-
-RPE correlates with heart rate but accounts for fatigue, heat, sleep debt, stress. Useful when HR data is unavailable or unreliable (cardiac drift, heat, caffeine).
+### The Zones:
+* **Zone 1 (50-60% HRR):** Active Recovery. Flushes metabolic waste.
+* **Zone 2 (60-70% HRR):** Aerobic Threshold. Builds mitochondrial density.
+* **Zone 3 (70-80% HRR):** Aerobic-Anaerobic Transition. Gray zone training.
+* **Zone 4 (80-90% HRR):** Lactate Threshold. Improves clearance velocity.
+* **Zone 5 (90-100% HRR):** Anaerobic Capacity. VO2max intervals and sprints.

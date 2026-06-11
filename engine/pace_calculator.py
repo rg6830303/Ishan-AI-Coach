@@ -1,4 +1,5 @@
-﻿from engine.vo2max import estimate_vo2max_from_5k, estimate_vo2max_from_profile
+import math
+from engine.vo2max import estimate_vo2max_from_5k, estimate_vo2max_from_profile
 
 
 def get_age_factor(age: int, gender: str) -> float:
@@ -35,6 +36,34 @@ def get_fitness_multiplier(fitness_level: str) -> float:
     return multipliers.get(fitness_level, 1.0)
 
 
+# ==============================================================================
+# Jack Daniels' physiological quadratic pace solver
+# ==============================================================================
+
+def solve_daniels_velocity(vdot: float, percent: float) -> float:
+    """
+    Solves the Daniels/Gilbert quadratic equation for running velocity (m/min) at a given % VDOT:
+    0.000104 * v^2 + 0.182258 * v - (4.60 + percent * vdot) = 0
+    """
+    vo2_req = vdot * percent
+    a = 0.000104
+    b = 0.182258
+    c = -(4.60 + vo2_req)
+    
+    disc = (b ** 2) - 4 * a * c
+    if disc < 0:
+        return 100.0  # safe default fallback velocity
+    v = (-b + math.sqrt(disc)) / (2 * a)
+    return v
+
+
+def pace_seconds_from_velocity(v_m_min: float) -> int:
+    """Converts m/min velocity to seconds per kilometer."""
+    if v_m_min <= 0:
+        return 600  # Default 10:00/km
+    return round(60000.0 / v_m_min)
+
+
 def calculate_pace_zones_from_profile(
     age: int,
     gender: str,
@@ -43,42 +72,54 @@ def calculate_pace_zones_from_profile(
     fitness_level: str,
     tier: str,
 ) -> dict:
-    """Calculate pace zones from profile data (no race time available)."""
-    tier_base_pace = {
-        "spark": 420,
-        "pace": 350,
-        "tempo": 300,
-        "apex": 260,
-    }
-
-    base_pace = tier_base_pace.get(tier, 350)
-    age_factor = 1 / get_age_factor(age, gender)
+    """Calculate VDOT and pace zones from profile using Jack Daniels equations."""
+    # 1. Estimate VDOT based on profile-predicted VO2max
+    vo2max_profile = estimate_vo2max_from_profile(age, gender, fitness_level, weight_kg, height_cm)
+    
+    # Adjust VDOT based on age-grading and running efficiency adjustments
+    age_factor = get_age_factor(age, gender)
     bmi_adjust = get_bmi_adjustment(weight_kg, height_cm)
     fitness_mult = get_fitness_multiplier(fitness_level)
+    
+    # Calculate effective VDOT score
+    vdot = vo2max_profile * age_factor * (2.0 - bmi_adjust) * (2.0 - fitness_mult)
+    vdot = max(25.0, min(80.0, vdot))
 
-    adjusted_pace = base_pace * age_factor * bmi_adjust * fitness_mult
+    # 2. Solve velocities at specific Jack Daniels percentages of VDOT
+    # Easy: 62% | Tempo: 86% | Interval: 97% | Race/Threshold: 88%
+    v_easy = solve_daniels_velocity(vdot, 0.62)
+    v_tempo = solve_daniels_velocity(vdot, 0.86)
+    v_interval = solve_daniels_velocity(vdot, 0.97)
+    v_race = solve_daniels_velocity(vdot, 0.88)
 
     return {
-        "easy_pace_per_km": round(adjusted_pace * 1.20),
-        "tempo_pace_per_km": round(adjusted_pace),
-        "interval_pace_per_km": round(adjusted_pace * 0.88),
-        "race_pace_per_km": round(adjusted_pace * 0.95),
-        "vo2max_estimate": estimate_vo2max_from_profile(age, gender, fitness_level, weight_kg, height_cm),
+        "easy_pace_per_km": pace_seconds_from_velocity(v_easy),
+        "tempo_pace_per_km": pace_seconds_from_velocity(v_tempo),
+        "interval_pace_per_km": pace_seconds_from_velocity(v_interval),
+        "race_pace_per_km": pace_seconds_from_velocity(v_race),
+        "vo2max_estimate": round(vo2max_profile, 1),
+        "vdot": round(vdot, 1)
     }
 
 
 def calculate_pace_zones_from_5k(five_k_minutes: float) -> dict:
-    """Calculate pace zones from a known 5K time."""
-    vo2max = estimate_vo2max_from_5k(five_k_minutes)
-    five_k_seconds = five_k_minutes * 60
-    race_pace = five_k_seconds / 5.0
+    """Calculate pace zones by solving Jack Daniels' formulas for a known 5K time."""
+    time_seconds = five_k_minutes * 60
+    vdot = estimate_vo2max_from_5k(five_k_minutes)
+
+    # Solve velocities at Daniels intensities
+    v_easy = solve_daniels_velocity(vdot, 0.62)
+    v_tempo = solve_daniels_velocity(vdot, 0.86)
+    v_interval = solve_daniels_velocity(vdot, 0.97)
+    v_race = 5000.0 / (time_seconds / 60.0) # actual race pace
 
     return {
-        "easy_pace_per_km": round(race_pace * 1.30),
-        "tempo_pace_per_km": round(race_pace * 1.10),
-        "interval_pace_per_km": round(race_pace * 0.95),
-        "race_pace_per_km": round(race_pace),
-        "vo2max_estimate": round(vo2max, 1),
+        "easy_pace_per_km": pace_seconds_from_velocity(v_easy),
+        "tempo_pace_per_km": pace_seconds_from_velocity(v_tempo),
+        "interval_pace_per_km": pace_seconds_from_velocity(v_interval),
+        "race_pace_per_km": pace_seconds_from_velocity(v_race),
+        "vo2max_estimate": round(vdot, 1),
+        "vdot": round(vdot, 1)
     }
 
 

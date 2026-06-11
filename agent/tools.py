@@ -1,4 +1,4 @@
-﻿import json
+import json
 from engine.pace_calculator import calculate_pace_zones, format_pace
 from engine.guardrails import check_guardrails
 from knowledge.retriever import retriever
@@ -70,6 +70,22 @@ TOOL_DEFINITIONS = [
                         "type": "string",
                         "description": "Brief description of what you're about to recommend",
                     },
+                    "weekly_km": {
+                        "type": "number",
+                        "description": "Proposed weekly volume in km (optional)",
+                    },
+                    "consecutive_run_days": {
+                        "type": "integer",
+                        "description": "Proposed consecutive run days (optional)",
+                    },
+                    "volume_increase_percent": {
+                        "type": "number",
+                        "description": "Proposed volume increase percentage (optional)",
+                    },
+                    "intensity_type": {
+                        "type": "string",
+                        "description": "Type of workout proposed, e.g. 'intervals', 'tempo_runs', 'hill_sprints' (optional)",
+                    },
                 },
                 "required": ["recommendation_type", "details"],
             },
@@ -131,9 +147,10 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
             for r in results:
                 formatted.append({
                     "title": r["chunk"]["title"],
-                    "content": r["chunk"]["content"][:500],
+                    # Removed truncation to provide full context to the LLM
+                    "content": r["chunk"]["content"],
                     "source": r["chunk"]["source"],
-                    "relevance_score": round(r["score"], 3),
+                    "relevance_score": round(r["score"], 4),
                 })
             return json.dumps(formatted, indent=2)
 
@@ -150,9 +167,23 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
         elif tool_name == "check_guardrails":
             rec_type = arguments.get("recommendation_type", "volume_increase")
             details = arguments.get("details", "")
+            weekly_km = arguments.get("weekly_km")
+            consecutive_run_days = arguments.get("consecutive_run_days")
+            volume_increase_percent = arguments.get("volume_increase_percent")
+            intensity_type = arguments.get("intensity_type")
+
             profile = get_profile(user_id)
             tier = profile.get("tier", "pace") if profile else "pace"
-            result = check_guardrails(tier, rec_type, details)
+            
+            result = check_guardrails(
+                tier, 
+                rec_type, 
+                details,
+                weekly_km=weekly_km,
+                consecutive_run_days=consecutive_run_days,
+                volume_increase_percent=volume_increase_percent,
+                intensity_type=intensity_type
+            )
             return json.dumps(result)
 
         elif tool_name == "set_training_level":

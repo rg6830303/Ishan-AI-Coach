@@ -1,11 +1,11 @@
-﻿import os
+import os
 import json
 import numpy as np
 from config import CORPUS_PATH, INDEX_PATH
 
 
 def load_and_chunk_corpus() -> list[dict]:
-    """Load all corpus .md files and chunk by ## headers."""
+    """Load all corpus .md files and chunk by ## headers, splitting large sections with overlap."""
     chunks = []
     for filename in os.listdir(CORPUS_PATH):
         if not filename.endswith(".md"):
@@ -30,6 +30,7 @@ def load_and_chunk_corpus() -> list[dict]:
             if len(body) < 50:
                 continue
 
+            # Split large sections into subsections
             subsections = body.split("\n### ")
             if len(subsections) > 1:
                 for j, sub in enumerate(subsections):
@@ -38,25 +39,48 @@ def load_and_chunk_corpus() -> list[dict]:
                     sub_lines = sub.strip().split("\n")
                     sub_title = sub_lines[0].strip() if j > 0 else title
                     sub_body = "\n".join(sub_lines[1:]).strip() if j > 0 else sub.strip()
+                    
                     if len(sub_body) < 30:
                         continue
-                    chunks.append({
-                        "id": f"{tier_tag}_{i}_{j}",
-                        "title": f"{title} > {sub_title}" if j > 0 else title,
-                        "content": sub_body,
-                        "tier_tag": tier_tag,
-                        "source": filename,
-                    })
+
+                    # If the sub_body is very large, chunk it with overlap
+                    _add_chunks(chunks, sub_body, f"{title} > {sub_title}", tier_tag, filename, f"{tier_tag}_{i}_{j}")
             else:
-                chunks.append({
-                    "id": f"{tier_tag}_{i}",
-                    "title": title,
-                    "content": body,
-                    "tier_tag": tier_tag,
-                    "source": filename,
-                })
+                _add_chunks(chunks, body, title, tier_tag, filename, f"{tier_tag}_{i}")
 
     return chunks
+
+
+def _add_chunks(chunks_list: list, text: str, title: str, tier_tag: str, filename: str, base_id: str, chunk_size: int = 800, overlap: int = 150):
+    """Splits text into overlapping chunks if it exceeds chunk_size, otherwise adds it directly."""
+    if len(text) <= chunk_size:
+        chunks_list.append({
+            "id": base_id,
+            "title": title,
+            "content": text,
+            "tier_tag": tier_tag,
+            "source": filename,
+        })
+        return
+
+    # Sliding window chunking
+    start = 0
+    sub_idx = 0
+    while start < len(text):
+        end = start + chunk_size
+        chunk_text = text[start:end].strip()
+        
+        if len(chunk_text) >= 50:
+            chunks_list.append({
+                "id": f"{base_id}_c{sub_idx}",
+                "title": f"{title} (Part {sub_idx + 1})" if sub_idx > 0 else title,
+                "content": chunk_text,
+                "tier_tag": tier_tag,
+                "source": filename,
+            })
+            sub_idx += 1
+            
+        start += (chunk_size - overlap)
 
 
 def build_index():

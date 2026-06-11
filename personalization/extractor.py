@@ -1,12 +1,12 @@
-"""Rule-based signal extraction from free-text chat messages.
+"""Signal extraction from free-text chat messages using Groq LLM with a rule-based fallback.
 
-Deterministic and zero-cost (no extra LLM calls) so the coaches can update
-their personalization model on *every* message without added latency. The
-extracted signals are merged into the per-user personalization profile by
-:mod:`personalization.store`.
+Updates the personalization model dynamically on every message.
 """
 
 import re
+import json
+from openai import OpenAI
+import config
 
 INJURY_AREAS = [
     "knee", "ankle", "hip", "back", "shin", "shins", "hamstring", "calf",
@@ -40,7 +40,7 @@ TOPIC_KEYWORDS = {
 }
 
 GOAL_PATTERNS = [
-    r"(?:i\s+)?(?:want|hope|plan|planning|aim|aiming|going|trying|would like)\s+to\s+(.{6,90}?)(?:[\.,!?]|$)",
+    r"(?:i\s+)?(want|hope|plan|planning|aim|aiming|going|trying|would like)\s+to\s+(.{6,90}?)(?:[\.,!?]|$)",
     r"(?:my\s+goal\s+is\s+(?:to\s+)?)(.{6,90}?)(?:[\.,!?]|$)",
     r"(?:training|prepping|preparing)\s+for\s+(?:a\s+|the\s+|my\s+)?(.{4,70}?)(?:[\.,!?]|$)",
     r"(?:i\s+(?:want|wanna)\s+to\s+(?:run|do|finish|complete|break))\s+(.{3,70}?)(?:[\.,!?]|$)",
@@ -57,11 +57,9 @@ PREFERENCE_PATTERNS = [
     (r"i\s+(?:hate|dislike|avoid|can't stand|cant stand|don't like|dont like)\s+(.{4,60}?)(?:[\.,!?]|$)", "dislike"),
 ]
 
-# e.g. "ran 8km", "did 5 miles", "12 k easy"
 MILEAGE_PATTERN = re.compile(
     r"(\d+(?:\.\d+)?)\s*(km|kilometre|kilometer|k\b|mi\b|mile|miles)", re.IGNORECASE
 )
-
 
 _CLAUSE_BREAKS = re.compile(r"\s+(?:but|and|because|though|however|so|while|when)\s+", re.IGNORECASE)
 
@@ -71,7 +69,6 @@ def _clean(text: str) -> str:
 
 
 def _first_clause(text: str) -> str:
-    """Trim a captured phrase to its first clause so preferences stay tight."""
     parts = _CLAUSE_BREAKS.split(text, maxsplit=1)
     return _clean(parts[0]) if parts else _clean(text)
 
@@ -101,22 +98,18 @@ def detect_injuries(text: str) -> list[str]:
     hits = []
     for area in INJURY_AREAS:
         if re.search(rf"\b{re.escape(area)}\b", lo):
-            # Only treat as injury signal if a pain word is nearby.
             if any(p in lo for p in ["pain", "hurt", "sore", "injur", "tight", "stiff", "niggle", "ache"]):
                 hits.append(area.replace("shins", "shin").replace("calves", "calf"))
     return sorted(set(hits))
 
 
-def extract_signals(text: str) -> dict:
-    """Extract a bundle of structured signals from one message."""
-    if not text:
-        return {}
-
-    signals: dict = {
+def extract_signals_rule_based(text: str) -> dict:
+    """Fallback rule-based extraction using regular expressions."""
+    signals = {
         "goals": [],
         "achievements": [],
         "preferences": [],  # list of (kind, value)
-        "injuries": detect_injuries(text),
+        "injuries": [{"area": area, "status": "active"} for area in detect_injuries(text)],
         "topics": detect_topics(text),
         "sentiment": detect_sentiment(text),
         "mileage": [],
@@ -138,7 +131,7 @@ def extract_signals(text: str) -> dict:
         for m in re.findall(pat, text, re.IGNORECASE):
             val = _first_clause(m if isinstance(m, str) else m[0])
             if len(val) >= 3:
-                signals["preferences"].append((kind, val))
+                signals["preferences"].append({"kind": kind, "value": val})
 
     for amount, unit in MILEAGE_PATTERN.findall(text):
         try:
@@ -150,14 +143,56 @@ def extract_signals(text: str) -> dict:
         if 0.5 <= km <= 100:
             signals["mileage"].append(round(km, 2))
 
-    # De-duplicate list fields while preserving order.
-    for key in ("goals", "achievements", "topics", "injuries"):
-        seen = set()
-        deduped = []
-        for item in signals[key]:
-            if item.lower() not in seen:
-                seen.add(item.lower())
-                deduped.append(item)
-        signals[key] = deduped
-
     return signals
+
+
+SYSTEM_EXTRACTOR_PROMPT = """
+You are an expert running coach assistant. Extract running-related signals from the user message into a clean JSON structure.
+Output ONLY a raw JSON block matching this schema:
+{
+  "goals": ["specific long-term or training goals discussed as strings"],
+  "achievements": ["recent completions, PRs, or milestones as strings"],
+  "preferences": [{"kind": "like"|"dislike", "value": "what they like/dislike in running"}],
+  "injuries": [{"area": "knee"|"ankle"|"hip"|"back"|"shin"|"hamstring"|"calf"|"achilles"|"plantar"|"foot"|"heel"|"groin"|"it band"|"quad"|"glute", "status": "active"|"resolved"}],
+  "sentiment": "positive"|"neutral"|"negative",
+  "topics": ["nutrition"|"injury"|"racing"|"pacing"|"recovery"|"motivation"|"training_plan"|"strength"|"mental"],
+  "mileage": [floats of kilometers mentioned]
+}
+
+Guidelines:
+1. Negation: If user says "no more shin pain" or "my knee is healed" or "my ankle is fine now", output that injury area with status "resolved".
+2. Sentiment: Detect overall tone.
+3. Mileage: If miles are mentioned (e.g. "5 miles"), convert to kilometers (e.g. 8.05) and return as a float in the mileage list.
+4. Output nothing but raw JSON. No markdown backticks, no comments.
+"""
+
+
+def extract_signals_via_llm(text: str, api_key: str) -> dict:
+    """Uses Groq Llama 3.1 8B to extract semantic features from messages in JSON mode."""
+    client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "system", "content": SYSTEM_EXTRACTOR_PROMPT},
+            {"role": "user", "content": text}
+        ],
+        response_format={"type": "json_object"},
+        temperature=0.0
+    )
+    return json.loads(response.choices[0].message.content)
+
+
+def extract_signals(text: str) -> dict:
+    """Main signal extraction entry point. Calls LLM if Groq is configured, falls back to Regex."""
+    if not text:
+        return {}
+
+    api_key = config.get_groq_api_key()
+    if api_key and api_key != "gsk_your_key_here":
+        try:
+            return extract_signals_via_llm(text, api_key)
+        except Exception as e:
+            # Fallback on API issues
+            return extract_signals_rule_based(text)
+    
+    return extract_signals_rule_based(text)

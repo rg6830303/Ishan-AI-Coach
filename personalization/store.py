@@ -195,24 +195,35 @@ class PersonalizationStore:
                 if not any(x["text"].lower() == a.lower() for x in data["achievements"]):
                     data["achievements"].append({"text": a, "ts": now})
 
-            # Injuries ----------------------------------------------------
-            for area in signals.get("injuries", []):
+            # Injuries (with recovery lifecycle support) -----------------
+            for inj in signals.get("injuries", []):
+                area = inj.get("area")
+                status = inj.get("status", "active")
+                if not area:
+                    continue
+
                 existing = next((i for i in data["injuries"] if i["area"] == area), None)
                 if existing:
                     existing["last_seen"] = now
                     existing["mentions"] = existing.get("mentions", 1) + 1
-                    existing["status"] = "active"
+                    existing["status"] = status
                 else:
                     data["injuries"].append({
-                        "area": area, "status": "active",
-                        "first_seen": now, "last_seen": now, "mentions": 1,
+                        "area": area, 
+                        "status": status,
+                        "first_seen": now, 
+                        "last_seen": now, 
+                        "mentions": 1,
                     })
 
             # Preferences -------------------------------------------------
-            for kind, val in signals.get("preferences", []):
-                bucket = "likes" if kind == "like" else "dislikes"
-                if val.lower() not in [v.lower() for v in data["preferences"][bucket]]:
-                    data["preferences"][bucket].append(val)
+            for pref in signals.get("preferences", []):
+                kind = pref.get("kind")
+                val = pref.get("value")
+                if kind and val:
+                    bucket = "likes" if kind == "like" else "dislikes"
+                    if val.lower() not in [v.lower() for v in data["preferences"][bucket]]:
+                        data["preferences"][bucket].append(val)
 
             # Topics ------------------------------------------------------
             for t in signals.get("topics", []):

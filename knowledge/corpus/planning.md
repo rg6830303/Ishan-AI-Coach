@@ -1,54 +1,90 @@
 # Planning Mode — Building Training Plans
 
-## Planning Hierarchy
+This guide outlines the athletic methodology for structuring training macrocycles, mesocycles, and microcycles, ensuring peak performance on race day while maintaining safety.
 
-### Macrocycle, Mesocycle, Microcycle
-A macrocycle is the full arc to a goal race (12-24+ weeks). It is divided into mesocycles (3-6 week blocks each with one focus: base, build, peak, taper). Mesocycles are divided into microcycles (usually one week). Plan top-down: fix the race date, work backward through phases, then fill in weeks, then days. Every session should answer "what is this for?"
+---
 
-### Reverse Periodization From Race Day
-Start at the goal and count backward: race week (taper), peak phase (race-specific sharpening), build phase (introduce quality), base phase (aerobic foundation). This ensures the runner peaks on the right day rather than running out of runway or peaking too early.
+## The Planning Hierarchy
 
-### Phase Objectives
-- Base: maximize aerobic volume, build durability, mostly easy running. Volume is the stimulus.
-- Build: add race-specific quality (tempo, threshold, intervals) while holding volume. Specificity rises.
-- Peak/Sharpen: lower volume, raise intensity, dial in goal-pace work and race simulation.
-- Taper: reduce volume 30-50% over 1-3 weeks, keep some intensity, arrive fresh and supercompensated.
+### 1. Macrocycle (The Goal Arc)
+A macrocycle represents the entire training timeline leading up to a major race or peak performance block. It typically spans **12 to 24 weeks** and is divided into distinct training phases (mesocycles).
+- **Structure:** Count backward from the target race date to current day. This guarantees that base-building, build, peak, and taper phases are aligned and no phase is rushed.
+- **Top-Down Rule:** Fix the race date → Allocate phase durations → Define weekly volume curves → Program daily workouts.
 
-## Weekly Structure (Microcycle Design)
+### 2. Mesocycle (The Phase Blocks)
+A mesocycle is a block of **3 to 6 weeks** with a singular training focus. Stacking different mesocycles creates a periodized progression:
+- **Base Phase (Aerobic Foundation):** Focuses on expanding aerobic capacity, increasing cardiac stroke volume, and developing joint/tendon strength. High volume (80-90% easy Zone 2 running), minimal intensity.
+- **Build Phase (Threshold & Strength):** Introduces race-specific quality work. Volume stabilizes at its peak while lactate threshold runs and hill repeats are introduced.
+- **Peak Phase (VO2Max & Speed):** Neuromuscular sharpening. Volume drops slightly (10-15%) while intensity increases to VO2max intervals and race-pace simulations.
+- **Taper Phase (Supercompensation):** Reduces fatigue while keeping fitness. Volume drops 30-50% over 1-3 weeks. High-intensity runs are maintained but kept very short (e.g., short strides).
 
-### Hard/Easy Alternation
-Never stack hard days back-to-back unless deliberately overloading with a planned recovery block after. The classic pattern alternates stress and recovery: a quality day followed by one or more easy/rest days. Adaptation happens during recovery, not during the workout.
+### 3. Microcycle (The Weekly Schedule)
+A microcycle represents a single training week (typically 7 days). It is the daily unit of execution:
+- **Hard/Easy Alternation:** Never stack high-intensity or high-stress sessions back-to-back. Follow every hard workout (Long Run, Tempo, Intervals) with a complete rest day or a Zone 1 recovery jog.
+- **Microcycle Anchors:** Place the Long Run and the primary Quality workout first, then distribute easy base mileage and rest days around them.
 
-### The 80/20 Distribution
-Across the week, roughly 80% of running should be easy (below the aerobic threshold) and 20% hard. Most runners invert this by accident, running too many medium-hard days — the "gray zone" that fatigues without optimally stimulating. Polarize: make easy days truly easy so hard days can be truly hard.
+---
 
-### Sample Week Templates
-- 3 days: Easy / Quality / Long (or easy). Ideal for beginners and time-crunched runners.
-- 4-5 days: Easy / Quality / Easy / Long / (Easy). One to two quality sessions max.
-- 6-7 days: Easy / Quality / Easy / Quality / Easy / Long / Rest-or-recovery. For advanced runners only.
-The long run is the cornerstone — typically 20-30% of weekly volume, run easy, building duration gradually.
+## Structured Microcycle Templates
 
-### Anchoring the Week
-Place the long run and key quality sessions first (often weekend long run, midweek workout), then fill easy/recovery runs around them and around life. Protect at least one full rest or active-recovery day per microcycle for most runners.
+The week structure must align with the runner's level and available training days:
 
-## Progression & Recovery Principles
+### 3-Day Microcycle (Spark / Beginner)
+Best for habit building and minimizing musculoskeletal impact.
+- **Tuesday:** Easy Run (Zone 2, 3-5 km) + post-run strides.
+- **Thursday:** Walk/Run Intervals or light fartlek (Zone 2/3).
+- **Saturday:** Aerobic Long Run (Zone 2, 5-8 km).
+- *Rest Days:* Monday, Wednesday, Friday, Sunday.
 
-### Progressive Overload, Gradually
-Fitness improves when load slightly exceeds what the body is adapted to, followed by recovery. Increase one variable at a time (volume OR intensity OR frequency), not several at once. The classic guardrail: do not raise weekly volume more than ~10% week to week.
+### 4 to 5-Day Microcycle (Pace / Intermediate)
+Introduces structured threshold and volume progression.
+- **Tuesday:** Easy Base Run (Zone 2, 6-10 km) + strides.
+- **Thursday:** Lactate Threshold (e.g., 3 x 2km at T-pace with 90s rest).
+- **Friday:** Recovery Run (Zone 1, 4-5 km).
+- **Saturday:** Endurance Long Run (Zone 2, 10-16 km).
+- **Sunday:** Recovery Run (Zone 1, 4-5 km) or Rest.
+- *Rest Days:* Monday, Wednesday.
 
-### Deload Weeks
-Every 3-4 weeks, cut volume 30-40% to absorb training, reduce injury risk, and allow supercompensation. Deloads are not optional or a sign of weakness — they are when fitness is actually consolidated. Skipping them leads to plateau or breakdown.
+### 6-Day Microcycle (Tempo & Apex / Advanced & Elite)
+For advanced runners targeting competitive half/full marathons.
+- **Monday:** Recovery Run (Zone 1, 5-8 km) + mobility.
+- **Tuesday:** VO2Max Intervals (e.g., 5 x 1000m at I-pace with 3 min rest).
+- **Wednesday:** Easy Aerobic base run (Zone 2, 10-12 km).
+- **Thursday:** Tempo / Threshold run (e.g., 40 mins continuous at T-pace).
+- **Friday:** Easy Base Run (Zone 2, 8-10 km).
+- **Saturday:** Periodized Long Run (e.g., 20-28 km with last 5km at Marathon Pace).
+- **Sunday:** Rest or Active Recovery (Light cross-training).
 
-### Adjusting the Plan to Life
-A plan is a hypothesis, not a contract. Poor sleep, illness, stress, and missed sessions all demand adjustment. Rules of thumb: when in doubt, do less; never make up missed mileage by doubling; if sick below the neck or feverish, do not train; if a key session feels terrible, abort and reassess rather than grinding.
+---
 
-### Tapering Without Losing Fitness
-Fitness is maintained for 10-14 days even with sharply reduced volume — so a taper costs nothing and pays off in freshness. Cut volume, keep frequency and a touch of intensity (short, sharp, well-rested). The goal is to shed fatigue while preserving fitness, arriving on the start line springy and a little restless.
+## Progression Rules & Deload Math
 
-## Goal-Setting Within a Plan
+### The 10% Volume Increase Rule
+To prevent bone stress injuries (shin splints, stress fractures), weekly running volume (measured in distance or duration) must not increase by more than **10%** from the preceding week.
+- **Exception:** For beginner runners starting from zero, the volume can increase by set time blocks (e.g., transitioning from 15 mins to 20 mins of jogging) even if it technically exceeds 10%, up to a baseline threshold of 15 km/week.
 
-### SMART and Layered Goals
-Set goals that are Specific, Measurable, Achievable, Relevant, and Time-bound. Layer them: an A-goal (everything goes right), a B-goal (solid day), and a C-goal (the day is hard but I finish strong / I gain experience). Layered goals protect motivation when conditions don't cooperate.
+### The Deload Week Protocol
+Adaptation requires recovery. Deload weeks occur every 3rd or 4th week:
+- **Volume Reduction:** Cut total mileage by **30% to 40%**.
+- **Intensity:** Keep key paces (Threshold/strides) but reduce the repetition count (e.g., instead of 5 x 1000m, run 3 x 1000m).
+- **Benefit:** Allows joint fluid and connective tissues to recover from microscopic strains. Muscles absorb the training, and fitness is locked in.
 
-### Tracking and Feedback Loops
-A plan without review is guesswork. Track sessions, perceived effort, sleep, and mood. Review weekly: did the easy days stay easy, did the quality sessions hit, how is fatigue trending? Adjust the next microcycle based on evidence, not feelings alone. The training log is the coach's most honest informant.
+---
+
+## Tapering Mechanics by Race Distance
+
+Tapering drops fatigue rapidly while maintaining the cellular adaptations of fitness.
+
+### Marathon Taper (3 Weeks)
+- **3 Weeks Out:** Reduce weekly volume to 75-80% of peak. Long run capped at 18-20 km.
+- **2 Weeks Out:** Reduce weekly volume to 50-60% of peak. Long run capped at 12-14 km. Include a short 5-6 km tempo run.
+- **Race Week:** Reduce volume to 25-30% (excluding the race). Short easy jogs. Complete rest 2 days before the race.
+
+### Half Marathon Taper (2 Weeks)
+- **2 Weeks Out:** Reduce weekly volume to 60-70% of peak. Long run capped at 10-12 km.
+- **Race Week:** Reduce weekly volume to 30-40% of peak. Two easy jogs of 4-5 km. Complete rest 1-2 days before the race.
+
+### 5K / 10K Taper (1 Week)
+- **5 Days Out:** Reduce volume by 40-50%. Include a neuromuscular sharpening session: 4 x 400m at goal race pace with full rest.
+- **2 Days Out:** 15-20 min light shakeout jog + 4 strides.
+- **1 Day Out:** Complete Rest.

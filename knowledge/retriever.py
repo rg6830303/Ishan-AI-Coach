@@ -1,4 +1,4 @@
-﻿import os
+import os
 import json
 import numpy as np
 from config import INDEX_PATH, TIERS, CORPUS_PATH
@@ -48,68 +48,61 @@ class KnowledgeRetriever:
             self._use_dense = False
 
     def retrieve(self, query: str, tier: str = "general", top_k: int = 3, coach: str | None = None) -> list[dict]:
-        """Hybrid retrieval when FAISS available, BM25-only fallback otherwise."""
+        """Hybrid retrieval using Reciprocal Rank Fusion (RRF) to merge dense and sparse rankings."""
         self._load()
 
-        # Cross-cutting corpora (psychology, mentality, tactics, planning) apply
-        # to every runner, so they are always treated as tier-relevant. The
-        # active coach's own brain (coach_<style>) is boosted when present.
+        # Cross-cutting corpora apply to every runner, so they are always relevant.
         tier_relevant = {"general", "psychology", "mentality", "tactics", "planning", tier}
         if coach:
             tier_relevant.add(f"coach_{coach}")
         max_chunks = TIERS.get(tier, {}).get("max_rag_chunks", 3)
 
+        # 1. Sparse BM25 Search
         bm25_scores = self._bm25.get_scores(query.lower().split())
+        sparse_top_indices = np.argsort(bm25_scores)[-top_k * 4:][::-1]
+        sparse_ranks = {idx: rank + 1 for rank, idx in enumerate(sparse_top_indices) if bm25_scores[idx] > 0}
 
-        scored_results = []
-        seen_ids = set()
-
+        # 2. Dense Search (if enabled)
+        dense_ranks = {}
         if self._use_dense and self._index is not None:
-            query_embedding = self._model.encode([query], normalize_embeddings=True)
-            dense_scores, dense_indices = self._index.search(
-                np.array(query_embedding).astype("float32"), top_k * 3
-            )
+            try:
+                query_embedding = self._model.encode([query], normalize_embeddings=True)
+                dense_scores, dense_indices = self._index.search(
+                    np.array(query_embedding).astype("float32"), top_k * 4
+                )
+                for rank, idx in enumerate(dense_indices[0]):
+                    if idx >= 0 and idx < len(self._chunks):
+                        dense_ranks[idx] = rank + 1
+            except Exception:
+                pass
 
-            for i, idx in enumerate(dense_indices[0]):
-                if idx < 0 or idx >= len(self._chunks):
-                    continue
-                chunk = self._chunks[idx]
-                if chunk["id"] in seen_ids:
-                    continue
-                seen_ids.add(chunk["id"])
-
-                dense_score = float(dense_scores[0][i])
-                sparse_score = float(bm25_scores[idx]) if idx < len(bm25_scores) else 0
-                tier_boost = 1.3 if chunk["tier_tag"] in tier_relevant else 0.7
-                combined = (dense_score * 0.7 + sparse_score * 0.01) * tier_boost
-
-                scored_results.append({
-                    "chunk": chunk,
-                    "score": combined,
-                    "dense_score": dense_score,
-                    "sparse_score": sparse_score,
-                })
-
-        bm25_top = np.argsort(bm25_scores)[-top_k * 3:][::-1]
-        for idx in bm25_top:
-            if idx >= len(self._chunks):
-                continue
+        # 3. Reciprocal Rank Fusion (RRF)
+        # Formula: RRF_Score = Sum( 1 / (60 + rank) )
+        k = 60
+        all_candidate_indices = set(sparse_ranks.keys()) | set(dense_ranks.keys())
+        
+        scored_results = []
+        for idx in all_candidate_indices:
             chunk = self._chunks[idx]
-            if chunk["id"] in seen_ids:
-                continue
-            seen_ids.add(chunk["id"])
-
-            sparse_score = float(bm25_scores[idx])
+            
+            # Compute RRF terms
+            rrf_dense = 1.0 / (k + dense_ranks[idx]) if idx in dense_ranks else 0.0
+            rrf_sparse = 1.0 / (k + sparse_ranks[idx]) if idx in sparse_ranks else 0.0
+            rrf_score = rrf_dense + rrf_sparse
+            
+            # Apply tier relevance boost (1.3 for relevant content, 0.7 otherwise)
             tier_boost = 1.3 if chunk["tier_tag"] in tier_relevant else 0.7
-            combined = sparse_score * 0.02 * tier_boost
-
+            combined_score = rrf_score * tier_boost
+            
             scored_results.append({
                 "chunk": chunk,
-                "score": combined,
-                "dense_score": 0,
-                "sparse_score": sparse_score,
+                "score": combined_score,
+                "dense_rank": dense_ranks.get(idx, 999),
+                "sparse_rank": sparse_ranks.get(idx, 999),
+                "sparse_score": float(bm25_scores[idx]),
             })
 
+        # Sort candidate chunks by RRF combined score descending
         scored_results.sort(key=lambda x: x["score"], reverse=True)
         return scored_results[:max_chunks]
 
