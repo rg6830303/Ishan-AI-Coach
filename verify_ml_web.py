@@ -4,6 +4,7 @@ import json
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+from database.models import init_db
 from engine.ml_models import ml_dl_engine
 from knowledge.web_scraper import scrape_web
 from personalization.store import store as personalization_store
@@ -18,12 +19,14 @@ def test_web_scraper():
         print(f"Result {i+1}: {r['title']} -> {r['url']}")
         print(f"Snippet: {r['snippet']}")
     assert len(results) > 0, "No web results found"
-    print("[PASS] Web scraper verified.")
+    print("[PASS] web scraper verified.")
 
 def test_ml_dl_engine():
     print("\nTesting ML + DL Physiological Predictor Engine...")
     
-    # 1. Setup mock user
+    # 1. Initialize SQLite Database Schema
+    init_db()
+    
     user_id = 999
     # Clean profile & personalization if exists
     try:
@@ -37,7 +40,8 @@ def test_ml_dl_engine():
         pass
         
     signup("Test User", "test_ml@example.com", "password123")
-    # Retrieve user ID (it should have signed up as some ID, let's inject user id 999 or find last)
+    
+    # Retrieve user ID
     from database.models import get_connection
     conn = get_connection()
     user = conn.execute("SELECT id FROM users WHERE email = 'test_ml@example.com'").fetchone()
