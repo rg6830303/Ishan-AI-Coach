@@ -139,6 +139,13 @@ class PersonalizationStore:
         with _LOCK:
             self._append_jsonl(self._file(user_id, "training_log.jsonl"), record)
         self.log_event(user_id, "training_log", {"distance_km": entry.get("distance_km")})
+        
+        # Trigger live ML/DL performance and safety analysis
+        try:
+            from engine.ml_models import ml_dl_engine
+            ml_dl_engine.analyze_runner(user_id)
+        except Exception:
+            pass
 
     def get_training_log(self, user_id: int, limit: int | None = None) -> list[dict]:
         return self._read_jsonl(self._file(user_id, "training_log.jsonl"), limit=limit)
@@ -305,6 +312,14 @@ class PersonalizationStore:
         lines = []
         if data.get("summary"):
             lines.append(data["summary"])
+            
+        # Inject ML + DL predictive analytics directly into coach prompt context
+        ml_dl = data.get("ml_dl_performance_analysis")
+        if ml_dl:
+            lines.append(
+                f"ML/DL Predictions: injury risk = {ml_dl.get('injury_risk_percent')}% "
+                f"({ml_dl.get('readiness_zone')} readiness), predicted VDOT next week = {ml_dl.get('predicted_future_vdot')}"
+            )
         adj = data.get("coaching_adjustments", {})
         notes = []
         if adj.get("has_active_injury"):

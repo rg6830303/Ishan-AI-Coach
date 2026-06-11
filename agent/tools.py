@@ -39,6 +39,23 @@ TOOL_DEFINITIONS = [
     {
         "type": "function",
         "function": {
+            "name": "search_web",
+            "description": "Perform a live web search for running-related questions, course details, gear, or current events. Use when the local knowledge base doesn't have the information or you need real-time data.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Search query for the web",
+                    },
+                },
+                "required": ["query"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "calculate_pace_zones",
             "description": "Calculate training pace zones from a 5K time in minutes. Returns easy, tempo, interval, and race paces. ALWAYS use this instead of making up numbers.",
             "parameters": {
@@ -147,10 +164,22 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
             for r in results:
                 formatted.append({
                     "title": r["chunk"]["title"],
-                    # Removed truncation to provide full context to the LLM
                     "content": r["chunk"]["content"],
                     "source": r["chunk"]["source"],
                     "relevance_score": round(r["score"], 4),
+                })
+            return json.dumps(formatted, indent=2)
+
+        elif tool_name == "search_web":
+            query = arguments.get("query", "")
+            from knowledge.web_scraper import scrape_web
+            results = scrape_web(query)
+            formatted = []
+            for r in results:
+                formatted.append({
+                    "title": r.get("title"),
+                    "snippet": r.get("snippet"),
+                    "url": r.get("url")
                 })
             return json.dumps(formatted, indent=2)
 
