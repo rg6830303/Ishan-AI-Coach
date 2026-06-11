@@ -10,15 +10,25 @@ from ui.auth_page import render_auth_page
 from ui.profiling_page import render_profiling_page
 from ui.chat_page import render_chat_page
 from ui.sidebar import render_classification_result
+from ui.theme import inject_global_css
+from config import groq_key_is_configured
 
 st.set_page_config(
     page_title="Sprint Society AI Coach",
     page_icon="🏃",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="auto",
 )
 
+inject_global_css()
 init_db()
+
+if not groq_key_is_configured():
+    st.warning(
+        "⚠️ No Groq API key detected. Add `GROQ_API_KEY` to a `.env` file "
+        "(or Streamlit secrets) so the coaches can respond. See the README.",
+        icon="⚠️",
+    )
 
 if "page" not in st.session_state:
     st.session_state["page"] = "auth"

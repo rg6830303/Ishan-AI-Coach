@@ -5,6 +5,7 @@ from agent.tools import TOOL_DEFINITIONS, execute_tool
 from agent.system_prompts import build_system_prompt
 from database.auth import get_profile
 from database.memory import get_chat_history, get_top_insights, store_message, extract_insights
+from personalization.store import store as personalization_store
 
 
 def get_client() -> OpenAI:
@@ -50,7 +51,16 @@ def run_agent(user_id: int, user_message: str) -> dict:
     profile_summary = format_profile_summary(profile)
     insights = get_top_insights(user_id)
 
-    system_prompt = build_system_prompt(tier, coach_style, profile_summary, insights)
+    # Keep the JSON profile snapshot fresh, then continuously learn from this
+    # message before building the prompt so the coach reacts in the same turn.
+    if profile:
+        personalization_store.sync_profile(user_id, profile)
+    personalization_store.update_from_message(user_id, user_message, role="user")
+    personalization_block = personalization_store.build_prompt_block(user_id)
+
+    system_prompt = build_system_prompt(
+        tier, coach_style, profile_summary, insights, personalization_block
+    )
 
     chat_history = get_chat_history(user_id)
 
@@ -110,6 +120,10 @@ def run_agent(user_id: int, user_message: str) -> dict:
             final_text = choice.message.content or ""
             store_message(user_id, "assistant", final_text, tool_calls_made if tool_calls_made else None)
             extract_insights(user_id, final_text, role="assistant")
+            personalization_store.log_event(user_id, "assistant_message", {
+                "preview": final_text[:160],
+                "tools_used": [tc["tool"] for tc in tool_calls_made],
+            })
 
             return {
                 "response": final_text,

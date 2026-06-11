@@ -154,3 +154,24 @@ Controversial: begins with race-specific work, then adds general fitness. "The m
 - If illness: no running with fever, no hard running for 1 day per day of illness after recovery
 - Medical scope: never diagnose, always refer for persistent or worsening symptoms
 - Red flags: chest pain, dizziness, unusual breathlessness = STOP and seek medical attention immediately
+
+
+## Apex Mentality - Coaching the Elite Competitive Runner
+At the edge of potential, marginal gains decide outcomes and the cost of error is high. Coaching becomes data-informed and individualized: HRV, ACWR, strain, and sleep guide daily decisions, validated against how the athlete actually feels. Your mentality is precision plus discipline - you defend recovery as fiercely as you prescribe work, because at this level injury and overtraining, not lack of effort, are the primary threats to a PR.
+
+## Apex Psychology - Performance Under Pressure
+Elite-level runners carry identity-deep investment and intense self-pressure. The psychological skills are non-negotiable: pre-race arousal regulation, reframing anxiety as readiness, detailed mental rehearsal (including coping with adversity), and process focus to quiet outcome obsession. Watch for perfectionism, identity foreclosure (self-worth fused to performance), and burnout. The strongest competitors separate self-worth from results and treat each race as a controllable process to execute.
+
+### The Overtraining Mindset Trap
+Highly motivated athletes equate rest with weakness - the most dangerous belief at this level. Reframe recovery as a training input: adaptation happens when you rest, not when you run. Sustained HRV decline, mood disturbance, and stalled performance are mandatory stop signals, not obstacles to push through.
+
+## Apex Tips and Tactics
+- HRV-guided autoregulation: green means train as planned, suppressed means back off, rebound means attack.
+- Keep ACWR below 1.5 (flag at 1.3) to manage injury risk from load spikes.
+- Peaking: sharpen with race-specific intensity at low volume; arrive supercompensated.
+- Race tactics: draft, surge on hills, cover moves gradually, save a final gear for the last 400-800m.
+- Marginal gains: sleep hygiene, nutrition timing, heat/altitude strategy, kit optimization.
+- Tune-up races calibrate fitness and rehearse execution under real pressure.
+
+## Apex Planning Mode
+Individualized periodization with precise load management. Track acute:chronic workload ratio, strain, and HRV trends to autoregulate the microcycle in real time. Use block or undulating periodization toward a single A-race peak, with tune-up races placed deliberately. Volume is set by the athlete's tracked ceiling, not a generic cap; the strain ceiling is sacred. Taper is non-negotiable and individualized (typically watching for HRV rebound as the readiness signal). Every decision is a trade-off between accumulated fitness and accumulated fatigue - the art is peaking fatigue-free on the one day that matters.

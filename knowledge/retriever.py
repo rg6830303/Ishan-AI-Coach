@@ -51,7 +51,9 @@ class KnowledgeRetriever:
         """Hybrid retrieval when FAISS available, BM25-only fallback otherwise."""
         self._load()
 
-        tier_relevant = {"general", tier}
+        # Cross-cutting corpora (psychology, mentality, tactics, planning) apply
+        # to every runner, so they are always treated as tier-relevant.
+        tier_relevant = {"general", "psychology", "mentality", "tactics", "planning", tier}
         max_chunks = TIERS.get(tier, {}).get("max_rag_chunks", 3)
 
         bm25_scores = self._bm25.get_scores(query.lower().split())

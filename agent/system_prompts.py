@@ -42,7 +42,13 @@ You are coaching a COMPETITIVE runner chasing PRs with data-driven precision.
 }
 
 
-def build_system_prompt(tier: str, coach_style: str, profile_summary: str, insights: list[dict]) -> str:
+def build_system_prompt(
+    tier: str,
+    coach_style: str,
+    profile_summary: str,
+    insights: list[dict],
+    personalization_block: str = "",
+) -> str:
     """Assemble the full system prompt for the agent."""
     persona_block = get_persona_prompt(coach_style)
     tier_block = TIER_INSTRUCTIONS.get(tier, TIER_INSTRUCTIONS["pace"])
@@ -53,6 +59,9 @@ def build_system_prompt(tier: str, coach_style: str, profile_summary: str, insig
     if insights:
         insight_lines = [f"- [{i['category']}] {i['content']}" for i in insights]
         insights_text = "\nKNOWN ABOUT THIS RUNNER (from past conversations):\n" + "\n".join(insight_lines)
+
+    if personalization_block:
+        insights_text += "\n\n" + personalization_block
 
     return f"""You are a Sprint Society AI Running Coach ({tier_info['name']} tier).
 
@@ -86,8 +95,14 @@ RUNNER PROFILE:
 
 You have access to tools. Use them when:
 - Runner asks about paces/zones -> calculate_pace_zones
-- You need coaching methodology -> retrieve_knowledge
+- You need coaching methodology, psychology, or tactics -> retrieve_knowledge
 - Before any intensity/volume recommendation -> check_guardrails
 - You need the runner's full data -> get_runner_profile
+- The runner reports completing a run (distance/time/how it felt) -> log_training_run
+
+PERSONALIZATION: You learn about this runner continuously. Use what you already
+know (goals, mood, injuries, preferences above) to tailor tone and advice. When
+the runner reveals a new goal, preference, niggle, or completes a run, weave it
+naturally into your reply so they feel remembered.
 
 Respond in the voice of your persona. Be helpful, specific, and safe."""

@@ -1,6 +1,7 @@
 ﻿import streamlit as st
 from database.auth import save_profile
 from engine.classifier import classify_runner
+from ui.theme import COACH_META
 
 
 def render_profiling_page():
@@ -11,35 +12,37 @@ def render_profiling_page():
         st.rerun()
         return
 
-    st.markdown("## Runner Profile Setup")
-    st.markdown("Help us understand you so we can assign the perfect coach.")
+    _, center, _ = st.columns([1, 2, 1])
+    with center:
+        st.markdown("## 🧭 Runner Profile Setup")
+        st.caption("Help us understand you so we can assign the perfect coach.")
 
-    if "profile_step" not in st.session_state:
-        st.session_state["profile_step"] = 0
-    if "profile_data" not in st.session_state:
-        st.session_state["profile_data"] = {}
+        if "profile_step" not in st.session_state:
+            st.session_state["profile_step"] = 0
+        if "profile_data" not in st.session_state:
+            st.session_state["profile_data"] = {}
 
-    step = st.session_state["profile_step"]
-    total_steps = 8
+        step = st.session_state["profile_step"]
+        total_steps = 8
 
-    st.progress((step + 1) / total_steps, text=f"Step {step + 1} of {total_steps}")
+        st.progress((step + 1) / total_steps, text=f"Step {step + 1} of {total_steps}")
 
-    if step == 0:
-        _step_basics()
-    elif step == 1:
-        _step_fitness()
-    elif step == 2:
-        _step_dream_race()
-    elif step == 3:
-        _step_motivation()
-    elif step == 4:
-        _step_schedule()
-    elif step == 5:
-        _step_mindset()
-    elif step == 6:
-        _step_performance()
-    elif step == 7:
-        _step_coach_style()
+        if step == 0:
+            _step_basics()
+        elif step == 1:
+            _step_fitness()
+        elif step == 2:
+            _step_dream_race()
+        elif step == 3:
+            _step_motivation()
+        elif step == 4:
+            _step_schedule()
+        elif step == 5:
+            _step_mindset()
+        elif step == 6:
+            _step_performance()
+        elif step == 7:
+            _step_coach_style()
 
 
 def _nav_buttons(can_back=True):
@@ -197,21 +200,24 @@ def _step_coach_style():
     data = st.session_state["profile_data"]
 
     styles = ["scientist", "energizer", "warrior", "sage"]
-    style_info = [
-        ("The Scientist", "Data-driven. Logical. Optimizes everything with evidence."),
-        ("The Energizer", "Fun. Lively. Makes every run feel like an adventure."),
-        ("The Warrior", "No excuses. Discipline. Mental toughness forged through work."),
-        ("The Sage", "Patient. Wise. Trusts the process and the long game."),
-    ]
 
     current_style = data.get("coach_style", "energizer")
     idx = styles.index(current_style) if current_style in styles else 1
 
-    for i, (name, desc) in enumerate(style_info):
-        st.markdown(f"**{name}** — {desc}")
+    cols = st.columns(2)
+    for i, style in enumerate(styles):
+        meta = COACH_META[style]
+        with cols[i % 2]:
+            st.markdown(
+                f"<div class='ss-card' style='border-top:3px solid {meta['color']};'>"
+                f"<div style='font-size:1.6rem;'>{meta['icon']} <b>{meta['name']}</b></div>"
+                f"<div class='ss-muted'>{meta['tagline']}</div>"
+                f"<div style='font-size:.85rem; margin-top:.3rem;'>{meta['blurb']}</div></div>",
+                unsafe_allow_html=True,
+            )
 
-    choice_labels = [f"{name}" for name, _ in style_info]
-    selected = st.radio("Pick your coach personality", choice_labels, index=idx, label_visibility="collapsed")
+    choice_labels = [f"{COACH_META[s]['icon']} {COACH_META[s]['name']}" for s in styles]
+    selected = st.radio("Pick your coach personality", choice_labels, index=idx)
     data["coach_style"] = styles[choice_labels.index(selected)]
 
     st.markdown("---")

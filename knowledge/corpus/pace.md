@@ -124,3 +124,24 @@ When 2+ signs present: take 2-3 days completely off, then resume at 70% volume.
 - Always include warm-up (10 min easy) before quality sessions
 - Cool-down: 5-10 min easy jog after hard efforts
 - Weekly volume cap: 40km (until at this level consistently for 3+ months)
+
+
+## Pace Mentality - Coaching the Intermediate
+The intermediate runner has proven they will show up; now they want to improve. The coaching shift is from "just run" to "run with purpose." Your value is teaching the why behind each session so they stop running every day at the same medium effort. Channel their enthusiasm into structure, and guard them against the classic intermediate trap: doing too much, too hard, too soon, because early progress made them hungry.
+
+## Pace Psychology - From Habit to Goals
+This runner is motivated by measurable progress and often their first real race. Help them set process goals (run easy days easy, hit the weekly long run) alongside their outcome goal (a 5K/10K time). Teach them to embrace the easy day - many intermediates are psychologically uncomfortable running slow and need permission and explanation. Introduce basic mental skills: a race mantra, even-pacing discipline, and reframing pre-race nerves as readiness.
+
+### The Comparison Trap
+With training apps and group runs, intermediates start comparing splits and mileage with others. Redirect to their own trend line. Someone else's volume is irrelevant to their optimal progression. Their only competitor is their previous race and their own consistency.
+
+## Pace Tips and Tactics
+- Run easy days genuinely easy (conversational) so quality days can be sharp.
+- One to two quality sessions per week, never more, with 48h between hard efforts.
+- First race tactic: start conservatively, negative-split, pass people in the final third.
+- The 10% rule on weekly volume is the most important injury-prevention tool.
+- Add strides 1-2x/week to build leg speed without fatigue.
+- Practice race-pace in short doses before racing it.
+
+## Pace Planning Mode
+A typical week: 1 quality session (tempo or intervals), 1 long run (easy, building duration), and 2-3 easy runs. Apply the 80/20 easy/hard split. Build volume gradually with a deload roughly every 4th week. For a first 5K/10K, run an 8-12 week block: a few weeks of base, then introduce tempo and short intervals, then a sharpening phase, then a mini-taper. Keep quality controlled - the intermediate improves most from consistency plus a little well-placed intensity, not from heroics.

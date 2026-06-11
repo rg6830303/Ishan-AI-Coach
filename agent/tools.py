@@ -3,6 +3,7 @@ from engine.pace_calculator import calculate_pace_zones, format_pace
 from engine.guardrails import check_guardrails
 from knowledge.retriever import retriever
 from database.auth import get_profile
+from personalization.store import store as personalization_store
 
 
 TOOL_DEFINITIONS = [
@@ -74,6 +75,24 @@ TOOL_DEFINITIONS = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "log_training_run",
+            "description": "Record a run the runner just reported so it is saved to their personal training log. Call this whenever the runner mentions completing a workout with any detail (distance, duration, type, or how it felt).",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "distance_km": {"type": "number", "description": "Distance in km (estimate if given in miles or minutes)."},
+                    "duration_minutes": {"type": "number", "description": "Duration in minutes if known."},
+                    "type": {"type": "string", "description": "Run type, e.g. easy, long, tempo, intervals, race, recovery."},
+                    "feel": {"type": "string", "description": "How it felt in a few words (e.g. 'strong', 'sore knee', 'tough but good')."},
+                    "notes": {"type": "string", "description": "Any extra detail worth remembering."},
+                },
+                "required": [],
+            },
+        },
+    },
 ]
 
 
@@ -119,6 +138,18 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
             tier = profile.get("tier", "pace") if profile else "pace"
             result = check_guardrails(tier, rec_type, details)
             return json.dumps(result)
+
+        elif tool_name == "log_training_run":
+            entry = {
+                "distance_km": arguments.get("distance_km"),
+                "duration_minutes": arguments.get("duration_minutes"),
+                "type": arguments.get("type", "run"),
+                "feel": arguments.get("feel", ""),
+                "notes": arguments.get("notes", ""),
+            }
+            entry = {k: v for k, v in entry.items() if v not in (None, "")}
+            personalization_store.add_training_log(user_id, entry)
+            return json.dumps({"logged": True, "entry": entry})
 
         else:
             return json.dumps({"error": f"Unknown tool: {tool_name}"})

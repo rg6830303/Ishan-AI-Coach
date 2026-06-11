@@ -1,30 +1,83 @@
-﻿import os
+import os
+import re
 from dotenv import load_dotenv
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+# Load a standard .env first (KEY=value format).
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
+
+def _parse_env_like_file(path: str) -> dict:
+    """Parse a loosely-formatted env file.
+
+    Tolerates the malformed ``.env.txt`` shipped with the project where the
+    key was stored as ``GROQ-API-KEY:gsk_...`` (dash + colon) instead of the
+    standard ``GROQ_API_KEY=gsk_...``. Returns a dict of normalized keys.
+    """
+    values: dict[str, str] = {}
+    if not os.path.exists(path):
+        return values
+    try:
+        with open(path, "r", encoding="utf-8-sig") as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith("#"):
+                    continue
+                # Split on the first '=' or ':' delimiter.
+                m = re.match(r"^([A-Za-z0-9_\-\.]+)\s*[:=]\s*(.+)$", line)
+                if not m:
+                    continue
+                key = m.group(1).strip().upper().replace("-", "_")
+                val = m.group(2).strip().strip('"').strip("'")
+                values[key] = val
+    except Exception:
+        pass
+    return values
+
+
+def _resolve_groq_key() -> str:
+    """Resolve the Groq API key from env, then .env, then the legacy .env.txt."""
+    key = os.getenv("GROQ_API_KEY", "").strip()
+    if key and key != "gsk_your_key_here":
+        return key
+    # Fallback to the legacy/loose file the user shipped.
+    for fname in (".env", ".env.txt"):
+        parsed = _parse_env_like_file(os.path.join(BASE_DIR, fname))
+        candidate = parsed.get("GROQ_API_KEY", "").strip()
+        if candidate and candidate != "gsk_your_key_here":
+            # Make it available to any downstream os.getenv calls too.
+            os.environ["GROQ_API_KEY"] = candidate
+            return candidate
+    return key
+
+
+GROQ_API_KEY = _resolve_groq_key()
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 GROQ_MODEL_SMALL = os.getenv("GROQ_MODEL_SMALL", "llama-3.1-8b-instant")
 GROQ_MODEL_LARGE = os.getenv("GROQ_MODEL_LARGE", "llama-3.3-70b-versatile")
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "data", "coach.db")
-INDEX_PATH = os.path.join(os.path.dirname(__file__), "knowledge", "index")
-CORPUS_PATH = os.path.join(os.path.dirname(__file__), "knowledge", "corpus")
+DB_PATH = os.path.join(BASE_DIR, "data", "coach.db")
+INDEX_PATH = os.path.join(BASE_DIR, "knowledge", "index")
+CORPUS_PATH = os.path.join(BASE_DIR, "knowledge", "corpus")
+
+# Local JSON / JSONL personalization store (one folder per user).
+DATA_DIR = os.path.join(BASE_DIR, "data")
+PERSONALIZATION_DIR = os.path.join(DATA_DIR, "personalization")
 
 TIERS = {
     "spark": {
         "name": "Spark",
         "label": "Beginner",
         "model": GROQ_MODEL_SMALL,
-        "max_rag_chunks": 2,
+        "max_rag_chunks": 3,
         "description": "New or returning runner, building habits",
     },
     "pace": {
         "name": "Pace",
         "label": "Intermediate",
         "model": GROQ_MODEL_SMALL,
-        "max_rag_chunks": 3,
+        "max_rag_chunks": 4,
         "description": "Consistent runner, chasing 5K-10K goals",
     },
     "tempo": {
@@ -38,7 +91,7 @@ TIERS = {
         "name": "Apex",
         "label": "Elite",
         "model": GROQ_MODEL_LARGE,
-        "max_rag_chunks": 5,
+        "max_rag_chunks": 6,
         "description": "PR-chasing, competitive, data-driven",
     },
 }
@@ -64,7 +117,11 @@ TIER_THRESHOLDS = {
     "apex": (75, 100),
 }
 
-MAX_AGENT_ITERATIONS = 3
+MAX_AGENT_ITERATIONS = 4
 MEMORY_DECAY_LAMBDA = 0.03
-MEMORY_TOP_K_INSIGHTS = 5
-CHAT_HISTORY_WINDOW = 10
+MEMORY_TOP_K_INSIGHTS = 8
+CHAT_HISTORY_WINDOW = 12
+
+
+def groq_key_is_configured() -> bool:
+    return bool(GROQ_API_KEY) and GROQ_API_KEY != "gsk_your_key_here"

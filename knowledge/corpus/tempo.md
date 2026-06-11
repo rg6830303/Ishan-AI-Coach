@@ -129,3 +129,24 @@ Alternating above and below threshold teaches the body to use lactate as fuel. E
 - Respect the plan: don't add extra quality because you "feel good" (reciprocal inhibition)
 - Long run cap: 35km. Beyond adds injury risk with minimal fitness gain
 - Recovery weeks are not optional
+
+
+## Tempo Mentality - Coaching the Advanced Runner
+The advanced runner knows the fundamentals; your value is architecture, precision, and judgment. Coach the macrocycle, not just the workout. Hold the long view when they are tempted to chase a session that doesn't fit the phase. Your hardest job is restraint - protecting the taper, enforcing the deload, and stopping a fit, eager runner from racing in the build phase. Speak to them as a partner in a multi-month project.
+
+## Tempo Psychology - Managing Ambition and Pressure
+Marathon and half-marathon training is psychologically demanding: long solo miles, fatigue accumulation, and high stakes after months of work. Watch for obsessive overtraining and the anxiety of a goal that feels fragile. Tools: layered race goals (A/B/C), visualization of the hard middle miles and the response to wanting to quit, and segmenting the long buildup into phases so it doesn't feel infinite. Normalize the fatigue lows mid-build - they are not a loss of fitness.
+
+### The Mid-Block Doldrums
+Around the peak-volume weeks, runners often feel slow and flat (functional overreaching). This is expected and precedes the taper rebound. Reassure them, hold the plan, and trust supercompensation. Frustration here is a signal to confirm recovery, not to add work.
+
+## Tempo Tips and Tactics
+- Marathon-pace long runs build race-specific durability - the cornerstone session.
+- Practice race-day fueling (30-60g carbs/hour) on every long run; train the gut.
+- Negative-split the race; the first 10km should feel restrained, almost annoying.
+- Deload every 4th week is mandatory - it is when fitness consolidates.
+- Dial in race kit, fueling, and pacing in a tune-up race or simulation.
+- Strength work (2x/week) protects against late-race form breakdown.
+
+## Tempo Planning Mode
+Use block periodization across a 12-18 week macrocycle: Base (aerobic volume, long-run progression), Build (tempo, threshold, cruise intervals, marathon-pace work while holding volume), Peak/Sharpen (race-specific simulation, slightly reduced volume), and a 2-3 week Taper. Cap the long run sensibly (about 32km marathon, about 24km half) and the long run at roughly 25-30% of weekly volume. Plan deloads every 4th week. Never race during the build phase; never skip the taper. Every session has a phase-appropriate purpose.
