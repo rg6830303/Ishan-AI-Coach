@@ -36,33 +36,87 @@ def _parse_env_like_file(path: str) -> dict:
     return values
 
 
-def _from_streamlit_secrets(name: str) -> str:
-    """Read a secret from Streamlit Cloud's secrets, if running under Streamlit."""
+_PLACEHOLDER = "gsk_your_key_here"
+# Accept common key-name variants people paste into the Secrets panel.
+_KEY_ALIASES = ("GROQ_API_KEY", "groq_api_key", "GROQ-API-KEY", "GROQ_KEY", "groq")
+
+
+def _looks_like_key(value: str) -> bool:
+    value = (value or "").strip()
+    return bool(value) and value != _PLACEHOLDER
+
+
+def _from_streamlit_secrets() -> str:
+    """Read the Groq key from Streamlit Cloud secrets, trying several aliases.
+
+    Handles a flat ``GROQ_API_KEY = "gsk_..."`` as well as the loose
+    ``GROQ-API-KEY:gsk_...`` style users sometimes paste in. Safe to call
+    outside the Streamlit runtime (returns "" instead of raising).
+    """
     try:
         import streamlit as st  # local import; optional at runtime
-        return str(st.secrets.get(name, "")).strip()
     except Exception:
         return ""
+    try:
+        secrets = st.secrets
+    except Exception:
+        return ""
+    # Direct alias lookups.
+    for name in _KEY_ALIASES:
+        try:
+            val = secrets.get(name)
+        except Exception:
+            val = None
+        if val and _looks_like_key(str(val)):
+            return str(val).strip()
+    # Last resort: scan all top-level secrets for a value shaped like a Groq key.
+    try:
+        for k, v in dict(secrets).items():
+            sv = str(v).strip()
+            # value may itself be "GROQ-API-KEY:gsk_..." or just "gsk_..."
+            if "gsk_" in sv:
+                idx = sv.find("gsk_")
+                cand = sv[idx:].split()[0].strip().strip('"').strip("'")
+                if _looks_like_key(cand):
+                    return cand
+            if _looks_like_key(sv) and k.upper().replace("-", "_") in {a.upper() for a in _KEY_ALIASES}:
+                return sv
+    except Exception:
+        pass
+    return ""
 
 
 def _resolve_groq_key() -> str:
-    """Resolve the Groq API key from env, Streamlit secrets, then .env / .env.txt."""
+    """Resolve the Groq API key from env, Streamlit secrets, then .env / .env.txt.
+
+    Re-evaluated at call time (not just import) so it works on Streamlit Cloud
+    regardless of when secrets become available.
+    """
     key = os.getenv("GROQ_API_KEY", "").strip()
-    if key and key != "gsk_your_key_here":
+    if _looks_like_key(key):
         return key
     # Streamlit Cloud deployment: read from the Secrets panel.
-    secret = _from_streamlit_secrets("GROQ_API_KEY")
-    if secret and secret != "gsk_your_key_here":
+    secret = _from_streamlit_secrets()
+    if _looks_like_key(secret):
         os.environ["GROQ_API_KEY"] = secret
         return secret
     # Local fallback to the legacy/loose file the user shipped.
     for fname in (".env", ".env.txt"):
         parsed = _parse_env_like_file(os.path.join(BASE_DIR, fname))
         candidate = parsed.get("GROQ_API_KEY", "").strip()
-        if candidate and candidate != "gsk_your_key_here":
+        if _looks_like_key(candidate):
             os.environ["GROQ_API_KEY"] = candidate
             return candidate
     return key
+
+
+def get_groq_api_key() -> str:
+    """Always-fresh accessor (handles Streamlit secrets timing on deploy)."""
+    global GROQ_API_KEY
+    resolved = _resolve_groq_key()
+    if _looks_like_key(resolved):
+        GROQ_API_KEY = resolved
+    return resolved
 
 
 GROQ_API_KEY = _resolve_groq_key()
@@ -137,4 +191,4 @@ CHAT_HISTORY_WINDOW = 12
 
 
 def groq_key_is_configured() -> bool:
-    return bool(GROQ_API_KEY) and GROQ_API_KEY != "gsk_your_key_here"
+    return _looks_like_key(get_groq_api_key())

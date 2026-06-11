@@ -24,11 +24,19 @@ inject_global_css()
 init_db()
 
 if not groq_key_is_configured():
-    st.warning(
-        "⚠️ No Groq API key detected. Add `GROQ_API_KEY` to a `.env` file "
-        "(or Streamlit secrets) so the coaches can respond. See the README.",
-        icon="⚠️",
-    )
+    st.warning("⚠️ No Groq API key detected — the coaches can't respond until one is set.", icon="⚠️")
+    with st.expander("🔑 How to fix this (30 seconds)", expanded=True):
+        st.markdown(
+            "**On Streamlit Cloud (this deployment):**\n"
+            "1. Open your app → **⋮ menu → Settings → Secrets**.\n"
+            "2. Paste exactly this (with your real key) and **Save**:\n"
+        )
+        st.code('GROQ_API_KEY = "gsk_your_real_key_here"', language="toml")
+        st.markdown(
+            "3. The app reboots automatically and this warning disappears.\n\n"
+            "**Running locally:** create a `.env` file with `GROQ_API_KEY=gsk_...` "
+            "(see the README). Get a free key at https://console.groq.com/keys."
+        )
 
 if "page" not in st.session_state:
     st.session_state["page"] = "auth"

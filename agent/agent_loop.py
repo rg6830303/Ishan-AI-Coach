@@ -1,6 +1,7 @@
 ﻿import json
 from openai import OpenAI
-from config import GROQ_API_KEY, GROQ_BASE_URL, TIERS, MAX_AGENT_ITERATIONS
+import config
+from config import GROQ_BASE_URL, TIERS, MAX_AGENT_ITERATIONS
 from agent.tools import TOOL_DEFINITIONS, execute_tool
 from agent.system_prompts import build_system_prompt
 from database.auth import get_profile
@@ -10,7 +11,8 @@ from coaching.cycles import estimate_starting_level, level_block_for_prompt
 
 
 def get_client() -> OpenAI:
-    return OpenAI(api_key=GROQ_API_KEY, base_url=GROQ_BASE_URL)
+    # Resolve at call time so Streamlit Cloud secrets are always picked up.
+    return OpenAI(api_key=config.get_groq_api_key(), base_url=GROQ_BASE_URL)
 
 
 def format_profile_summary(profile: dict) -> str:
