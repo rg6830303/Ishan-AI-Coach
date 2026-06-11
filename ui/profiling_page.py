@@ -183,11 +183,18 @@ def _step_performance():
     has_5k = st.checkbox("I have a recent 5K time", value=data.get("recent_5k_time") is not None)
 
     if has_5k:
+        existing = data.get("recent_5k_time")
+        try:
+            existing = float(existing) if existing is not None else 28.0
+        except (TypeError, ValueError):
+            existing = 28.0
+        default_min = min(60, max(12, int(existing)))
+        default_sec = min(59, max(0, int(round((existing - int(existing)) * 60))))
         col1, col2 = st.columns(2)
         with col1:
-            mins = st.number_input("Minutes", 12, 60, int(data.get("recent_5k_time", 28)))
+            mins = st.number_input("Minutes", 12, 60, default_min)
         with col2:
-            secs = st.number_input("Seconds", 0, 59, 0)
+            secs = st.number_input("Seconds", 0, 59, default_sec)
         data["recent_5k_time"] = mins + secs / 60
     else:
         data["recent_5k_time"] = None
