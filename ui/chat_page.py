@@ -39,6 +39,26 @@ def render_chat_page():
 
     personalization_store.sync_profile(user["id"], profile)
 
+    # Ensure a default training plan is generated from profile metrics if none exists
+    if not personalization_store.get_active_plan(user["id"]):
+        dream_race = profile.get("dream_race", "5K") or "5K"
+        goal_key = "5k"
+        if "10" in dream_race:
+            goal_key = "10k"
+        elif "half" in dream_race.lower():
+            goal_key = "half"
+        elif "marathon" in dream_race.lower():
+            goal_key = "marathon"
+        
+        default_days = profile.get("training_days", 3) or 3
+        try:
+            default_days = max(3, min(5, int(default_days)))
+        except Exception:
+            default_days = 3
+            
+        default_plan = generate_periodized_plan(profile, goal_key, weeks=12, days_per_week=default_days)
+        personalization_store.save_active_plan(user["id"], default_plan)
+
     # Ensure an active thread exists.
     if "thread_id" not in st.session_state or st.session_state.get("thread_id") is None:
         st.session_state["thread_id"] = get_or_create_active_thread(user["id"])
