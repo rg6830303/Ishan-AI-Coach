@@ -36,17 +36,30 @@ def _parse_env_like_file(path: str) -> dict:
     return values
 
 
+def _from_streamlit_secrets(name: str) -> str:
+    """Read a secret from Streamlit Cloud's secrets, if running under Streamlit."""
+    try:
+        import streamlit as st  # local import; optional at runtime
+        return str(st.secrets.get(name, "")).strip()
+    except Exception:
+        return ""
+
+
 def _resolve_groq_key() -> str:
-    """Resolve the Groq API key from env, then .env, then the legacy .env.txt."""
+    """Resolve the Groq API key from env, Streamlit secrets, then .env / .env.txt."""
     key = os.getenv("GROQ_API_KEY", "").strip()
     if key and key != "gsk_your_key_here":
         return key
-    # Fallback to the legacy/loose file the user shipped.
+    # Streamlit Cloud deployment: read from the Secrets panel.
+    secret = _from_streamlit_secrets("GROQ_API_KEY")
+    if secret and secret != "gsk_your_key_here":
+        os.environ["GROQ_API_KEY"] = secret
+        return secret
+    # Local fallback to the legacy/loose file the user shipped.
     for fname in (".env", ".env.txt"):
         parsed = _parse_env_like_file(os.path.join(BASE_DIR, fname))
         candidate = parsed.get("GROQ_API_KEY", "").strip()
         if candidate and candidate != "gsk_your_key_here":
-            # Make it available to any downstream os.getenv calls too.
             os.environ["GROQ_API_KEY"] = candidate
             return candidate
     return key

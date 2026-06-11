@@ -3,11 +3,19 @@ import streamlit as st
 
 from agent.agent_loop import run_agent
 from database.auth import get_profile
-from database.memory import get_chat_history, clear_chat_history
+from database.memory import (
+    get_full_thread, clear_chat_history,
+    list_threads, create_thread, rename_thread, delete_thread,
+    get_or_create_active_thread,
+)
 from personalization.store import store as personalization_store
+from coaching.cycles import get_cycle, get_level, estimate_starting_level
 from config import TIERS
 from ui.theme import coach_meta, tier_meta, coach_hero
-from ui.voice import voice_input, voice_input_available, speak, LANGUAGES
+from ui.voice import (
+    voice_input, voice_input_available, speak, stop_speaking,
+    LANGUAGES, VOICE_STYLES, default_voice_for,
+)
 
 
 def render_chat_page():
@@ -28,22 +36,28 @@ def render_chat_page():
     cm = coach_meta(coach_style)
     tier_info = TIERS.get(tier, TIERS["pace"])
 
-    # Keep the JSON profile snapshot in sync for the dashboard.
     personalization_store.sync_profile(user["id"], profile)
+
+    # Ensure an active thread exists.
+    if "thread_id" not in st.session_state or st.session_state.get("thread_id") is None:
+        st.session_state["thread_id"] = get_or_create_active_thread(user["id"])
+        st.session_state["messages"] = get_full_thread(user["id"], st.session_state["thread_id"])
 
     with st.sidebar:
         _render_sidebar(user, profile, tier_info, coach_style)
 
     coach_hero(coach_style, tier, tier_info["name"])
 
-    tab_chat, tab_memory, tab_log, tab_activity = st.tabs(
-        ["💬 Chat", "🧠 Coach's Memory", "📊 Training Log", "📡 Activity"]
+    tab_chat, tab_memory, tab_cycle, tab_log, tab_activity = st.tabs(
+        ["💬 Chat", "🧠 Coach's Memory", "🎯 Training Cycle", "📊 Training Log", "📡 Activity"]
     )
 
     with tab_chat:
-        _render_chat_tab(user, profile, cm, tier_info)
+        _render_chat_tab(user, profile, cm, coach_style, tier_info)
     with tab_memory:
         _render_memory_tab(user)
+    with tab_cycle:
+        _render_cycle_tab(user, profile, coach_style)
     with tab_log:
         _render_training_log_tab(user)
     with tab_activity:
@@ -51,25 +65,33 @@ def render_chat_page():
 
 
 # ----------------------------------------------------------------- chat tab
-def _render_chat_tab(user, profile, cm, tier_info):
-    st.caption(f"Model: `{tier_info['model']}` · responses adapt to everything you share.")
+def _render_chat_tab(user, profile, cm, coach_style, tier_info):
+    level = personalization_store.get_training_level(
+        user["id"], coach_style, default=estimate_starting_level(coach_style, profile)
+    )
+    lvl_info = get_level(coach_style, level)
+    cycle = get_cycle(coach_style)
+    st.caption(
+        f"Model: `{tier_info['model']}` · Level {level}/10 · "
+        f"**{lvl_info['name']}** ({cycle['cycle_name']})"
+    )
 
     if "messages" not in st.session_state:
-        st.session_state["messages"] = get_chat_history(user["id"]) or []
+        st.session_state["messages"] = get_full_thread(user["id"], st.session_state["thread_id"])
 
     for msg in st.session_state["messages"]:
-        with st.chat_message(msg["role"], avatar=cm["icon"] if msg["role"] == "assistant" else "🏃"):
+        avatar = cm["icon"] if msg["role"] == "assistant" else "🏃"
+        with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
             if msg.get("tool_calls"):
                 _render_tool_calls(msg["tool_calls"])
 
-    # ---- Voice input row ----
     spoken = None
     if st.session_state.get("voice_enabled") and voice_input_available():
         lang = st.session_state.get("voice_lang", "en-US")
         c1, c2 = st.columns([1, 4])
         with c1:
-            spoken = voice_input(key="chat_voice", language=lang)
+            spoken = voice_input(key=f"voice_{st.session_state['thread_id']}", language=lang)
         with c2:
             st.caption("🎤 Tap **Speak**, talk, then **Stop** — your words become the message.")
 
@@ -77,17 +99,24 @@ def _render_chat_tab(user, profile, cm, tier_info):
     prompt = (spoken or "").strip() or (typed or "").strip()
 
     if prompt:
-        _handle_prompt(user, cm, prompt)
+        _handle_prompt(user, cm, coach_style, prompt)
 
 
-def _handle_prompt(user, cm, prompt):
+def _handle_prompt(user, cm, coach_style, prompt):
+    thread_id = st.session_state["thread_id"]
+
+    # Auto-title a fresh thread from the first user message.
+    if not st.session_state.get("messages"):
+        title = " ".join(prompt.split()[:6])[:60] or "New chat"
+        rename_thread(user["id"], thread_id, title)
+
     st.session_state["messages"].append({"role": "user", "content": prompt})
     with st.chat_message("user", avatar="🏃"):
         st.markdown(prompt)
 
     with st.chat_message("assistant", avatar=cm["icon"]):
         with st.spinner(f"{cm['name']} is thinking..."):
-            result = run_agent(user["id"], prompt)
+            result = run_agent(user["id"], prompt, thread_id=thread_id)
         st.markdown(result["response"])
         if result.get("tool_calls"):
             _render_tool_calls(result["tool_calls"])
@@ -98,10 +127,9 @@ def _handle_prompt(user, cm, prompt):
         "tool_calls": result.get("tool_calls"),
     })
 
-    # Speak the reply if auto-read is on.
     if st.session_state.get("auto_read") and not result.get("error"):
-        nonce = len(st.session_state["messages"])
-        speak(result["response"], nonce=nonce)
+        style = st.session_state.get("voice_style") or default_voice_for(coach_style)
+        speak(result["response"], nonce=len(st.session_state["messages"]), style=style)
 
     st.rerun()
 
@@ -113,6 +141,38 @@ def _render_tool_calls(tool_calls):
         for tc in tool_calls:
             st.code(f"{tc['tool']}({json.dumps(tc.get('args', {}))})", language="python")
             st.text((tc.get("result", "") or "")[:300])
+
+
+# ------------------------------------------------------------- cycle tab
+def _render_cycle_tab(user, profile, coach_style):
+    cm = coach_meta(coach_style)
+    cycle = get_cycle(coach_style)
+    level = personalization_store.get_training_level(
+        user["id"], coach_style, default=estimate_starting_level(coach_style, profile)
+    )
+    st.markdown(f"#### {cm['icon']} {cycle['cycle_name']}")
+    st.caption(cycle["philosophy"])
+    st.progress(level / 10.0, text=f"Level {level} of 10")
+
+    for lv in cycle["levels"]:
+        n = lv["n"]
+        if n == level:
+            border = cm["color"]
+            badge = "📍 YOU ARE HERE"
+        elif n < level:
+            border = "#3ddc84"
+            badge = "✅ cleared"
+        else:
+            border = "rgba(255,255,255,.12)"
+            badge = "🔒 locked"
+        st.markdown(
+            f"<div class='ss-card' style='border-left:4px solid {border};'>"
+            f"<b>Level {n} — {lv['name']}</b> "
+            f"<span class='ss-muted'>{badge}</span><br>"
+            f"<span style='font-size:.9rem;'>{lv['focus']}</span><br>"
+            f"<span class='ss-muted'>⬆️ Level up: {lv['graduate']}</span></div>",
+            unsafe_allow_html=True,
+        )
 
 
 # --------------------------------------------------------------- memory tab
@@ -140,8 +200,6 @@ def _render_memory_tab(user):
         active_cues.append("💛 Extra encouragement")
     if cues.get("wants_data"):
         active_cues.append("📐 Numbers & structure")
-    if cues.get("prefers_brevity"):
-        active_cues.append("✂️ Keeping it brief")
     if active_cues:
         st.markdown("**Active coaching adjustments:** " + "  ".join(f"<span class='ss-chip'>{c}</span>" for c in active_cues), unsafe_allow_html=True)
 
@@ -256,13 +314,15 @@ def _render_activity_tab(user):
         return
     icons = {
         "user_message": "🗣️", "assistant_message": "🤖", "training_log": "🏃",
-        "profile_update": "⚙️", "voice_input": "🎤",
+        "profile_update": "⚙️", "level_change": "🎯",
     }
     for ev in reversed(events):
         icon = icons.get(ev.get("type"), "•")
         ts = ev.get("ts", "")[:19].replace("T", " ")
         payload = ev.get("payload", {})
         preview = payload.get("preview", "")
+        if ev.get("type") == "level_change":
+            preview = f"Level {payload.get('from')} → {payload.get('to')}: {payload.get('reason','')}"
         extra = ""
         if payload.get("topics"):
             extra = "  ".join(f"<span class='ss-chip'>{t}</span>" for t in payload["topics"])
@@ -287,24 +347,13 @@ def _render_sidebar(user, profile, tier_info, coach_style):
         f"<div class='ss-muted'>{cm['tagline']}</div></div>",
         unsafe_allow_html=True,
     )
-
     st.markdown(
         f"<div style='text-align:center; margin:.4rem 0;'>"
         f"<span class='ss-pill' style='background:{tm['color']};'>{tm['icon']} {tier_info['name']} · {tier_info['label']}</span></div>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("**Your profile**")
-    st.markdown(f"- 🎂 Age: {profile.get('age')}")
-    st.markdown(f"- 🏋️ Fitness: {profile.get('fitness_level')}")
-    st.markdown(f"- 🏃 Experience: {profile.get('running_experience')}")
-    st.markdown(f"- 🏁 Dream race: {profile.get('dream_race')}")
-    st.markdown(f"- 📅 Training days: {profile.get('training_days', 3)}/week")
-    five_k = profile.get("recent_5k_time")
-    if five_k:
-        mins = int(five_k)
-        secs = int(round((five_k - mins) * 60))
-        st.markdown(f"- ⏱️ 5K: {mins}:{secs:02d}")
+    _render_threads_panel(user)
 
     st.divider()
     st.markdown("**🔊 Voice**")
@@ -312,19 +361,27 @@ def _render_sidebar(user, profile, tier_info, coach_style):
         st.session_state["voice_enabled"] = st.toggle(
             "Voice input (mic)", value=st.session_state.get("voice_enabled", False)
         )
-        label = st.selectbox("Language", list(LANGUAGES.keys()), index=0)
+        label = st.selectbox("Input language", list(LANGUAGES.keys()), index=0)
         st.session_state["voice_lang"] = LANGUAGES[label]
     else:
         st.caption("🎤 Mic input unavailable (install `streamlit-mic-recorder`).")
+
     st.session_state["auto_read"] = st.toggle(
         "Read replies aloud", value=st.session_state.get("auto_read", False)
     )
+    default_style = default_voice_for(coach_style)
+    styles = list(VOICE_STYLES.keys())
+    idx = styles.index(default_style) if default_style in styles else 0
+    st.session_state["voice_style"] = st.selectbox("Coach voice", styles, index=idx)
+    cc1, cc2 = st.columns(2)
+    with cc1:
+        if st.button("🔈 Test", use_container_width=True):
+            speak(f"Hi, I'm {cm['name']}. Let's get to work.", nonce=f"test_{st.session_state['voice_style']}", style=st.session_state["voice_style"])
+    with cc2:
+        if st.button("⏹️ Stop", use_container_width=True):
+            stop_speaking()
 
     st.divider()
-    if st.button("🧹 Clear chat history", use_container_width=True):
-        clear_chat_history(user["id"])
-        st.session_state["messages"] = []
-        st.rerun()
     if st.button("🔄 Re-do profiling", use_container_width=True):
         st.session_state["page"] = "profiling"
         st.session_state["profile_step"] = 0
@@ -334,3 +391,46 @@ def _render_sidebar(user, profile, tier_info, coach_style):
         for key in list(st.session_state.keys()):
             del st.session_state[key]
         st.rerun()
+
+
+def _render_threads_panel(user):
+    st.markdown("**💬 Chat threads**")
+    threads = list_threads(user["id"])
+    active = st.session_state.get("thread_id")
+
+    if st.button("➕ New chat", use_container_width=True):
+        tid = create_thread(user["id"], "New chat")
+        st.session_state["thread_id"] = tid
+        st.session_state["messages"] = []
+        st.rerun()
+
+    if threads:
+        labels = {}
+        for t in threads:
+            mark = "🟢 " if t["id"] == active else ""
+            labels[t["id"]] = f"{mark}{t['title']}  ·  {t['message_count']} msg"
+        chosen = st.radio(
+            "Threads",
+            options=[t["id"] for t in threads],
+            format_func=lambda tid: labels.get(tid, "thread"),
+            index=next((i for i, t in enumerate(threads) if t["id"] == active), 0),
+            label_visibility="collapsed",
+        )
+        if chosen != active:
+            st.session_state["thread_id"] = chosen
+            st.session_state["messages"] = get_full_thread(user["id"], chosen)
+            st.rerun()
+
+        with st.expander("✏️ Manage this thread"):
+            new_title = st.text_input("Rename", value=next((t["title"] for t in threads if t["id"] == active), ""))
+            mc1, mc2 = st.columns(2)
+            with mc1:
+                if st.button("Save name", use_container_width=True):
+                    rename_thread(user["id"], active, new_title)
+                    st.rerun()
+            with mc2:
+                if st.button("🗑️ Delete", use_container_width=True):
+                    delete_thread(user["id"], active)
+                    st.session_state["thread_id"] = None
+                    st.session_state.pop("messages", None)
+                    st.rerun()

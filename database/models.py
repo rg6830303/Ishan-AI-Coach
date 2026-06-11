@@ -48,9 +48,19 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
 
+        CREATE TABLE IF NOT EXISTS threads (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL DEFAULT 'New chat',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+
         CREATE TABLE IF NOT EXISTS conversations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
+            thread_id INTEGER,
             role TEXT NOT NULL,
             content TEXT NOT NULL,
             tool_calls TEXT,
@@ -69,6 +79,11 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
     """)
+
+    # --- Lightweight migrations for existing databases ---
+    cols = [r["name"] for r in cursor.execute("PRAGMA table_info(conversations)").fetchall()]
+    if "thread_id" not in cols:
+        cursor.execute("ALTER TABLE conversations ADD COLUMN thread_id INTEGER")
 
     conn.commit()
     conn.close()

@@ -143,6 +143,34 @@ class PersonalizationStore:
     def get_training_log(self, user_id: int, limit: int | None = None) -> list[dict]:
         return self._read_jsonl(self._file(user_id, "training_log.jsonl"), limit=limit)
 
+    # ------------------------------------------------- per-coach level (1-10)
+    def get_training_level(self, user_id: int, coach_style: str, default: int = 1) -> int:
+        """Current level on the active coach's cycle. Resets sensibly if the
+        runner switched coaches (each coach has its own cycle)."""
+        with _LOCK:
+            data = self.get_personalization(user_id)
+            tl = data.get("training_level")
+            if not tl or tl.get("coach") != coach_style:
+                tl = {"coach": coach_style, "level": int(default), "history": []}
+                data["training_level"] = tl
+                self._write_json(self._file(user_id, "personalization.json"), data)
+            return int(tl.get("level", default))
+
+    def set_training_level(self, user_id: int, coach_style: str, level: int, reason: str = "") -> int:
+        level = max(1, min(10, int(level)))
+        with _LOCK:
+            data = self.get_personalization(user_id)
+            tl = data.get("training_level") or {"coach": coach_style, "level": level, "history": []}
+            tl["coach"] = coach_style
+            prev = tl.get("level")
+            tl["level"] = level
+            tl.setdefault("history", []).append({"ts": _now(), "level": level, "reason": reason})
+            tl["history"] = tl["history"][-30:]
+            data["training_level"] = tl
+            self._write_json(self._file(user_id, "personalization.json"), data)
+        self.log_event(user_id, "level_change", {"coach": coach_style, "from": prev, "to": level, "reason": reason[:120]})
+        return level
+
     # ------------------------------------------------- continuous self-update
     def update_from_message(self, user_id: int, text: str, role: str = "user") -> dict:
         """Extract signals from a message and merge them into the model.

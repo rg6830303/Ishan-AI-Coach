@@ -6,6 +6,7 @@ from agent.system_prompts import build_system_prompt
 from database.auth import get_profile
 from database.memory import get_chat_history, get_top_insights, store_message, extract_insights
 from personalization.store import store as personalization_store
+from coaching.cycles import estimate_starting_level, level_block_for_prompt
 
 
 def get_client() -> OpenAI:
@@ -36,10 +37,11 @@ def format_profile_summary(profile: dict) -> str:
     )
 
 
-def run_agent(user_id: int, user_message: str) -> dict:
+def run_agent(user_id: int, user_message: str, thread_id: int | None = None) -> dict:
     """
     Main agent loop. Sends user message to Groq with tools, handles tool calls,
-    returns final response with metadata about tool usage.
+    returns final response with metadata about tool usage. Messages are stored
+    against `thread_id` so conversations save and load as separate threads.
     """
     client = get_client()
     profile = get_profile(user_id)
@@ -58,18 +60,24 @@ def run_agent(user_id: int, user_message: str) -> dict:
     personalization_store.update_from_message(user_id, user_message, role="user")
     personalization_block = personalization_store.build_prompt_block(user_id)
 
+    # Per-coach 10-level training cycle: place the runner and guide progression.
+    start_level = estimate_starting_level(coach_style, profile)
+    current_level = personalization_store.get_training_level(user_id, coach_style, default=start_level)
+    cycle_block = level_block_for_prompt(coach_style, current_level)
+    personalization_block = (cycle_block + "\n\n" + personalization_block).strip()
+
     system_prompt = build_system_prompt(
         tier, coach_style, profile_summary, insights, personalization_block
     )
 
-    chat_history = get_chat_history(user_id)
+    chat_history = get_chat_history(user_id, thread_id=thread_id)
 
     messages = [{"role": "system", "content": system_prompt}]
     for msg in chat_history:
         messages.append({"role": msg["role"], "content": msg["content"]})
     messages.append({"role": "user", "content": user_message})
 
-    store_message(user_id, "user", user_message)
+    store_message(user_id, "user", user_message, thread_id=thread_id)
     extract_insights(user_id, user_message, role="user")
 
     tool_calls_made = []
@@ -118,7 +126,7 @@ def run_agent(user_id: int, user_message: str) -> dict:
                 })
         else:
             final_text = choice.message.content or ""
-            store_message(user_id, "assistant", final_text, tool_calls_made if tool_calls_made else None)
+            store_message(user_id, "assistant", final_text, tool_calls_made if tool_calls_made else None, thread_id=thread_id)
             extract_insights(user_id, final_text, role="assistant")
             personalization_store.log_event(user_id, "assistant_message", {
                 "preview": final_text[:160],
@@ -135,5 +143,5 @@ def run_agent(user_id: int, user_message: str) -> dict:
             }
 
     final_text = "I apologize, but I'm having trouble processing your request. Could you rephrase it?"
-    store_message(user_id, "assistant", final_text)
+    store_message(user_id, "assistant", final_text, thread_id=thread_id)
     return {"response": final_text, "tool_calls": tool_calls_made, "error": True}

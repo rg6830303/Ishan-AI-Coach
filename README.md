@@ -24,6 +24,26 @@ continuously from every message, and remembers it all in local JSON/JSONL files.
 Each tier has its own safety guardrails, volume/intensity limits, coaching depth, and
 chooses a Groq model sized to the complexity (8B for Spark/Pace, 70B for Tempo/Apex).
 
+### Per-coach knowledge brains + 10-level training cycles
+Every coach has its **own complete knowledge brain** (`knowledge/corpus/coach_*.md`)
+covering its full methodology, motivation style, and how it handles every performance
+level — and its **own unique 10-level training cycle**:
+
+| Coach | Cycle | Levels 1 → 10 |
+|-------|-------|---------------|
+| 🔬 Scientist | **The Lab Protocol** | Baseline Diagnostics → Performance Mastery |
+| ⚡ Energizer | **The Adventure Ladder** | First Steps → Unstoppable |
+| 🔥 Warrior | **The Forge** | Recruit → Champion |
+| 🧘 Sage | **The Path** | Seed → Mountain |
+
+The coach places you at a level, names it, frames every session as a step toward the next
+one, and **levels you up** (via the `set_training_level` tool) when you meet the criteria.
+Your level, history, and progress are shown in the **🎯 Training Cycle** tab.
+
+### Chat threads (saved & loaded)
+Keep multiple named conversations. Create, switch, rename, and delete threads from the
+sidebar — each is stored in SQLite and reloads exactly where you left off.
+
 ### Agentic RAG on Groq
 The coach runs a tool-calling loop with four tools:
 - `calculate_pace_zones` — VO2max & pace zones from your 5K time or profile
@@ -48,7 +68,9 @@ data/personalization/<user_id>/
 ### Voice (browser-based, optional)
 - 🎤 **Speak** your message — captured in the browser and transcribed to text.
 - 🔊 **Read replies aloud** — the coach's answer is spoken with the browser's
-  built-in speech synthesis (no extra services).
+  built-in speech synthesis. **Multiple strong voice styles** (Strong Male, Strong
+  Female, Deep & Commanding, Energetic, Calm & Warm), and each coach has a signature
+  default voice. A 🔈 Test / ⏹️ Stop control lets you preview.
 Both degrade gracefully to text-only if unavailable.
 
 ### Knowledge base
@@ -109,8 +131,11 @@ Open http://localhost:8501, sign up, complete the 8-step profiling wizard, and s
 
 **Notes for cloud:**
 - Never commit your real key — `.env` and `.env.txt` are git-ignored; use Streamlit secrets.
-- The SQLite DB and `data/` personalization files live on the app's ephemeral disk and reset
-  on redeploy. For durable storage, point `DB_PATH`/`DATA_DIR` at a mounted volume or external DB.
+  `config.py` reads the key from environment **or** Streamlit secrets automatically.
+- Accounts, profiles, **chats and chat threads** (SQLite) and the personalization JSON/JSONL
+  all save and reload correctly while the app is running — log out, come back, switch threads,
+  and everything is there. Note the disk is **ephemeral on redeploy/reboot**: for permanent
+  durability across redeploys, point `DB_PATH`/`DATA_DIR` at a mounted volume or external DB.
 - Browser mic access requires HTTPS — Streamlit Cloud serves over HTTPS, so voice input works.
 
 ---
@@ -120,10 +145,11 @@ Open http://localhost:8501, sign up, complete the 8-step profiling wizard, and s
 app.py                  # entry point + routing
 config.py               # env/key loading, tiers, models, paths
 agent/                  # agentic loop, tools, personas, system prompts
+coaching/               # per-coach 10-level training cycles + progression logic
 engine/                 # classifier, guardrails, pace calculator, VO2max
-knowledge/              # corpus (markdown), chunking, hybrid retriever
+knowledge/              # corpus (markdown incl. per-coach brains), chunking, retriever
 personalization/        # JSON/JSONL store + signal extractor (continuous learning)
-database/               # SQLite models, auth, conversation/insight memory
+database/               # SQLite models, auth, threads, conversation/insight memory
 ui/                     # theme, auth, profiling wizard, chat + dashboards, voice
 scripts/build_index.py  # one-off FAISS index builder
 ```

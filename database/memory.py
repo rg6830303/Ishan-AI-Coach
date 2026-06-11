@@ -6,23 +6,86 @@ from database.models import get_connection
 from config import MEMORY_DECAY_LAMBDA, MEMORY_TOP_K_INSIGHTS, CHAT_HISTORY_WINDOW
 
 
-def store_message(user_id: int, role: str, content: str, tool_calls: list | None = None):
+# --------------------------------------------------------------- threads
+def create_thread(user_id: int, title: str = "New chat") -> int:
+    conn = get_connection()
+    cur = conn.execute(
+        "INSERT INTO threads (user_id, title) VALUES (?, ?)", (user_id, title)
+    )
+    conn.commit()
+    tid = cur.lastrowid
+    conn.close()
+    return tid
+
+
+def list_threads(user_id: int) -> list[dict]:
+    conn = get_connection()
+    rows = conn.execute(
+        """SELECT t.id, t.title, t.created_at, t.updated_at,
+                  (SELECT COUNT(*) FROM conversations c WHERE c.thread_id = t.id) AS message_count
+           FROM threads t WHERE t.user_id = ? ORDER BY t.updated_at DESC""",
+        (user_id,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_or_create_active_thread(user_id: int) -> int:
+    """Return the most recent thread, creating one if none exist."""
+    threads = list_threads(user_id)
+    if threads:
+        return threads[0]["id"]
+    return create_thread(user_id, "New chat")
+
+
+def rename_thread(user_id: int, thread_id: int, title: str):
     conn = get_connection()
     conn.execute(
-        "INSERT INTO conversations (user_id, role, content, tool_calls) VALUES (?, ?, ?, ?)",
-        (user_id, role, content, json.dumps(tool_calls) if tool_calls else None),
+        "UPDATE threads SET title = ? WHERE id = ? AND user_id = ?",
+        (title[:80], thread_id, user_id),
     )
     conn.commit()
     conn.close()
 
 
-def get_chat_history(user_id: int, limit: int = CHAT_HISTORY_WINDOW) -> list[dict]:
+def delete_thread(user_id: int, thread_id: int):
     conn = get_connection()
-    rows = conn.execute(
-        """SELECT role, content, tool_calls, created_at FROM conversations
-        WHERE user_id = ? ORDER BY created_at DESC LIMIT ?""",
-        (user_id, limit),
-    ).fetchall()
+    conn.execute("DELETE FROM conversations WHERE thread_id = ? AND user_id = ?", (thread_id, user_id))
+    conn.execute("DELETE FROM threads WHERE id = ? AND user_id = ?", (thread_id, user_id))
+    conn.commit()
+    conn.close()
+
+
+def _touch_thread(conn, thread_id: int):
+    if thread_id is not None:
+        conn.execute("UPDATE threads SET updated_at = CURRENT_TIMESTAMP WHERE id = ?", (thread_id,))
+
+
+def store_message(user_id: int, role: str, content: str, tool_calls: list | None = None, thread_id: int | None = None):
+    conn = get_connection()
+    conn.execute(
+        "INSERT INTO conversations (user_id, thread_id, role, content, tool_calls) VALUES (?, ?, ?, ?, ?)",
+        (user_id, thread_id, role, content, json.dumps(tool_calls) if tool_calls else None),
+    )
+    _touch_thread(conn, thread_id)
+    conn.commit()
+    conn.close()
+
+
+def get_chat_history(user_id: int, limit: int = CHAT_HISTORY_WINDOW, thread_id: int | None = None) -> list[dict]:
+    conn = get_connection()
+    if thread_id is not None:
+        rows = conn.execute(
+            """SELECT role, content, tool_calls, created_at FROM conversations
+            WHERE user_id = ? AND thread_id = ? ORDER BY created_at DESC LIMIT ?""",
+            (user_id, thread_id, limit),
+        ).fetchall()
+    else:
+        rows = conn.execute(
+            """SELECT role, content, tool_calls, created_at FROM conversations
+            WHERE user_id = ? ORDER BY created_at DESC LIMIT ?""",
+            (user_id, limit),
+        ).fetchall()
     conn.close()
     messages = []
     for row in reversed(rows):
@@ -33,9 +96,30 @@ def get_chat_history(user_id: int, limit: int = CHAT_HISTORY_WINDOW) -> list[dic
     return messages
 
 
-def clear_chat_history(user_id: int):
+def get_full_thread(user_id: int, thread_id: int) -> list[dict]:
+    """All messages in a thread (for loading a saved conversation in the UI)."""
     conn = get_connection()
-    conn.execute("DELETE FROM conversations WHERE user_id = ?", (user_id,))
+    rows = conn.execute(
+        """SELECT role, content, tool_calls, created_at FROM conversations
+        WHERE user_id = ? AND thread_id = ? ORDER BY created_at ASC""",
+        (user_id, thread_id),
+    ).fetchall()
+    conn.close()
+    messages = []
+    for row in rows:
+        msg = {"role": row["role"], "content": row["content"]}
+        if row["tool_calls"]:
+            msg["tool_calls"] = json.loads(row["tool_calls"])
+        messages.append(msg)
+    return messages
+
+
+def clear_chat_history(user_id: int, thread_id: int | None = None):
+    conn = get_connection()
+    if thread_id is not None:
+        conn.execute("DELETE FROM conversations WHERE user_id = ? AND thread_id = ?", (user_id, thread_id))
+    else:
+        conn.execute("DELETE FROM conversations WHERE user_id = ?", (user_id,))
     conn.commit()
     conn.close()
 

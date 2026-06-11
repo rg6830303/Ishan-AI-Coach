@@ -78,6 +78,21 @@ TOOL_DEFINITIONS = [
     {
         "type": "function",
         "function": {
+            "name": "set_training_level",
+            "description": "Update the runner's level (1-10) on your training cycle. Call ONLY when they have clearly met the graduation criteria for their current level (level up) or when evidence shows they should be re-placed. Always explain why in your reply.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "level": {"type": "integer", "description": "New level from 1 to 10 on your cycle.", "minimum": 1, "maximum": 10},
+                    "reason": {"type": "string", "description": "Why they earned this level (the criteria they met)."},
+                },
+                "required": ["level", "reason"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "log_training_run",
             "description": "Record a run the runner just reported so it is saved to their personal training log. Call this whenever the runner mentions completing a workout with any detail (distance, duration, type, or how it felt).",
             "parameters": {
@@ -110,7 +125,8 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
             query = arguments.get("query", "")
             profile = get_profile(user_id)
             tier = profile.get("tier", "general") if profile else "general"
-            results = retriever.retrieve(query, tier=tier)
+            coach = profile.get("coach_style") if profile else None
+            results = retriever.retrieve(query, tier=tier, coach=coach)
             formatted = []
             for r in results:
                 formatted.append({
@@ -138,6 +154,16 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int) -> str:
             tier = profile.get("tier", "pace") if profile else "pace"
             result = check_guardrails(tier, rec_type, details)
             return json.dumps(result)
+
+        elif tool_name == "set_training_level":
+            profile = get_profile(user_id)
+            coach = profile.get("coach_style", "energizer") if profile else "energizer"
+            level = arguments.get("level", 1)
+            reason = arguments.get("reason", "")
+            new_level = personalization_store.set_training_level(user_id, coach, level, reason)
+            from coaching.cycles import get_level
+            info = get_level(coach, new_level)
+            return json.dumps({"level": new_level, "level_name": info["name"], "focus": info["focus"]})
 
         elif tool_name == "log_training_run":
             entry = {

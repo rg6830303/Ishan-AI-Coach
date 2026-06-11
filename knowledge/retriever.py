@@ -47,13 +47,16 @@ class KnowledgeRetriever:
         else:
             self._use_dense = False
 
-    def retrieve(self, query: str, tier: str = "general", top_k: int = 3) -> list[dict]:
+    def retrieve(self, query: str, tier: str = "general", top_k: int = 3, coach: str | None = None) -> list[dict]:
         """Hybrid retrieval when FAISS available, BM25-only fallback otherwise."""
         self._load()
 
         # Cross-cutting corpora (psychology, mentality, tactics, planning) apply
-        # to every runner, so they are always treated as tier-relevant.
+        # to every runner, so they are always treated as tier-relevant. The
+        # active coach's own brain (coach_<style>) is boosted when present.
         tier_relevant = {"general", "psychology", "mentality", "tactics", "planning", tier}
+        if coach:
+            tier_relevant.add(f"coach_{coach}")
         max_chunks = TIERS.get(tier, {}).get("max_rag_chunks", 3)
 
         bm25_scores = self._bm25.get_scores(query.lower().split())
