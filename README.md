@@ -138,6 +138,20 @@ Open http://localhost:8501, sign up, complete the 8-step profiling wizard, and s
   durability across redeploys, point `DB_PATH`/`DATA_DIR` at a mounted volume or external DB.
 - Browser mic access requires HTTPS — Streamlit Cloud serves over HTTPS, so voice input works.
 
+### Keeping the app awake (no sleeping from inactivity)
+Community Cloud sleeps apps with no traffic. This repo ships a GitHub Actions
+workflow (`.github/workflows/keep-alive.yml`) that pings the app every 10 minutes
+to keep it awake. To use it:
+1. Set a repo **variable** `APP_URL` to your deployed URL: **Repo → Settings →
+   Secrets and variables → Actions → Variables → New variable** →
+   `APP_URL = https://your-app.streamlit.app` (or just edit the default in the workflow).
+2. Enable Actions if prompted, then it runs automatically (or trigger it once from the
+   **Actions** tab → *Keep Streamlit app awake* → *Run workflow*).
+
+> GitHub's scheduled workflows can be delayed a few minutes and are auto-disabled after
+> ~60 days with no repo commits. For rock-solid uptime, also point a free uptime monitor
+> (e.g. **UptimeRobot** or **cron-job.org**) at the same URL on a 5-minute interval.
+
 ---
 
 ## 🗂️ Project structure
