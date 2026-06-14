@@ -16273,3 +16273,4865 @@ Training by heart rate helps you run at the right intensity for each workout. Un
 
 ---
 
+
+
+# === ADDITIONAL EXTRACTION (21 missed repos) ===
+
+## [pyexphys] README.md
+
+# PyExPhys
+
+PyExPhys is a Python library of exercise physiology and healthcare equations for transforming basic health data into insights at scale.  PyExPhys is a collection of bodybuilding competition formulas, aerobic performance and weightlifting performance models, and body composition equations.
+
+## Installing
+Install the library using `pip`:
+```
+pip install pyexphys
+```
+
+## Tests
+To test the calculations of PyExPhys, run the `distutils` test:
+```
+python setup.py test
+```
+
+## Support
+Please raise potential bugs on [Github](https://github.com/dpfens/PyExPhys/issues).
+
+
+---
+
+## [pyexphys] index.rst
+
+.. PyFit documentation master file, created by
+   sphinx-quickstart on Sun Nov 18 13:34:58 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to PyExPhys's documentation!
+====================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Table of Contents:
+   
+   pyexphys
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+
+---
+
+## [pyexphys] pyexphys.rst
+
+Reference
+================
+
+Submodules
+----------
+
+pyexphys.cardio module
+----------------------
+
+.. automodule:: pyexphys.cardio
+    :members:
+    :show-inheritance:
+
+pyexphys.cardio.cardiac module
+------------------------------
+
+.. automodule:: pyexphys.cardio.cardiac
+    :members:
+    :show-inheritance:
+
+pyexphys.cardio.energy module
+-----------------------------
+
+.. automodule:: pyexphys.cardio.energy
+    :members:
+    :show-inheritance:
+
+pyexphys.cardio.respiration module
+----------------------------------
+
+.. automodule:: pyexphys.cardio.respiration
+    :members:
+    :show-inheritance:
+
+pyexphys.composition module
+---------------------------
+
+.. automodule:: pyexphys.composition
+    :members:
+    :show-inheritance:
+
+pyexphys.mets module
+--------------------
+
+.. automodule:: pyexphys.mets
+    :members:
+    :show-inheritance:
+
+pyexphys.strength module
+------------------------
+
+.. automodule:: pyexphys.strength
+    :members:
+    :show-inheritance:
+
+
+---
+
+## [qs_ledger] README.md
+
+# Quantified Self (QS) Ledger
+
+## A Personal Data Aggregator and Dashboard for Self-Trackers and Quantified Self Enthusiasts
+
+[Quantfied Self (QS) Ledger](https://github.com/markwk/qs_ledger) aggregates and visualizes your personal data. 
+
+The project has two primary goals: 
+
+1. **download all of your personal data** from various tracking services (see below for list of integration services) and store locally. 
+2. provide the starting point for **personal data analysis, data visualization and a personal data dashboard** 
+
+At present, the main objective is to provide working data downloaders and simple data analysis for each of the integrated services. 
+
+Some initial work has been started on using these data streams for predictive analytics and forecasting using Machine Learning and Artificial Intelligence, and the intention to increasingly focus on modeling in future iterations. .
+
+### Code / Dependencies: 
+
+* The code is written in Python 3. 
+* Shared and distributed via Jupyter Notebooks. 
+* Most services depend on Pandas and NumPy for data manipulation and Matplot and Seaborn for data analysis and visualization. 
+* To get started, we recommend downloading and using the [Anaconda Distribution](https://www.anaconda.com/download/#macos).
+* For initial installation and setup help, see documentation below. 
+* For setup and usage of individual services, see documentation provided by each integration.  
+
+### Current Integrations: 
+
+* [Apple Health](https://github.com/markwk/qs_ledger/tree/master/apple_health): fitness and health tracking, data analysis and dashboard from iPhone or Apple Watch (includes example of Elastic Search integration and Kibana Health Dashboard).
+* [AutoSleep](https://github.com/markwk/qs_ledger/tree/master/autosleep/autosleep_data_analysis.ipynb): iOS sleep tracking data analysis of sleep per night and rolling averages. 
+* [Fitbit](https://github.com/markwk/qs_ledger/tree/master/fitbit): fitness and health tracking and analysis of Steps, Sleep, and Heart Rate from a Fitbit wearable.
+* [GoodReads](https://github.com/markwk/qs_ledger/tree/master/goodreads ): book reading tracking and data analysis for GoodReads.
+* [Google Calendar](https://github.com/markwk/qs_ledger/tree/master/google_calendar/): past events, meetings and times for Google Calendar.
+* [Google Sheets](https://github.com/markwk/qs_ledger/tree/master/google_sheets/): get data from any Google Sheet which can be useful for pulling data from IFTTT integrations that add data. 
+* [Habitica](https://github.com/markwk/qs_ledger/tree/master/habitica/habitica_downloader.ipynb): habit and task tracking with Habitica's gamified approach to task management.
+* [Instapaper](https://github.com/markwk/qs_ledger/tree/master/instapaper/instapaper_downloader.ipynb): articles read and highlighted passages from Instapaper.
+* [Kindle Highlights](https://github.com/markwk/qs_ledger/tree/master/kindle/kindle_clippings_parser.ipynb): Parser and Highlight Extract from Kindle clippings, along with a sample data analysis and tool to export highlights to separate markdown files.  
+* [Last.fm](https://github.com/markwk/qs_ledger/tree/master/last_fm): music tracking and analysis of music listening history from Last.fm.
+* [Oura](https://github.com/markwk/qs_ledger/tree/master/oura): oura ring activity, sleep and wellness data. 
+* [RescueTime](https://github.com/markwk/qs_ledger/tree/master/rescuetime): track computer usage and analysis of computer activities and time with RescueTime. 
+* [Pocket](https://github.com/markwk/qs_ledger/tree/master/pocket/pocket_downloader.ipynb): articles read and read count from Pocket. 
+* [Strava](https://github.com/markwk/qs_ledger/tree/master/strava): activities downloader (runs, cycling, swimming, etc.) and analysis from Strava. 
+* [Todoist](https://github.com/markwk/qs_ledger/tree/master/todoist): task tracking and analysis of todo's and tasks completed history from Todoist app. 
+* [Toggl](https://github.com/markwk/qs_ledger/tree/master/toggl
+
+---
+
+## [qs_ledger] README.md
+
+# Apple Health Data Extractor, Data Analysis, and Elastic Search Integration and Dashboard
+
+This project can help you convert your Apple Health data into something useful and usable! The code has been broken down into separate scripts to handle the process step-by-step. 
+
+For more information and a walkthrough of some of the key steps in the process see [How to Export, Parse and Explore Your Apple Health Data With Python](http://www.markwk.com/data-analysis-for-apple-health.html). 
+
+### Extracting and Processing Your Apple Health XML into CSVs and some simple data analysis
+
+- Step 1: Export Apple Health data from the Health on iOS
+- Step 2: Download to your computer and decompress the file and place in the apple_health directory instead of qs_ledger. It should look something like your-path-here/qs_ledger/apple_health_export/export.xml
+- Step 3: Open up and run the jupyter notebook **apple_health_extractor.ipynb**. This script will parse your XML file and convert it into a series of CSV files. It essentially walks you through a process that runs the python script apple-health-data-parser.py which you can alternatively run directly in terminal or command line. 
+- Step 4 (optional):  Open up and run the jupyter notebook **apple_health_data_processor.ipynb** for some additional data processing and simple data analysis using pandas and matplotlib. 
+
+### Integrating with Elastic Search and Creating a Kibana Apple Health Dashboard
+
+This part is entirely optional but it will enable you to view and explore your data inside of Elastic Search. This part assumes you have downloaded and setup Elastic Search either locally or in the cloud. 
+
+- Step 1 (if running locally): Start Elastic with `bin/elasticsearch`
+- Step 2: Install Espandas using the following command: `python -m pip install https://github.com/markwk/espandas/archive/master.zip` (Note: At the time of this project, the main project has a bug so you'll need to either download this fork or make some manual changes to the original code. [See issue here](https://github.com/dashaub/espandas/issues/2).)
+- Step 3: Open up and run the jupyter notebook **apple_health_data2elastic.ipynb** in order to modify your data into Elastic Search compatible format and then import it into Elastic Indexes. (NOTE: The script currently uses a workaround with the file `apple_health_elastic_mapping.json` to mapping your fields into Elastic compatible format. You can check the mappings by running the following command `curl -X GET "localhost:9200/steps/_mapping?pretty"`)
+- Step 4: Run the following command to confirm data imported correctly 
+
+```
+curl -H "Content-Type: application/json" -XGET localhost:9200/steps/_count -d '{
+        "query": {
+                "match_all": {}
+        }
+}'
+```
+
+- Step 5 (if running locally): Start Kibana `bin/kibana` and navigate to it locally at http://localhost:5601. 
+- Step 6: In Kibana use the sidebar menu to navigate to Management > Stack Management and finally choose the option **Index Patterns** under "Kibana."
+- Step 7: Select the button for "Create index pattern" and then type in the name of one of your indexes like `steps` and hit "Next Step."
+- Step 8: Then use the time field option and select `date` and hit "Create index pattern."
+- Repeat 6-8 to create additional index patterns for hr and resting_hr.  
+- Step 9: Navigate to the menu item **Saved Objects** under Kibana.
+- Step 10: Select option for **Import** and either drag and drop or select the file `apple_health_elastic_dashboard.ndjson` which will create a few sample charts and an Apple Health Dashboard which you can view in Kibana and looks something like this: 
+
+![](https://raw.githubusercontent.com/markwk/qs_ledger/master/apple_health/apple_health_elastic_dashboard_example.png)
+
+Best of luck extract, parsing and visualizing your apple health data! 
+
+---
+
+## [qs_ledger] README.md
+
+Fitbit Integration README
+
+
+* For Setup and Installation Steps, See: [Fitbit Downloader](https://github.com/markwk/qs_ledger/blob/master/fitbit/fitbit_downloader.ipynb)
+* For Sample Data Analysis, See: [Fitbit Data Analysis](https://github.com/markwk/qs_ledger/blob/master/fitbit/fitbit_data_analysis.ipynb)
+
+This project depends on (Python Fitbit Library](https://github.com/orcasgit/python-fitbit)
+
+
+---
+
+## [qs_ledger] README.md
+
+# Google Calendar
+
+* Download and Export your past calendar events to CSV
+* Coming Soon: Data analysis and data visualization of your calendar activities!
+
+## Initial Install and Setup
+
+Follow Steps here: https://developers.google.com/calendar/quickstart/python
+
+1. Click Button "ENABLE THE GOOGLE CALENDAR API"
+2. Select + Create a new project.
+3. Download the configuration file.
+4. Move the downloaded file to your working directory and ensure it is named credentials.json.
+5. In terminal or command line, navigate to your project's working directory
+6. Run `python quickstart.py`
+
+Afterwards:
+
+> The sample will attempt to open a new window or tab in your default browser. If this fails, copy the URL from the console and manually open it in your browser.
+
+> If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization.
+
+> Click the Accept button.
+> The sample will proceed automatically, and you may close the window/tab.
+
+## Usage
+
+* Download your data via [Google Calendar Downloader](https://github.com/markwk/qs_ledger/blob/master/google_calendar/google_calendar_downloader.ipynb)
+
+---
+
+## [qs_ledger] README.md
+
+# Kindle EBook Clippings Parser, Data Analysis and Markdown Exporter
+
+Part of [QS Ledger](https://github.com/markwk/qs_ledger/)
+
+This set of scripts and notebooks allows you to parse the highlights from a kindle ebook device (like a Paperwhite), to do some simple data analysis and export individual book highlights into separate text files. 
+
+![Data Analysis Example of Highlights](https://github.com/markwk/qs_ledger/raw/master/kindle/kindle_highlights_data_analysis_example.png)
+
+### How to Use: Parser and Data Analysis
+
+Review [QS Ledger's Readme for more generic installation instructions](https://github.com/markwk/qs_ledger/).
+
+1. Connect your kindle ereader device to your computer and collect your "My Clippings.txt" file. Save that file into the data directory. 
+2. Open [kindle_clippings_parser.ipynb](https://github.com/markwk/qs_ledger/blob/master/kindle/kindle_clippings_parser.ipynb) in jupyter notebook or jupyter labs, configure and run. This will parse your clippings file into a data frame and export it to several CSV files. 
+3. For data analysis, open and run [kindle_clippings_data_analysis.ipynb](https://github.com/markwk/qs_ledger/blob/master/kindle/kindle_clippings_data_analysis.ipynb) for a breakdown of highlights across different time dimensions. 
+
+### How to Use: Markdown Text File Exporter
+
+[kindle_highlights_markdown_exporter.ipynb](https://github.com/markwk/qs_ledger/blob/master/kindle/kindle_highlights_markdown_exporter.ipynb) is an optional notebook that will generates a separate markdown file for each your books with their clippings and highlights. This can be useful for knowledge management and personal research. 
+
+To use, open the notebook and first edit `export_directory` reference to a local directory on your machine. Then run the notebook.  
+
+
+---
+
+## [qs_ledger] README.md
+
+## Last.fm Integration README
+
+* For Setup and Installation Steps, See: [Last.fm Downloader](https://github.com/markwk/qs_ledger/blob/master/last_fm/lastfm_downloader.ipynb)
+* For Sample Data Analysis, See: [Last.fm Data Analysis](https://github.com/markwk/qs_ledger/blob/master/last_fm/lastfm_data_analysis.ipynb)
+
+
+---
+
+## [qs_ledger] README.md
+
+# RescueTime Data Collection and Data Analysis with Python
+
+* To setup, collect and download your RescueTime data, open [RescueTime Downloader](https://github.com/markwk/qs_ledger/blob/master/rescuetime/rescuetime_downloader.ipynb) in Python 3 in a Jupyter Notebook. 
+* For Sample Data Analysis, See: [RescueTime Data Analysis](https://github.com/markwk/qs_ledger/blob/master/rescuetime/rescuetime_data_analysis.ipynb)
+
+
+---
+
+## [qs_ledger] README.md
+
+Todoist Integration README
+
+* For Setup and Installation Steps, See: [Todoist Downloader](https://github.com/markwk/qs_ledger/blob/master/todoist/todoist_downloader.ipynb)
+
+For simple data analysis of your completed tasks, See: [Todoist Tasks Completed Data Analysis](https://github.com/markwk/qs_ledger/blob/master/todoist/todoist_data_analysis.ipynb)
+
+
+
+---
+
+## [runblueprint.com] README.md
+
+# Runblueprint.com
+
+Running training plan generator.
+
+See Trello project at https://trello.com/b/X6Fg9XVA/runblueprint
+
+# Requirements
+
+* `brew install mysql`
+* Python 3.6.x at least: suggest using [Pyenv](https://github.com/pyenv/pyenv#basic-github-checkout)
+
+# Installation
+
+You should only need to do these steps once:
+
+```bash
+pyenv install 3.6.3
+pyenv global 3.6.3
+git clone git@github.com:supermitch/runblueprint.com.git
+cd runblueprint
+python -m venv venv
+source venv/bin/activate
+pip install -U pip
+```
+
+## Database Setup
+
+Create local user & database:
+```bash
+mysql.server start
+mysql
+CREATE USER 'runblueprint'@'localhost' IDENTIFIED WITH sha256_password BY 'runblueprint';
+CREATE DATABASE IF NOT EXISTS runblueprint;
+GRANT ALL PRIVILEGES ON `%_runblueprint`.* TO 'runblueprint'@'localhost';  # Allows test_runblueprint creation
+SHOW GRANTS FOR 'runblueprint'@'localhost';  # Check it worked
+```
+
+# Development
+
+Note that you need a `local_settings.py` file with your DB settings, at least!
+
+Every time you work you should do these steps:
+```bash
+source venv/bin/activate
+pip install -r requirements.txt
+make migrate
+```
+
+Don't forget to freeze requirements if you installed new dependencies:
+```bash
+pip freeze > requirements.txt
+```
+
+## Production
+
+No production environment yet... TBD.
+
+## Makefile
+
+Some handy shortcuts in the Makefile
+
+* `$ make` - Start local development server: http://127.0.0.1:8000
+* `$ make test` - Run tests
+* `$ make migrate` - Run migrations
+* `$ make staging` - Deploy to **Staging** *TBD*
+* `$ make production` - Deploy to **Production** *TBD*
+
+## Create Superuser
+
+Instructions to create a user that can login to the admin site.
+
+* `$ source venv/bin/activate` - Make sure you are in the virtual env
+* `$ ./manage.py createsuperuser --settings=runblueprint.local_settings` - Run createsuperuser command
+* Follow user creation prompts
+* Test new superuser login at http://127.0.0.1:8000/admin/
+
+
+---
+
+## [runblueprint.com] dreamhost_setup.md
+
+Dreamhost Setup
+===============
+
+## SSH setup
+Copy your SSH key to the server:
+```bash
+cat ~/.ssh/id_rsa.pub | ssh <username>@<server>.dreamhost.com "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"
+```
+
+Add the following to your `~/.ssh/config`:
+```
+Host *
+  ServerAliveInterval 15
+  ServerAliveCountMax 4
+```
+
+## Git setup
+```bash
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+git config --global core.editor "vim"
+git config --global push.default simple
+# ?? git config --global pull.rebase true
+```
+
+## Pyenv setup
+
+[Install Pyenv as usual](https://github.com/pyenv/pyenv#basic-github-checkout),
+but also do the following:
+
+```bash
+mkdir ~/tmp
+echo 'export TMPDIR="$HOME/tmp"' >> ~/.bash_profile  # .zprofile for zsh
+```
+
+
+---
+
+## [running] README.md
+
+# 🏃‍♀️ running 🏃
+[![image](https://img.shields.io/pypi/v/running.svg)](https://pypi.org/project/running/)
+[![image](https://img.shields.io/pypi/pyversions/running.svg)](https://pypi.org/project/running/)
+
+A flexible but user-friendly running pace calculator as a command line tool.
+
+# Installation
+```
+$ pip install running
+```
+
+# Usage
+Call `running` with two of the three arguments `pace`, `distance` or `time`, and it will calculate the missing one for you.
+
+```
+$ running --pace 4:30/km --distance marathon 
+Elapsed time: 3:09:53 [H:]MM:SS
+```
+
+You can also just use the first letter of the argument names:
+```
+$ running -p 4:30 -d marathon
+```
+
+Note that distance unit for the pace was omitted, defaulting to kilometer. This can be changed with the `unit` (`-u`) parameter as follows:
+```
+$ running -p 8:00 -d 10km -u miles
+Elapsed time: 49:43 [H:]MM:SS
+```
+
+You can also directly specify the units for the pace:
+```
+$ running -p 6min/mile -t 1hour
+Travelled distance: 16.09 km
+$ running -d half-marathon -t 1:45:00
+Required pace: 04:59 /km
+```
+
+You can also view split times with `--splits` (`-s`):
+```
+$ running -p 4:30 -d marathon --splits
+Elapsed time: 3:09:53 [H:]MM:SS
+
+   1 km  04:30
+   2 km  09:00
+   3 km  13:30
+  ...
+  42 km  3:09:00
+42.195 km  3:09:53
+```
+
+Predict race times for other distances with `--predict` (`-r`), using the Riegel formula:
+```
+$ running -d 10km -t 45:00 --predict
+Required pace: 04:30 /km
+
+Race predictions:
+          1500m    06:01   (04:01 /km)
+         1 mile    06:29   (04:02 /km)
+             5K    21:35   (04:19 /km)
+            10K    45:00   (04:30 /km)
+  Half-marathon  1:39:17   (04:42 /km)
+       Marathon  3:27:01   (04:54 /km)
+```
+
+The tool is quite flexible in terms of the valid expressions for the arguments, see `running --help` for more examples.
+
+**Ever wondered how fast Usain Bolt would run a marathon?**
+```
+$ running -p bolt -d marathon
+Elapsed time: 1:07:22 [H:]MM:SS
+```
+
+
+---
+
+## [running-app] AGENTS.md
+
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
+
+---
+
+## [running-app] FEATURES.md
+
+# Feature Reference — Coaching-First Analysis
+
+This file stores the full analysis of Strava and Garmin features through the lens of a marathon coach.
+Use this as a backlog when planning future waves or expansions.
+
+---
+
+## What Each Platform Provides
+
+### Strava (subscription features)
+- Training Log — cumulative mileage visualized over time
+- Grade Adjusted Pace (GAP) — effort-normalized pace on hilly routes
+- Heart Rate Zones — time in each zone per activity
+- Training Zones — zone distribution across weeks/periods
+- Matched Activities — benchmark the same route across different dates
+- Performance Predictions — AI-estimated finish times for 5K, 10K, HM, marathon, updated after every run
+- Athlete Intelligence — AI narrative summaries of training patterns
+- Relative Effort — per-activity load score derived from heart rate
+
+### Garmin Connect (via watch + app)
+- VO2 max — running-specific, heat/altitude adjusted
+- Training Status — classifies fitness as Peaking / Productive / Maintaining / Recovery / Overreaching / Detraining
+- Training Load — acute load score + 4-week load focus (base / tempo / anaerobic split)
+- Recovery Time — estimated hours until ready for next hard effort
+- HRV Status — daily readiness signal from heart rate variability
+- Body Battery — daily energy reserve (0–100)
+- Resting Heart Rate trends
+- Running Dynamics — cadence, stride length, vertical oscillation, ground contact time, vertical ratio
+- Race Time Predictions — pace-based finish time estimates
+- Performance Condition — real-time fitness vs. baseline mid-run
+- Sleep Score, Stress levels
+- Garmin Coach — adaptive training plans
+
+---
+
+## Feature Priority for a Marathon Coach
+
+### Tier 1 — Essential (coach checks these every week)
+
+| Feature | Why |
+|---|---|
+| Weekly mileage + load trend | Volume progression is the foundation of marathon training. Spot dangerous spikes before injury. |
+| Training status / recovery time | Most actionable daily signal — is the athlete ready for today's key session? |
+| Zone distribution (easy vs. hard %) | Most athletes run easy days too hard. Verifying 80% low-intensity is central to polarized training. |
+| Consistency calendar | Missing runs compounds over 16 weeks. A coach needs the full picture, not just last week. |
+| Goal progress vs. race target | Continuous "are we on track" signal — mileage goal + performance prediction trending toward goal time. |
+
+### Tier 2 — High coaching value
+
+| Feature | Why |
+|---|---|
+| HRV / Body Battery trend | Early warning for accumulated fatigue or illness before it degrades performance. 5 consecutive low HRV days = pull back load. |
+| VO2 max trend | Clearest long-term fitness progression signal. Should trend up through the block and plateau at taper. |
+| Matched Activities | Showing athletes the same route getting faster over a training cycle is motivationally powerful. |
+| Route maps | Verify the athlete ran prescribed terrain; understand elevation and conditions. |
+
+### Tier 3 — Useful but secondary
+
+| Feature | Why |
+|---|---|
+| Running dynamics | Form work addressed in dedicated sessions, not weekly check-ins. |
+| All-runs heatmap | Engaging but not a coaching tool. |
+| Segment leaderboards | Can encourage athletes to race on recovery days — handle carefully. |
+| Performance predictions (race finish times) | Useful but a Tier 1 derived output, not a standalone feature. |
+
+---
+
+## Backlog Ideas (Future Waves)
+
+- Athlete-facing dashboard with coach comments / feedback per activity
+- Load ratio alert — flag when acute/chronic load ratio exceeds 1.3 (injury risk zone)
+- HRV trend chart overlaid with training load
+- VO2 max progression chart
+- Matched Activities view — same route compared across dates
+- Weekly zone distribution chart (easy / moderate / hard % breakdown)
+- Race goal setup with predicted finish time tracking
+- Running dynamics charts (cadence, stride length over time)
+- Coach notes / annotation on individual activities
+- Multi-athlete view (if expanded beyond si
+
+---
+
+## [running-app] PRODUCT.md
+
+# Running App — Product Definition
+
+## Vision
+
+A personal running dashboard for a single authenticated user. Connects to both Strava and Garmin to pull in activity data, visualizes GPS routes and training trends, and helps track progress toward goals. Responsive web app that works on desktop and mobile.
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Reason |
+|---|---|---|
+| Framework | Next.js 14+ (App Router) | Fullstack, responsive, great DX |
+| Database | PostgreSQL + Prisma | Relational, typed ORM |
+| Auth | NextAuth.js | Simple credential login, single user |
+| Maps | Mapbox GL JS | Route maps + heatmap layer |
+| Charts | Recharts | Lightweight, composable, React-native |
+| Styling | Tailwind CSS | Fast, clean/minimal aesthetic |
+| Deployment | Vercel | Native Next.js support |
+
+---
+
+## Core Features
+
+- **Auth**: Single-user login to protect the app
+- **GPX/FIT file upload**: Drag-and-drop activity import — works with any GPS watch
+- **Intervals.icu sync**: Optional automatic sync via free intervals.icu API (Garmin/Strava feed through it)
+- **Run list**: Paginated list of all runs with key stats (date, distance, pace, duration)
+- **Run detail**: Individual run page with GPS route map
+- **Heatmap**: All-runs overlay on a single map
+- **Training trends**: Weekly mileage, zone distribution, consistency calendar
+- **Goal tracking**: Set weekly/monthly distance goals, track progress
+
+---
+
+## Design Principles
+
+- Clean and minimal — white space, data-first, no clutter
+- Responsive — desktop and mobile layouts
+- Fast — data loaded once, cached locally where possible
+
+---
+
+## Build Waves
+
+### Wave 1 — Foundation
+> Goal: Working app skeleton with auth and run data flowing in via file upload
+
+- [ ] Next.js project setup with Tailwind, Prisma, NextAuth
+- [ ] PostgreSQL schema: User, Activity
+- [ ] Single-user credential login (email + password)
+- [ ] GPX/FIT file upload — parse and store activity data (date, distance, pace, duration, GPS coordinates, heart rate)
+- [ ] Basic run list page (no maps yet, just stats)
+- [ ] **Test**: Login works, upload a GPX/FIT file, run appears in list with correct stats
+
+### Wave 2 — Intervals.icu Sync + Run Detail
+> Goal: Automatic sync connected, individual run pages live
+
+- [ ] Intervals.icu API integration (API key auth)
+- [ ] Sync endpoint that pulls activities from intervals.icu and stores them
+- [ ] Deduplicate activities (uploaded vs. synced)
+- [ ] Run detail page with stats breakdown
+- [ ] **Test**: Intervals.icu syncs, no duplicates, detail page loads correctly
+
+### Wave 3 — Maps
+> Goal: GPS routes visible on individual run pages and heatmap view
+
+- [ ] Mapbox GL JS setup
+- [ ] Individual run route map (render GPS polyline on run detail page)
+- [ ] All-runs heatmap page (render all GPS tracks as a heatmap overlay)
+- [ ] **Test**: Routes display accurately, heatmap loads without crashing on large datasets
+
+### Wave 4 — Dashboard & Goals
+> Goal: A coaching-first dashboard that surfaces the signals that actually matter for marathon training
+
+- [ ] Dashboard home page with summary stats (total runs, total distance, current week)
+- [ ] Weekly mileage bar chart — rolling 8 weeks
+- [ ] Training zone distribution chart — easy / moderate / hard % per week
+- [ ] Consistency calendar — GitHub-style activity grid showing run/no-run per day
+- [ ] Goal creation: set weekly or monthly distance target
+- [ ] Goal progress indicator on dashboard
+- [ ] Polish: loading states, empty states, mobile layout review
+- [ ] **Test**: Charts render correctly, goals persist and update as runs sync
+
+> See [FEATURES.md](./FEATURES.md) for the full coaching feature backlog and future wave ideas.
+
+### Wave 5 — Analysis Tab: Aerobic Development
+> Goal: A dedicated analysis space where you can interrogate any date window and understand how your aerobic engine is developing — the heart-rate-centric view a marathon coach checks every week.
+
+The key insight from the research: the single most valuable signal for marathon development is
+
+---
+
+## [running-app] README.md
+
+# Running Planning
+
+## Goals
+- Connect data to Garmin or Strava
+- List out my runs
+- Create visual maps for each run
+- Create dashboard for analyzing runs
+
+---
+
+## What it does
+
+A personal running dashboard for a single authenticated user. Pulls activity data from Intervals.icu (which aggregates Garmin and Strava), lets you upload GPX/FIT files directly, and turns it all into coaching-grade analysis.
+
+### Runs list
+
+Every activity in one place — distance, time, pace, heart rate, and source. Toggle between miles and kilometers; preference is remembered across sessions.
+
+![Runs list](public/screenshots/runs-list.png)
+
+### Run detail & route map
+
+Click any run to see the full stats breakdown and a GPS route map rendered with Mapbox, with a green start marker and red finish marker.
+
+![Run detail with route map](public/screenshots/run-detail.png)
+
+### Heatmap
+
+All GPS tracks layered on a single dark map, centered on Manhattan. Repeated routes glow brighter — your training geography at a glance.
+
+![All-runs heatmap](public/screenshots/heatmap.png)
+
+### Analysis
+
+A dedicated analysis page with a date-range slider (default: last 2 weeks, adjustable to your full history). Every aerobic chart updates live as you scrub.
+
+- **Aerobic Development** — distance vs. avg HR scatter, colored by date. A cloud drifting down = more distance for less cardiac cost.
+- **Aerobic Efficiency** — meters per minute per heartbeat over time. Rising = faster running at the same cardiovascular effort.
+- **Aerobic Pace** — easy (Zone 2) runs plotted over time; the y-axis is flipped so up = faster. The clearest long-term aerobic base signal.
+- **Effort Distribution** — weekly easy/moderate/hard breakdown by time, with the 75%-easy marathon training target marked.
+- **Fitness & Fatigue** — TRIMP-based CTL/ATL/TSB curves over 6 months: fitness builds slowly, fatigue moves fast, form = the difference.
+- **Acute:Chronic Load** — color-coded injury-risk ratio (green 0.8–1.3 = safe build, amber = caution, red = overreach).
+- **Long Run Progression** — longest run per week over the last 16 weeks.
+
+![Analysis page](public/screenshots/analysis.png)
+
+---
+
+## Tech stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js (App Router) |
+| Database | PostgreSQL + Prisma |
+| Auth | NextAuth.js (single-user credential login) |
+| Maps | Mapbox GL JS |
+| Charts | Recharts |
+| Styling | Tailwind CSS |
+| Deployment | Vercel |
+
+
+
+---
+
+## [running-coach] README.md
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+---
+
+## [running-coach] TRAINING_PLAN.md
+
+# Revised 15-Day Training Plan — Mississauga 10K Sub-60
+
+**Race:** Mississauga 10K  
+**Race Date:** Saturday, April 18, 2026  
+**Goal:** Sub 1:00:00 (6:00/km pace)  
+**Plan Start:** Friday, April 3, 2026  
+
+---
+
+## Phase 1: Reintroduce Running (Apr 3-6) — ~27 km
+
+| Date | Day | Type | Workout | Distance | Pace | Status |
+|------|-----|------|---------|----------|------|--------|
+| Apr 3 | Fri | Easy Run | 10-12km easy. First real run back. Go genuinely easy, pay attention to legs at km 8+. | 10-12 km | 7:00-7:30/km | [ ] |
+| Apr 4 | Sat | Upper Body + Easy Run | Upper body lift AM. 5km easy + 4x100m strides PM. | 5 km | 7:00-7:30/km | [ ] |
+| Apr 5 | Sun | Long Run | 10-12km. Endurance check — if comfortable, aerobic engine is fine. | 10-12 km | 6:45-7:15/km | [ ] |
+| Apr 6 | Mon | Lower Body | Lower body lift. No running. Legs need recovery. | — | — | [ ] |
+
+**Key point:** Go genuinely easy on all runs. Your cardio from swimming is ahead of your running-specific fitness. Let your legs adapt.
+
+---
+
+## Phase 2: Race Pace Test + Sharpening (Apr 7-10) — ~20 km
+
+| Date | Day | Type | Workout | Distance | Pace | Status |
+|------|-----|------|---------|----------|------|--------|
+| **Apr 7** | **Tue** | **RACE PACE TEST** | **WU 1.5km + 5km @ 6:00/km + CD 1.5km. THE key workout. Lock in 6:00 and hold.** | **8 km** | **6:00/km** | [ ] |
+| Apr 8 | Wed | Upper Body + Recovery Run | Upper body lift. 4km recovery, very easy shake-out. | 4 km | 7:15-7:45/km | [ ] |
+| Apr 9 | Thu | Tempo Intervals | WU 1.5km + 4x1km @ 5:50-6:00/km (90s jog rest) + CD 1.5km. Hold race pace under fatigue. | 8 km | 5:50-6:00/km | [ ] |
+| Apr 10 | Fri | Lower Body | Lower body lift. No running. Last hard leg day before race. | — | — | [ ] |
+
+**Key point:** The Apr 7 test tells you everything. If you hold 6:00/km for 5km and it feels controlled but hard — sub-60 is real. If you can't hold past 3km, adjust race target to 61-62 min.
+
+---
+
+## Phase 3: Cottage + Taper + Race (Apr 11-18) — ~12 km running + Race
+
+| Date | Day | Type | Workout | Distance | Pace | Status |
+|------|-----|------|---------|----------|------|--------|
+| Apr 11 | Sat | Cottage — Swim/Bike | Swim or easy bike if available. No running needed. | — | — | [ ] |
+| Apr 12 | Sun | Cottage — Swim/Rest | Swim, light walk, enjoy it. No running. | — | — | [ ] |
+| Apr 13 | Mon | Easy + Strides | 5km easy + 4x100m strides. Back from cottage, shake legs out. | 5 km | 7:00-7:20/km | [ ] |
+| Apr 14 | Tue | Swim | 20-30 min easy swim. Keeps cardio up, zero leg stress. | — | — | [ ] |
+| Apr 15 | Wed | Easy + Strides | 4km easy + 3x100m strides. Last run with any speed. | 4 km | 7:00-7:20/km | [ ] |
+| Apr 16 | Thu | Swim or Rest | Easy swim if you want, or full rest. No running. | — | — | [ ] |
+| Apr 17 | Fri | Shakeout | 3km very easy + 2x100m strides. Lay out race gear tonight. | 3 km | 7:30+/km | [ ] |
+| **Apr 18** | **Sat** | **RACE DAY** | **Mississauga 10K** | **10 km** | **6:00/km** | [ ] |
+
+**Key point:** No lifting this phase. Swim or bike on off days to keep blood flowing without leg stress. You might feel sluggish during taper — that's normal. Trust the process.
+
+---
+
+## Race Day Strategy
+
+| Segment | Pace | Cumulative Time | Notes |
+|---------|------|-----------------|-------|
+| Km 1 | 6:05-6:10 | ~6:10 | Hold back. Adrenaline will make it feel easy — that's a trap. |
+| Km 2-5 | 6:00 | ~30:00 | Find the 6:00 pacer. Run YOUR pace, not theirs if they're aggressive early. |
+| Km 6-8 | 6:00 | ~48:00 | This is where it gets honest. If struggling, 6:05 still gives ~60:30. |
+| Km 9-10 | 5:50-5:55 | ~59:00 | If you have anything left, empty the tank. |
+
+**Target splits:** 12:10 (2K) → 30:00 (5K) → 42:00 (7K) → 59:00 (finish)
+
+---
+
+## Lifting Schedule
+
+| Session | Date | Notes |
+|---------|------|-------|
+| Upper Body #1 | Apr 4 (Sat) | Normal session |
+| Lower Body #1 | Apr 6 (Mon) | Normal session |
+| Upper Body #2 | Apr 8 (Wed) | Normal session |
+| Lower Body #2 | Apr 10 (Fri) | Last hard leg day — no li
+
+---
+
+## [running-coach] README.md
+
+# Welcome to your Convex functions directory!
+
+Write your Convex functions here.
+See https://docs.convex.dev/functions for more.
+
+A query function that takes two arguments looks like:
+
+```ts
+// convex/myFunctions.ts
+import { query } from "./_generated/server";
+import { v } from "convex/values";
+
+export const myQueryFunction = query({
+  // Validators for arguments.
+  args: {
+    first: v.number(),
+    second: v.string(),
+  },
+
+  // Function implementation.
+  handler: async (ctx, args) => {
+    // Read the database as many times as you need here.
+    // See https://docs.convex.dev/database/reading-data.
+    const documents = await ctx.db.query("tablename").collect();
+
+    // Arguments passed from the client are properties of the args object.
+    console.log(args.first, args.second);
+
+    // Write arbitrary JavaScript here: filter, aggregate, build derived data,
+    // remove non-public properties, or create new objects.
+    return documents;
+  },
+});
+```
+
+Using this query function in a React component looks like:
+
+```ts
+const data = useQuery(api.myFunctions.myQueryFunction, {
+  first: 10,
+  second: "hello",
+});
+```
+
+A mutation function looks like:
+
+```ts
+// convex/myFunctions.ts
+import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+
+export const myMutationFunction = mutation({
+  // Validators for arguments.
+  args: {
+    first: v.string(),
+    second: v.string(),
+  },
+
+  // Function implementation.
+  handler: async (ctx, args) => {
+    // Insert or modify documents in the database here.
+    // Mutations can also read from the database like queries.
+    // See https://docs.convex.dev/database/writing-data.
+    const message = { body: args.first, author: args.second };
+    const id = await ctx.db.insert("messages", message);
+
+    // Optionally, return a value from your mutation.
+    return await ctx.db.get("messages", id);
+  },
+});
+```
+
+Using this mutation function in a React component looks like:
+
+```ts
+const mutation = useMutation(api.myFunctions.myMutationFunction);
+function handleButtonPress() {
+  // fire and forget, the most common way to use mutations
+  mutation({ first: "Hello!", second: "me" });
+  // OR
+  // use the result once the mutation has completed
+  mutation({ first: "Hello!", second: "me" }).then((result) =>
+    console.log(result),
+  );
+}
+```
+
+Use the Convex CLI to push your functions to a deployment. See everything
+the Convex CLI can do by running `npx convex -h` in your project root
+directory. To learn more, launch the docs with `npx convex docs`.
+
+
+---
+
+## [running-coach-app] AGENTS.md
+
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
+
+---
+
+## [running-coach-app] DECISIONS.md
+
+# Running Coach App — Decision Log
+
+This document tracks all major decisions made during the development of the running coach app. It is the canonical record of what was decided, why, and what alternatives were considered.
+
+**Synced to:** Google Drive at `01 Home/02 Running-and-training/CIM2026/DECISIONS.md`
+
+---
+
+## 2026-05-30 — Architecture & Tech Stack
+
+**Decision:** Next.js 16 monolith with Supabase backend, deployed on Vercel.
+
+**Context:** Evaluated three approaches:
+1. Next.js monolith with Supabase (chosen)
+2. Next.js frontend + separate API layer
+3. Next.js + Supabase Edge Functions for backend
+
+**Rationale:** A monolith is appropriate for a two-user coaching app. Supabase bundles auth, database, storage, and realtime — avoiding the complexity of managing 3-4 separate services. If a mobile app is needed later, Supabase's REST API is already available.
+
+---
+
+## 2026-05-30 — Authentication
+
+**Decision:** Supabase Auth with email/password, role stored in `profiles` table.
+
+**Alternatives considered:**
+- Clerk (polished UI but adds a separate service and 10K MAU free tier cap)
+- NextAuth (more manual setup, no built-in storage/realtime bundle)
+
+**Rationale:** Supabase Auth is bundled with the database, supports RLS natively, and the 50K MAU free tier is more than sufficient.
+
+---
+
+## 2026-05-30 — Workout Data Integration
+
+**Decision:** Strava API as the single integration point for Apple Watch, Nike Run Club, and direct Strava data.
+
+**Context:**
+- Apple Health has no web API (HealthKit is iOS-only)
+- Nike Run Club has no public API but officially syncs to Strava
+- Strava provides OAuth2, webhooks, and rich activity data
+
+**Rationale:** Strava is the natural aggregation layer. Screenshot upload is available as a fallback for non-Strava data.
+
+---
+
+## 2026-05-30 — AI Integration
+
+**Decision:** Vercel AI Gateway with Gemini (multimodal) for the AI agent.
+
+**Alternatives considered:**
+- Direct Gemini SDK (simpler but locked to one provider)
+- Direct provider SDKs for multiple models
+
+**Rationale:** AI Gateway provides model routing, failover, and cost tracking. Allows switching models later without code changes. Gemini supports vision for screenshot analysis.
+
+---
+
+## 2026-05-30 — Domain & Deployment
+
+**Decision:** `run.latinovation.com` on Vercel, DNS via Namecheap CNAME.
+
+**Setup:** CNAME record `run` -> `cname.vercel-dns.com` (to be added manually by user).
+
+---
+
+## 2026-05-30 — Calendar Conflict System
+
+**Decision:** General-purpose calendar plan uploads (CSV/spreadsheet) with auto-detection of conflict types via keyword matching.
+
+**Rationale:** Not limited to travel itineraries — works for any date-based plan. Conflict types (travel, hiking, rest) are auto-detected from activity keywords but can be overridden by the user.
+
+---
+
+## 2026-05-30 — Community Feed
+
+**Decision:** Public feed where runners share achievements and milestones. Single "cheer" reaction (like Strava kudos). Visible to all authenticated users.
+
+---
+
+## 2026-05-31 — shadcn/ui Component Library
+
+**Decision:** shadcn/ui uses `@base-ui/react` (not Radix UI) as of v4.8+. The `DropdownMenuTrigger` no longer supports `asChild` — children are rendered directly inside the trigger element.
+
+**Impact:** All dropdown trigger patterns must place the trigger content as children, not use the `asChild` prop pattern from older Radix-based examples.
+
+---
+
+## 2026-05-31 — V1 Feature Set
+
+**Decision:** V1 includes: auth, training plans (Excel import), workouts (logging, comments, media), calendar view (hybrid month grid + detail panel with toggle), calendar conflicts (CSV import, auto-detection), messaging (coach-runner realtime chat), community feed (posts, cheers), and profile settings.
+
+**Deferred to V1.1:**
+- Strava integration (requires API key registration at developers.strava.com)
+- AI agent (requires Vercel AI Gateway OIDC setup)
+- Rich media in messages (image/file attachments)
+- Coach invitation system (email-based)
+
+---
+
+## 2026-05-31 — Calendar View Design
+
+
+
+---
+
+## [running-coach-app] README.md
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+---
+
+## [running-coach-app] 2026-05-31-calendar-view-design.md
+
+# Calendar View — Design Spec
+
+**Date:** 2026-05-31
+**Status:** Approved
+
+---
+
+## Purpose
+
+Add a hybrid calendar view (mini month grid + detail panel) to the dashboard and plan pages. Users can toggle between the existing week-card list view and the new calendar view.
+
+---
+
+## Component: TrainingCalendar
+
+A client component rendering:
+
+### Left Panel — Month Grid
+- 7-column grid (Mon–Sun) showing day numbers
+- Color-coded cells based on workout status:
+  - Green: completed
+  - Blue: upcoming
+  - Yellow: modified
+  - Red: missed
+  - Gray: off/rest/no workout
+- Today's date has a highlighted ring
+- Month navigation via left/right arrows above the grid
+- Days without workouts are plain (no color)
+
+### Right Panel — Day Detail
+- Shows when a day with a workout is clicked
+- Displays: day name, date, prescribed workout, status badge
+- Shows logged metrics if available (miles, HR, effort)
+- Shows calendar conflict warning if one exists for that date (future: Plan 5)
+- Link to full workout detail page (`/plan/[planId]/workout/[workoutId]`)
+- When no day is selected, shows a prompt: "Click a day to see details"
+
+### Responsive
+- On small screens, the detail panel moves below the calendar grid (stacked layout)
+- Grid cells shrink but remain tappable
+
+---
+
+## Component: ViewToggle
+
+A `Tabs` component (shadcn/ui) with two values: `calendar` and `list`.
+
+- Placed at the top of both dashboard and plan pages, right-aligned next to the page heading
+- View state stored in URL search param `?view=calendar` or `?view=list`
+- Defaults to `calendar`
+- When `list` is selected, the existing week-card view renders
+- When `calendar` is selected, the TrainingCalendar renders
+
+---
+
+## Integration Points
+
+### Dashboard (`/dashboard`)
+- ViewToggle appears next to "This Week" heading
+- Calendar view shows the full month with the current plan's workouts
+- List view shows the existing WeekCard for the current week (unchanged)
+
+### Plan Page (`/plan/[planId]`)
+- ViewToggle appears next to the plan title
+- Calendar view shows all months that have workouts, defaulting to the current month
+- List view shows the existing stacked WeekCards (unchanged)
+
+---
+
+## Data Flow
+
+- Both views consume the same data: workouts with `date`, `prescribed_workout`, `status`, `miles`, `perceived_effort`, `day_of_week`, `id`
+- The plan page already fetches weeks with nested workouts — the calendar flattens this into a date-indexed map
+- The dashboard already fetches the current week — the calendar additionally needs all workouts for the current month (a slightly wider query)
+- Day detail uses data already loaded (no extra fetch needed for basic info)
+
+---
+
+## Files
+
+| File | Action | Purpose |
+|------|--------|---------|
+| `src/components/training-calendar.tsx` | Create | Hybrid calendar component (client) |
+| `src/components/calendar-day-detail.tsx` | Create | Right-side detail panel |
+| `src/components/view-toggle.tsx` | Create | Calendar/List tabs |
+| `src/app/(protected)/plan/[planId]/page.tsx` | Modify | Add toggle + calendar view |
+| `src/app/(protected)/dashboard/page.tsx` | Modify | Add toggle + calendar view, widen query to full month |
+
+---
+
+## No New Database Changes
+
+The calendar is purely a UI layer over existing data. No migrations, RLS changes, or new server actions needed.
+
+
+---
+
+## [runningCalculator] README.md
+
+[![sonar](https://sonarcloud.io/api/project_badges/quality_gate?project=ronek22_runningCalculator)](https://sonarcloud.io/dashboard?id=ronek22_runningCalculator)
+
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/ronek22/runningCalculator/?ref=repository-badge)
+[![Build Status](https://travis-ci.org/ronek22/runningCalculator.svg?branch=master)](https://travis-ci.org/ronek22/runningCalculator)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8da171e47d7d47e95c0a/maintainability)](https://codeclimate.com/github/ronek22/runningCalculator/maintainability)
+[![BCH compliance](https://bettercodehub.com/edge/badge/ronek22/runningCalculator?branch=master)](https://bettercodehub.com/)
+[![codecov](https://codecov.io/gh/ronek22/runningCalculator/branch/master/graph/badge.svg)](https://codecov.io/gh/ronek22/runningCalculator)
+
+
+# runningCalculator
+Application allows us to calculate:
+* How long should be long run depending on weekly mileage (formula from Jack Daniels book)
+* pace (from time & distance)
+* time (from distance & pace) calculate (pace, time,long run, vdot, paces for vdot)
+* table with paces according to Jack Daniels book, depending on latest race time
+
+## Requirements
+I recommend to create virtual environment for this project, then you can easily install all requirements with following command
+```
+pip install -r requirements.txt
+```
+
+# Test online
+You can test it online [here.](https://repl.it/@ronek22/runningCalculator)
+
+
+---
+
+## [running_analysis] ANALYSIS_SUMMARY.md
+
+# Running Activity Analysis Summary
+
+## Your Running Statistics (July-August 2025)
+
+### Overall Totals
+- **Total Activities**: 27 sessions
+- **Total Distance**: 221.62 km
+- **Total Time**: 21 hours 16 minutes
+- **Total Calories**: 15,370 kcal
+- **Average Pace**: 5:45 /km
+
+### Activity Breakdown
+
+#### Outdoor Running (22 activities)
+- **Total Distance**: 192.08 km (87% of total)
+- **Total Time**: 18h 16m
+- **Average Distance**: 8.73 km per run
+- **Average Heart Rate**: 148 bpm
+- **Average Cadence**: 166 spm
+- **Total Calories**: 13,170 kcal
+
+#### Treadmill Running (5 activities)
+- **Total Distance**: 29.54 km (13% of total)
+- **Total Time**: 3h 00m
+- **Average Distance**: 5.91 km per run
+- **Average Heart Rate**: 151 bpm
+- **Average Cadence**: 158 spm
+- **Total Calories**: 2,200 kcal
+
+## Key Metrics Available in Your Data
+
+### Always Available
+- Distance, time, pace
+- Heart rate (average, max, zones)
+- Cadence and stride count
+- Running power metrics
+- Training effect scores
+- Lap/split breakdowns
+- Pause detection
+
+### Outdoor Runs Only
+- GPS coordinates and route tracking
+- Elevation gain/loss
+- Altitude data
+
+### Running Form Metrics
+Your FIT files include advanced running dynamics:
+- Ground contact time (stance time)
+- Step length
+- Vertical oscillation
+- Vertical ratio (efficiency metric)
+- L/R balance (in newer files)
+
+## Observations
+
+### Training Volume
+- You run approximately **13-14 times per week** during this period
+- Mix of short (2-3km), medium (5-12km), and long runs (16-25km)
+- Longest run: **25.01 km** on July 27, 2025
+
+### Intensity
+- Most runs fall in **Zone 4 (80-90% max HR)** - tempo/threshold pace
+- Training Effect scores typically 2.0-3.5 (moderate to improving)
+- Two 5.0 TE runs (your long runs) - very hard effort
+
+### Consistency
+- Regular training pattern
+- Good mix of outdoor and treadmill work
+- Outdoor runs tend to be longer than treadmill sessions
+
+### Form Metrics
+- Cadence averages **166 spm** (outdoor) and **158 spm** (treadmill)
+  - Outdoor cadence is within optimal range (160-180 spm)
+  - Treadmill cadence slightly lower
+- Ground contact time around **240-260 ms**
+- Vertical oscillation around **7-9 cm**
+
+## Tools Created for Analysis
+
+### 1. Batch Summary (`batch_summary.py`)
+Quick table view of all activities with key metrics.
+
+**Use when**: You want a high-level overview of all your runs.
+
+### 2. Session Report (`session_report.py`)
+Comprehensive single-activity analysis.
+
+**Use when**: You want detailed insights into a specific run, including:
+- HR zone breakdown
+- Split analysis
+- Running dynamics
+- Pause details
+
+### 3. Structure Analyzer (`analyze_fit_structure.py`)
+Deep dive into FIT file format and available fields.
+
+**Use when**: You're curious about the raw data structure or want to build custom analysis tools.
+
+## Potential Future Insights
+
+Based on your data, you could analyze:
+
+1. **Progress Tracking**
+   - Pace improvement over time
+   - HR drift (cardiovascular efficiency)
+   - Form metrics trends
+
+2. **Training Patterns**
+   - Weekly/monthly volume
+   - Intensity distribution
+   - Recovery patterns
+
+3. **Performance Predictors**
+   - Correlation between pace and HR
+   - Cadence vs pace relationship
+   - Form breakdown at different paces
+
+4. **Route Analysis**
+   - Favorite routes (GPS clustering)
+   - Elevation profiles
+   - Pace on hills vs flats
+
+5. **Comparative Analysis**
+   - Outdoor vs treadmill differences
+   - Morning vs evening performance
+   - Weather impact (if correlated with external data)
+
+## File Format Notes
+
+### Naming Convention
+Your files follow: `{distance}k_{date}_{time}[_treadmill].fit`
+
+Example: `11.0k_28-07-25_05h56.fit`
+- 11km run
+- July 28, 2025
+- Started at 5:56 AM
+
+### Data Quality
+- All files contain complete session data
+- Heart rate data present in all activities
+- Running dynamics (cadence, form) available
+- GPS data complete for outdoor runs
+- Power metrics included (likely calculated, not from external sensor)
+
+## Next Steps
+
+1. **Explore indi
+
+---
+
+## [running_analysis] DASHBOARD_GUIDE.md
+
+# Dashboard User Guide
+
+## Overview
+
+This guide will help you get started with the interactive Jupyter dashboards for analyzing your running activities.
+
+## Setup
+
+### One-Time Setup
+
+Run the setup script to install all required dependencies:
+
+```bash
+./setup_dashboard.sh
+```
+
+This will install:
+- pandas (data manipulation)
+- matplotlib & seaborn (static plotting)
+- plotly (interactive charts)
+- ipywidgets (interactive controls)
+- numpy (numerical operations)
+- folium (GPS maps)
+- fitparse (FIT file parsing)
+
+### Manual Setup
+
+If the script doesn't work, install manually:
+
+```bash
+pip3 install fitparse pandas matplotlib seaborn plotly ipywidgets numpy folium
+```
+
+## Launching Dashboards
+
+### General Analysis Dashboard
+
+View aggregate statistics and trends across all your activities:
+
+```bash
+jupyter notebook general_dashboard.ipynb
+```
+
+Once Jupyter opens in your browser:
+1. Click "Run All" from the Cell menu (or use Shift+Enter to run cells one by one)
+2. Wait for all cells to execute
+3. Scroll through to view different visualizations
+
+### Session Analysis Dashboard
+
+Analyze individual running sessions in detail:
+
+```bash
+jupyter notebook session_dashboard.ipynb
+```
+
+Once Jupyter opens:
+1. Run the first few cells to load libraries and set up the file selector
+2. Use the dropdown menu to select a FIT file
+3. Click "Analyze Session" button
+4. Run the remaining cells to generate visualizations
+
+## General Dashboard Features
+
+### 1. Overall Statistics
+- Total distance, activities, time, calories
+- Average pace, heart rate, cadence
+- Longest run distance
+
+### 2. Training Volume Over Time
+- Individual activity distances with trendlines
+- Cumulative distance progression
+- Separate views for outdoor vs treadmill
+
+### 3. Activity Distribution
+- Pie chart showing outdoor vs treadmill split
+- Bar chart of activities by day of week
+- Distance breakdown by activity type
+
+### 4. Pace and Speed Analysis
+- Pace trends over time
+- Pace distribution histogram
+- Pace vs distance scatter plots
+- Speed comparisons
+
+### 5. Heart Rate Analysis
+- Average HR trends over time
+- HR distribution across all activities
+- HR vs pace correlation
+- HR vs distance analysis
+
+### 6. Running Form Metrics
+- Cadence progression (target: 180 spm)
+- Ground contact time trends
+- Vertical oscillation efficiency
+- Cadence vs pace relationship
+
+### 7. Weekly Summary
+- Weekly distance totals
+- Activities per week
+- Training time per week
+- Calorie expenditure
+
+### 8. Activity Summary Table
+- Sortable table with all activities
+- Color-coded by distance and HR
+- Quick reference for all sessions
+
+### 9. Outdoor vs Treadmill Comparison
+- Side-by-side metric comparisons
+- Performance differences
+- Volume distribution
+
+## Session Dashboard Features
+
+### 1. Interactive File Selector
+- Dropdown menu with all FIT files
+- Click button to load selected session
+- Clear status messages
+
+### 2. Session Summary
+- Key metrics at a glance
+- Distance, duration, pace, calories
+- Heart rate, cadence, training effect
+
+### 3. Heart Rate Analysis
+- HR over time with average line
+- Time spent in each HR zone (color-coded)
+- HR vs distance progression
+
+### 4. Pace and Speed
+- Pace progression throughout run
+- Speed changes over time
+- Pace distribution histogram
+- Speed vs distance chart
+
+### 5. Running Form Metrics
+- Cadence over time (with 180 spm reference)
+- Ground contact time progression
+- Vertical oscillation trends
+- Step length analysis
+
+### 6. Elevation Profile (Outdoor Only)
+- Elevation changes over distance
+- Elevation vs heart rate correlation
+- Total ascent and descent
+
+### 7. Lap/Split Analysis
+- Visual comparison of lap paces
+- Heart rate per lap
+- Cadence consistency across laps
+- Time per lap breakdown
+- Detailed lap table
+
+### 8. GPS Route Map (Outdoor Only)
+- Interactive map with your route
+- Start and finish markers
+- Zoom and pan capabilities
+- Click for coordinates
+
+### 9. Multi-Metric Correlation
+- Normalized comparison of all metrics
+- Identify patterns and relationships
+
+---
+
+## [running_analysis] FIT_FILE_STRUCTURE.md
+
+# FIT File Structure Analysis
+
+## Overview
+
+This document details the structure and available metrics from Garmin FIT files used for running activity tracking. Analysis was performed on 27 FIT files (22 outdoor, 5 treadmill activities).
+
+## File Categories
+
+### Outdoor Activities
+- Files without "treadmill" in filename
+- Include GPS data (latitude, longitude, altitude)
+- Track elevation changes (ascent/descent)
+- 22 files in dataset
+
+### Treadmill Activities
+- Files with "treadmill" in filename
+- No GPS coordinates (position_lat, position_long)
+- No elevation data
+- 5 files in dataset
+- `sub_sport` field = "treadmill" (vs "generic" for outdoor)
+
+## Key Message Types
+
+### SESSION
+Single message per activity containing aggregate metrics for the entire run.
+
+**Core Metrics:**
+- `total_distance` - Total distance in meters
+- `total_timer_time` - Active running time (excluding pauses)
+- `total_elapsed_time` - Total time including pauses
+- `total_calories` - Calories burned
+- `total_strides` - Total steps taken
+
+**Speed:**
+- `enhanced_avg_speed` - Average speed in m/s
+- `enhanced_max_speed` - Maximum speed in m/s
+
+**Heart Rate:**
+- `avg_heart_rate` - Average HR (bpm)
+- `max_heart_rate` - Maximum HR (bpm)
+
+**Running Dynamics:**
+- `avg_running_cadence` - Average cadence (steps per minute, per foot)
+- `max_running_cadence` - Max cadence
+- `avg_fractional_cadence` - Fractional component for sub-1 spm precision
+- `avg_stance_time` - Ground contact time in milliseconds
+- `avg_stance_time_percent` - Stance time as % of stride (newer files)
+- `avg_stance_time_balance` - L/R balance percentage (newer files)
+- `avg_step_length` - Average step length in millimeters
+- `avg_vertical_oscillation` - Vertical bounce in millimeters
+- `avg_vertical_ratio` - Vertical oscillation / step length percentage
+
+**Power:**
+- `avg_power` - Average power in watts
+- `max_power` - Maximum power in watts
+- `normalized_power` - Normalized power metric
+- `total_work` - Total work in joules
+
+**Training Effect:**
+- `total_training_effect` - Aerobic training effect (1.0-5.0 scale)
+- `total_anaerobic_training_effect` - Anaerobic training effect
+
+**Elevation (Outdoor Only):**
+- `total_ascent` - Total elevation gain in meters
+- `total_descent` - Total elevation loss in meters
+
+**Position (Outdoor Only):**
+- `start_position_lat` / `start_position_long` - Start coordinates (semicircles)
+- `nec_lat` / `nec_long` - Northeast corner of bounding box
+- `swc_lat` / `swc_long` - Southwest corner of bounding box
+
+**Other:**
+- `start_time` - Activity start timestamp
+- `timestamp` - Activity end timestamp
+- `num_laps` - Number of laps/splits
+- `sport` - Always "running" for these files
+- `sub_sport` - "treadmill" or "generic"
+
+### LAP
+Multiple messages (typically one per kilometer or user-triggered lap).
+
+**Same metrics as SESSION but for each lap:**
+- Distance, time, speed metrics
+- Heart rate stats
+- Running dynamics
+- Power metrics
+- Elevation changes (outdoor)
+- Position coordinates (outdoor)
+
+**Additional:**
+- `message_index` - Lap number
+- `lap_trigger` - How lap was triggered (distance, manual, etc.)
+- `intensity` - Active/rest/warmup/cooldown
+
+### RECORD
+Most frequent message type (2,000-4,500+ per activity), representing second-by-second data points.
+
+**Available Fields:**
+- `timestamp` - GPS timestamp for this record
+- `distance` - Cumulative distance in meters
+- `enhanced_speed` - Current speed in m/s
+- `enhanced_altitude` - Current altitude in meters (outdoor)
+- `position_lat` / `position_long` - GPS coordinates (outdoor)
+- `heart_rate` - Current heart rate
+- `cadence` - Running cadence (spm)
+- `fractional_cadence` - Sub-1 spm precision
+- `stance_time` - Ground contact time (ms)
+- `stance_time_percent` - Stance time % (newer files)
+- `stance_time_balance` - L/R balance (newer files)
+- `step_length` - Step length (mm)
+- `vertical_oscillation` - Vertical bounce (mm)
+- `vertical_ratio` - Vert osc / step length %
+- `power` - Running power (watts)
+- `accumulated_power` - Cumula
+
+---
+
+## [running_analysis] GETTING_STARTED.md
+
+# Getting Started with Running Analysis
+
+## First Time Setup (5 minutes)
+
+### Step 1: Install Dependencies
+
+Run the automated setup:
+
+```bash
+cd /Users/danielgomez/running_analysis
+./setup_dashboard.sh
+```
+
+**What this does:**
+- Checks for Python 3
+- Installs all required packages
+- Confirms successful installation
+
+### Step 2: Choose Your Path
+
+You have two options for analyzing your running data:
+
+#### Option A: Interactive Dashboards (Recommended for Rich Visualizations)
+
+```bash
+jupyter notebook
+```
+
+This will open Jupyter in your browser. Then:
+- Click `general_dashboard.ipynb` for overview of all runs
+- Click `session_dashboard.ipynb` for detailed single-run analysis
+
+#### Option B: Command Line (Recommended for Quick Terminal Access)
+
+```bash
+# See all activities at once
+python3 batch_summary.py
+
+# Detailed report for specific run
+python3 session_report.py fit/11.0k_28-07-25_05h56.fit
+```
+
+## Your First Analysis
+
+### Try the General Dashboard
+
+1. Open terminal and navigate to project:
+   ```bash
+   cd /Users/danielgomez/running_analysis
+   ```
+
+2. Launch Jupyter:
+   ```bash
+   jupyter notebook general_dashboard.ipynb
+   ```
+
+3. In the browser that opens:
+   - Click "Cell" → "Run All" from the menu
+   - Wait 10-20 seconds for all cells to execute
+   - Scroll down to see visualizations
+
+4. **What you'll see:**
+   - Total statistics (221.62 km, 27 activities!)
+   - Distance over time chart
+   - Pace trends
+   - Heart rate analysis
+   - Running form metrics
+   - Weekly training volume
+
+### Try the Session Dashboard
+
+1. Launch Jupyter:
+   ```bash
+   jupyter notebook session_dashboard.ipynb
+   ```
+
+2. Run the first 3 cells (Shift+Enter for each)
+
+3. You'll see a dropdown menu with all your FIT files
+
+4. Select a file and click "Analyze Session"
+
+5. Run the remaining cells to see:
+   - Heart rate zones
+   - Pace progression
+   - Running form metrics
+   - GPS map (for outdoor runs)
+   - Lap-by-lap breakdown
+
+## Quick Command Line Example
+
+Try this right now:
+
+```bash
+python3 batch_summary.py
+```
+
+You'll immediately see a table with all 27 activities showing:
+- Date and type
+- Distance and time
+- Pace and heart rate
+- Calories and training effect
+
+## Understanding the Output
+
+### General Dashboard Shows:
+- **Trends** - Are you getting faster? Running more consistently?
+- **Patterns** - What days do you run most? Indoor vs outdoor preferences?
+- **Metrics** - Average pace, HR, cadence across all activities
+- **Progress** - Cumulative distance, weekly volume
+
+### Session Dashboard Shows:
+- **Performance** - How did this specific run go?
+- **Pacing** - Did you maintain even pace or slow down?
+- **Heart Rate** - Time in each zone, HR progression
+- **Form** - Cadence, ground contact, vertical oscillation
+- **Route** - GPS map showing where you ran (outdoor)
+
+## Your Data At a Glance
+
+From the 27 FIT files analyzed:
+
+**🏃 Total Activities:** 27 runs
+**📏 Total Distance:** 221.62 km
+**⏱️ Total Time:** 21 hours 16 minutes
+**🔥 Calories Burned:** 15,370 kcal
+**⚡ Average Pace:** 5:45 /km
+**❤️ Average HR:** 148 bpm
+**👟 Average Cadence:** 166 spm
+
+**Activity Split:**
+- 🌳 Outdoor: 22 runs (192 km)
+- 🏃 Treadmill: 5 runs (29.5 km)
+
+**Longest Run:** 25.01 km (wow!)
+
+## Common Questions
+
+### Q: Which dashboard should I use first?
+**A:** Start with `general_dashboard.ipynb` to see overall patterns, then use `session_dashboard.ipynb` to deep dive into specific runs.
+
+### Q: How do I pick which session to analyze?
+**A:** Look for:
+- Your longest runs to see endurance patterns
+- Recent runs to track current form
+- Treadmill vs outdoor to compare
+- Runs with interesting filenames (race days, specific workouts)
+
+### Q: What's the most important metric to watch?
+**A:** Depends on your goal:
+- **Getting faster?** Watch average pace trends
+- **Building endurance?** Monitor HR at given paces (should decrease over time)
+- **Improving form?** Track cadence (target 180 spm) and ground contact time
+- **Training load?** Check weekly distance and training effect
+
+
+
+---
+
+## [running_analysis] INDEX.md
+
+# Running Analysis Project - Complete Index
+
+## 🚀 Start Here
+
+**New to this project?** → [GETTING_STARTED.md](GETTING_STARTED.md)
+
+**Want the full overview?** → [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)
+
+**Ready to analyze?** → Run `./setup_dashboard.sh` then open `general_dashboard.ipynb`
+
+---
+
+## 📁 File Directory
+
+### 🎯 Main Entry Points
+
+| File | Purpose | When to Use |
+|------|---------|-------------|
+| [GETTING_STARTED.md](GETTING_STARTED.md) | Quick start guide | First time setup |
+| [README.md](README.md) | Main documentation | Reference and overview |
+| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Complete project summary | Full understanding |
+
+### 📊 Interactive Dashboards
+
+| File | Type | Purpose |
+|------|------|---------|
+| `general_dashboard.ipynb` | Jupyter Notebook | Analyze all activities together |
+| `session_dashboard.ipynb` | Jupyter Notebook | Deep dive into single sessions |
+
+**How to use:**
+1. Run `./setup_dashboard.sh` (first time only)
+2. Launch with `jupyter notebook <filename>`
+3. Follow instructions in [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md)
+
+### 💻 Command Line Tools
+
+| File | Purpose | Example Command |
+|------|---------|----------------|
+| `batch_summary.py` | Quick overview table | `python3 batch_summary.py` |
+| `session_report.py` | Detailed single session | `python3 session_report.py fit/file.fit` |
+| `analyze_fit_structure.py` | FIT format analysis | `python3 analyze_fit_structure.py` |
+
+### 📖 Documentation
+
+| File | Content | Read When |
+|------|---------|-----------|
+| [GETTING_STARTED.md](GETTING_STARTED.md) | First-time setup and quick guide | Starting the project |
+| [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) | Complete dashboard tutorial | Using Jupyter notebooks |
+| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Everything about the project | Want comprehensive overview |
+| [ANALYSIS_SUMMARY.md](ANALYSIS_SUMMARY.md) | Your running statistics | Want to see your data summary |
+| [FIT_FILE_STRUCTURE.md](FIT_FILE_STRUCTURE.md) | Technical FIT format details | Need data format info |
+| [README.md](README.md) | Main project documentation | General reference |
+
+### ⚙️ Configuration & Setup
+
+| File | Purpose |
+|------|---------|
+| `setup_dashboard.sh` | Automated setup script |
+| `requirements.txt` | Python package dependencies |
+
+### 📂 Data
+
+| Folder | Contents |
+|--------|----------|
+| `fit/` | 27 FIT files (22 outdoor, 5 treadmill) |
+
+---
+
+## 🎯 Quick Navigation by Task
+
+### I want to...
+
+#### ...get started quickly
+→ [GETTING_STARTED.md](GETTING_STARTED.md) → Run `./setup_dashboard.sh`
+
+#### ...see all my activities at once
+→ Launch `jupyter notebook general_dashboard.ipynb`
+→ Or run `python3 batch_summary.py` for terminal view
+
+#### ...analyze a specific run in detail
+→ Launch `jupyter notebook session_dashboard.ipynb`
+→ Or run `python3 session_report.py fit/<filename>`
+
+#### ...understand what metrics are available
+→ [FIT_FILE_STRUCTURE.md](FIT_FILE_STRUCTURE.md) - All metrics explained
+→ [ANALYSIS_SUMMARY.md](ANALYSIS_SUMMARY.md) - Your data overview
+
+#### ...learn how to use the dashboards
+→ [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) - Complete tutorial
+
+#### ...understand my running performance
+→ [ANALYSIS_SUMMARY.md](ANALYSIS_SUMMARY.md) - Statistics and insights
+→ `general_dashboard.ipynb` - Visual analysis
+
+#### ...see the big picture
+→ [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) - Everything explained
+
+#### ...troubleshoot issues
+→ [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) → "Troubleshooting" section
+→ Check if dependencies installed: `pip3 list | grep -E "fitparse|pandas|plotly"`
+
+---
+
+## 📊 Dashboard Features Quick Reference
+
+### General Dashboard Sections
+1. Overall Statistics
+2. Training Volume Over Time
+3. Activity Distribution
+4. Pace and Speed Analysis
+5. Heart Rate Analysis
+6. Running Form Metrics
+7. Weekly Summary
+8. Activity Table
+9. Outdoor vs Treadmill Comparison
+
+### Session Dashboard Sections
+1. File Selector (dropdown menu)
+2. Session Summary
+3. Heart Rate Analysis
+4. Pace and Speed
+
+
+---
+
+## [running_analysis] PROJECT_SUMMARY.md
+
+# Running Analysis Project - Complete Summary
+
+## What's Been Created
+
+This project provides comprehensive analysis tools for Garmin FIT running data, with both command-line utilities and interactive Jupyter dashboards.
+
+## Project Structure
+
+```
+running_analysis/
+├── fit/                          # 27 FIT files (22 outdoor, 5 treadmill)
+├── general_dashboard.ipynb       # Interactive dashboard for all activities
+├── session_dashboard.ipynb       # Interactive dashboard for individual sessions
+├── batch_summary.py              # CLI tool: summary table of all activities
+├── session_report.py             # CLI tool: detailed single session report
+├── analyze_fit_structure.py      # CLI tool: FIT file format analysis
+├── setup_dashboard.sh            # One-command setup script
+├── requirements.txt              # Python dependencies
+├── README.md                     # Main documentation
+├── DASHBOARD_GUIDE.md            # How to use the dashboards
+├── FIT_FILE_STRUCTURE.md         # Technical FIT format documentation
+├── ANALYSIS_SUMMARY.md           # Your running statistics overview
+└── PROJECT_SUMMARY.md            # This file
+```
+
+## Quick Start Guide
+
+### For Interactive Analysis (Recommended)
+
+1. **Setup** (one time):
+   ```bash
+   ./setup_dashboard.sh
+   ```
+
+2. **General Overview**:
+   ```bash
+   jupyter notebook general_dashboard.ipynb
+   ```
+   Then run all cells to see aggregate statistics and trends.
+
+3. **Specific Session Analysis**:
+   ```bash
+   jupyter notebook session_dashboard.ipynb
+   ```
+   Select a file from dropdown, click "Analyze Session", run cells.
+
+### For Command Line Analysis
+
+```bash
+# Quick overview of all activities
+python3 batch_summary.py
+
+# Detailed report for one activity
+python3 session_report.py fit/11.0k_28-07-25_05h56.fit
+
+# Technical analysis of FIT structure
+python3 analyze_fit_structure.py
+```
+
+## Interactive Dashboards
+
+### General Dashboard (`general_dashboard.ipynb`)
+
+**8 Major Sections:**
+
+1. **Overall Statistics** - Total distance, time, calories, averages
+2. **Training Volume** - Distance over time, cumulative progress
+3. **Activity Distribution** - By type, day of week, distance breakdown
+4. **Pace & Speed** - Trends, distributions, correlations
+5. **Heart Rate** - Zones, trends, pace relationships
+6. **Running Form** - Cadence, ground contact, vertical oscillation
+7. **Weekly Summary** - Training load by week
+8. **Comparative Analysis** - Outdoor vs treadmill performance
+
+**Key Features:**
+- All charts are interactive (hover, zoom, pan)
+- Automatic calculation of derived metrics
+- Color-coded visualizations
+- Trend analysis
+- Statistical summaries
+
+### Session Dashboard (`session_dashboard.ipynb`)
+
+**10 Major Sections:**
+
+1. **File Selector** - Interactive dropdown with all FIT files
+2. **Session Summary** - Key metrics dashboard
+3. **Heart Rate Analysis** - HR over time, zones, progression
+4. **Pace & Speed** - Pace/speed charts, distributions
+5. **Running Form** - Cadence, stance time, vertical metrics
+6. **Elevation Profile** - Altitude changes with HR correlation (outdoor)
+7. **Lap Analysis** - Split comparisons, per-lap metrics
+8. **GPS Map** - Interactive route map with markers (outdoor)
+9. **Multi-Metric Correlation** - Normalized comparison view
+10. **Data Tables** - Detailed lap-by-lap breakdowns
+
+**Key Features:**
+- Graphical file selection
+- Second-by-second data visualization
+- GPS route mapping (outdoor runs)
+- Elevation profiles
+- Lap-by-lap comparisons
+- Form metric trends
+- HR zone distribution
+
+## Command Line Tools
+
+### 1. batch_summary.py
+- **Purpose**: Quick text-based overview
+- **Output**: Table with all activities
+- **Best for**: Terminal users, quick checks
+
+### 2. session_report.py
+- **Purpose**: Detailed text report for one session
+- **Output**: Comprehensive stats, splits, pauses
+- **Best for**: Detailed single-session analysis without GUI
+
+### 3. analyze_fit_structure.py
+- **Purpose**: Technical FIT file inspection
+- **Output**: Message types, field an
+
+---
+
+## [running_analysis] README.md
+
+# Running Activity Analysis
+
+A collection of tools and documentation for analyzing running activities from Garmin FIT files.
+
+## Overview
+
+This repository contains 27 FIT files from running sessions (22 outdoor, 5 treadmill) and analysis tools to extract meaningful insights from the data.
+
+## Quick Start
+
+### Option 1: Interactive Dashboards (Recommended)
+
+1. **Setup:**
+   ```bash
+   ./setup_dashboard.sh
+   ```
+
+2. **Launch General Dashboard:**
+   ```bash
+   jupyter notebook general_dashboard.ipynb
+   ```
+
+   View comprehensive analysis of all activities with interactive charts.
+
+3. **Launch Session Dashboard:**
+   ```bash
+   jupyter notebook session_dashboard.ipynb
+   ```
+
+   Analyze individual sessions with detailed visualizations and GPS maps.
+
+### Option 2: Command Line Tools
+
+1. **Install Dependencies:**
+   ```bash
+   pip3 install fitparse
+   ```
+
+2. **View All Activities Summary:**
+   ```bash
+   python3 batch_summary.py
+   ```
+
+3. **Generate Detailed Session Report:**
+   ```bash
+   python3 session_report.py fit/11.0k_28-07-25_05h56.fit
+   ```
+
+## Available Tools
+
+### Interactive Dashboards (Jupyter Notebooks)
+
+#### `general_dashboard.ipynb`
+**Purpose:** Comprehensive analysis of all running activities
+
+**Features:**
+- Overall statistics (total distance, time, calories, etc.)
+- Training volume over time with cumulative trends
+- Activity distribution by type and day of week
+- Pace and speed analysis with trends
+- Heart rate analysis with zone distribution
+- Running form metrics (cadence, ground contact, vertical oscillation)
+- Weekly training summary
+- Outdoor vs Treadmill comparison
+- All visualizations are interactive (hover, zoom, pan)
+
+**Usage:** Open in Jupyter Notebook and run all cells
+
+---
+
+#### `session_dashboard.ipynb`
+**Purpose:** Deep dive into individual running sessions
+
+**Features:**
+- Interactive file selector dropdown menu
+- Session summary with key metrics
+- Heart rate analysis with zone breakdown
+- Pace and speed progression charts
+- Running form metrics over time
+- Elevation profile with HR correlation (outdoor)
+- Lap/split analysis with detailed breakdowns
+- GPS route map with start/finish markers (outdoor)
+- Multi-metric normalized comparison
+- All charts are interactive and zoomable
+
+**Usage:** Open in Jupyter Notebook, select a file from dropdown, click "Analyze Session"
+
+---
+
+### Command Line Tools
+
+#### `batch_summary.py`
+**Purpose:** Quick overview of all running activities in a table format
+
+**Usage:**
+```bash
+python3 batch_summary.py
+```
+
+**Output:** Summary table showing:
+- Date, type (outdoor/treadmill), distance, time, pace
+- Average heart rate, cadence, calories
+- Elevation gain (outdoor only)
+- Training effect
+- Aggregate statistics (totals and averages by activity type)
+
+---
+
+#### `session_report.py`
+**Purpose:** Generate comprehensive session reports for individual FIT files
+
+**Usage:**
+```bash
+python3 session_report.py <path_to_fit_file>
+```
+
+**Example:**
+```bash
+python3 session_report.py fit/11.0k_28-07-25_05h56.fit
+```
+
+**Output:** Detailed text report with all available metrics from the activity
+
+---
+
+### `analyze_fit_structure.py`
+**Purpose:** Deep analysis of FIT file structure and available data fields
+
+**Usage:**
+```bash
+python3 analyze_fit_structure.py
+```
+
+**Output:** Detailed breakdown of message types, fields, and differences between outdoor/treadmill files
+
+## Documentation
+
+### Quick Links
+- **[DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md)** - Complete guide to using the interactive dashboards
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Overview of all tools and capabilities
+- **[ANALYSIS_SUMMARY.md](ANALYSIS_SUMMARY.md)** - Your running statistics and insights
+- **[FIT_FILE_STRUCTURE.md](FIT_FILE_STRUCTURE.md)** - Technical FIT format reference
+
+### Main Documentation Files
+
+#### `DASHBOARD_GUIDE.md`
+Complete tutorial for the Jupyter dashboards:
+- Setup instructions
+- Feature descriptions for both dashboards
+- Tips for effective analysis
+- Understanding metrics
+- Troublesho
+
+---
+
+## [strava-analysis] README.md
+
+# strava-analysis
+Using strava to do personal analyses and to practice data scientist skills.
+
+# Common steps sequence
+
+1. Update the strava code on environment.
+2. Run the `create_token.py` script to create a token.
+3. Run the `get_activities.py` script to get activities.
+
+# Common problems
+The most commom problem is related to the token. If you have a problem with the token, you will need to update this token.
+1. Open https://www.strava.com/settings/api and click on `Generate new client secret`.
+2. Update the `client_secret` on the `.env` file.
+3. You will need a new strava code, so access [this link](http://www.strava.com/oauth/authorize?client_id=[CLIENT_ID]&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=profile:read_all,activity:read_all) replacing CLIENT_ID by your client_id.
+4. Update the `strava_code` on the `.env` file the code generated on the link.
+
+---
+
+## [strava-wind-analysis] README.md
+
+![Strava Wind Analysis](https://i.imgur.com/9eaXBJu.png)
+<br>Bringing machine learning analytics, data visualization and weather data to cycling activities and segments.
+
+[![Build Status](https://travis-ci.org/MathBunny/strava-wind-analysis.svg?branch=master)](https://travis-ci.org/MathBunny/strava-wind-analysis)
+[![GitHub issues](https://img.shields.io/github/issues/MathBunny/strava-wind-analysis.svg)](https://github.com/MathBunny/strava-wind-analysis/issues)
+![Uptime Robot ratio (7 days)](https://img.shields.io/uptimerobot/ratio/7/m780079116-6032e09891aff5228e33d6c0.svg)
+![node](https://img.shields.io/badge/node-%3E=6.3-brightgreen.svg)
+![npm](https://img.shields.io/npm/v/npm.svg)
+![release](https://img.shields.io/badge/release-v1.2-blue.svg)
+[![GitHub license](https://img.shields.io/github/license/MathBunny/strava-wind-analysis.svg)](https://github.com/MathBunny/strava-wind-analysis/blob/master/LICENSE.md)
+
+
+## Features
+* Strava OAuth authentication
+* Performance analytics on historical segment and aggregate data
+* Interactive charts using chart.js, Google Maps integration
+* Wind analysis using DarkSky API and vector manipulation algorithm
+* Individual modals with athlete-specific statistics on segment leaderboard
+* Linear regression and interpolation tools using scikit-learn
+* Segment and ride filtering options (distance, speed, etc.)
+* Content-based segment recommendation engine for scrolling feed
+* Improved performance with Redis caching
+* Integration with MongoDB including weather API throttling and user profiles
+* Legacy website support
+
+## Screenshots
+![Strava Wind Analysis](https://i.imgur.com/IBPMPKc.png)
+![Strava Wind Analysis](https://i.imgur.com/oVIZfPT.png)
+![Strava Wind Analysis](https://i.imgur.com/IQpQnBx.png)
+![Strava Wind Analysis](https://i.imgur.com/pP6sWZ4.png)
+![Strava Wind Analysis](https://i.imgur.com/lchF6wh.png)
+![Strava Wind Analysis](https://i.imgur.com/2aNA0v5.png)
+![Strava Wind Analysis](https://i.imgur.com/U33jx8U.png)
+
+
+## Build, Configure and Run
+First, install the dependencies. Ensure you have Node.js installed and npm:
+```shell
+npm install
+```
+
+Now setup the configuration file in the root folder as follows (saved as `config.js`):
+```javascript
+const clientID = 0;
+const clientSecret = "0";
+const callbackURL = "http://localhost:3000/login/callback";
+const weatherKey = "YourDarkSkyWeatherKey";
+const port = 3000;
+const accessToken = "0";
+const mlEndpoint = "YourMLEndPoint";
+const defaultExpirationTime = 7200; // Redis cache expiration time
+const mongoDBUrl = ''; // MongoDB url
+const dailyDarkSkyLimit = 500; // Hard limit on API calls per day
+const elasticsearchendpoint = 'YourElasticsearchEndpoint';
+
+exports.clientID = clientID;
+exports.clientSecret = clientSecret;
+exports.callbackURL = callbackURL;
+exports.port = port;
+exports.weatherKey = weatherKey;
+exports.accessToken = accessToken;
+exports.mlEndpoint = mlEndpoint;
+exports.defaultExpirationTime = defaultExpirationTime;
+exports.mongoDBUrl = mongoDBUrl;
+exports.dailyDarkSkyLimit = dailyDarkSkyLimit;
+exports.elasticsearchendpoint = elasticsearchendpoint;
+```
+
+Now setup a Redis instance and direct it to `localhost` with port `6379` (default configuration).
+
+Install and run the machine learning server with Flask:
+
+```shell
+FLASK_APP=app.py flask run
+```
+
+To start the server use:
+```shell
+npm start
+```
+
+## Running Tests
+You can run tests using Mocha and Chai:
+```shell
+npm test
+```
+
+## Contributing
+Feel free to submit a pull request. The coding conventions of this app follow the Airbnb base style guide.
+
+
+---
+
+## [strava_related] README.md
+
+# Strava data analysis related code
+
+This repo contains the code discussed in my blog: [Accessing user data via the Strava API using stravalib](https://medium.com/@mandieq/accessing-user-data-via-the-strava-api-using-stravalib-d5bee7fdde17)
+
+>Interested in getting to your data from the Strava API? In this blog I walk through the process for accessing Strava user data using the stravalib python library;  followed by some preliminary analysis using the pandas and seaborn libraries.
+
+## Some sample output
+
+Data overview using seaborn pairgrid:
+
+![pairgrid](images/pairgrid.png)
+
+View of activity distance as split out by type and day of the week:
+
+![by_day](images/activity_day.png)
+
+
+---
+
+## [time-to-run] README.md
+
+# About
+
+Running a marathon is hard. Setting up your training plan shouldn't be.
+
+1. Set the date of your race
+2. Pick a plan
+3. Choose miles or kilometers
+4. Download the plan and add it to your calendar
+
+It really is that easy. [Get started now!](https://www.codyhoover.com/time-to-run)
+
+## Acknowledgements
+
+This project takes inspiration from ["Calendar Hack"](https://defy.org/hacks/calendarhack/about/) by [@defyorg](https://twitter.com/defyorg) which I've already used for multiple marathons.
+
+This project includes a few popular training plans from [Advanced Marathoning](http://www.amazon.com/Advanced-Marathoning-Edition-Pete-Pfitzinger/dp/0736074600) by Pete Pfitzinger and Scott Douglas, [Faster Road Racing](https://www.amazon.com/Faster-Road-Racing-Half-Marathon/dp/1450470459) by Pete Pfitzinger and Philip Latter, [Hansons Marathon Method](https://hansons-running.com/collections/hansons-swag/products/hansons-method-hansons-method-mara%22) by Kieth and Kevin Hanson, and [Marathon: The Ultimate Training Guide](http://www.amazon.com/Marathon-Ultimate-Training-Programs-Marathons/dp/1609612248) by Hal Higdon. The plans are not intended to be used on their own and should be used in combination with the books, so please support the authors (and yourself!) if you don't already own them.
+
+Calendar Icon made by [monkik](https://www.flaticon.com/authors/monkik) from [www.flaticon.com](https://www.flaticon.com).
+
+All other icons made by Font Awesome from [www.fontawesome.com](https://www.fontawesome.com).
+
+## Contact
+
+If you have made a plan that you think others might benefit from or if you have issues, questions, or suggestions on how I can make this project work better for you, reach out via email (timetorun at codyhoover dot com) or [on github](https://github.com/hoovercj/time-to-run/issues).
+
+---
+
+## [trail-running-coach] README.md
+
+# Tarahumara Ultra Tracker
+
+Training tracker for the **Ultra Trail Tarahumara 59km** (October 2, 2026).
+
+## Goal
+
+Complete 59km / 2,400m D+ in Sierra Tarahumara, Chihuahua.
+Predicted finish: 9:30-10:30 hours based on historical Garmin data.
+
+## Athlete Profile
+
+- **Location:** High altitude (~2,600m), Central Mexico
+- **Race history:** Two ultras completed (33-39km range)
+- **Strengths:** HR control, gym consistency (3.4x/week), trail experience
+- **Area to improve:** Easy run pacing (Z2 discipline)
+
+## 30-Week Plan Overview
+
+| Phase | Weeks | Dates | Volume | Long Run |
+|-------|-------|-------|--------|----------|
+| Base (rebuild) | 1-12 | Mar 2 - May 24 | 25→50 km/wk | 14→22 km |
+| Specific | 13-27 | May 25 - Sep 6 | 50→75 km/wk | 22→42 km |
+| Taper | 28-30 | Sep 7 - Sep 27 | 55→25 km/wk | 22→10 km |
+| **Race** | - | **Oct 2, 2026** | - | **59 km** |
+
+Recovery weeks every 4th week with 25-30% volume reduction.
+
+## Project Structure
+
+```
+running/
+├── README.md                                    # this file
+├── plan.json                                    # structured 30-week plan
+├── requirements.txt                             # Python dependencies
+├── .env                                         # Garmin credentials (gitignored)
+├── tracker/                                     # Python package
+│   ├── config.py                                # paths, constants, thresholds
+│   ├── models.py                                # data models
+│   ├── plan_data.py                             # plan loader + week utilities
+│   ├── garmin_sync.py                           # Garmin Connect integration
+│   ├── analysis.py                              # planned vs actual comparison
+│   ├── alerts.py                                # rule-based alerts
+│   └── report.py                                # markdown report generator
+├── scripts/                                     # CLI tools
+│   ├── sync.py                                  # pull Garmin data
+│   ├── report.py                                # generate weekly report
+│   └── status.py                                # quick dashboard
+└── data/                                        # runtime data (gitignored)
+    ├── activities/                              # cached Garmin JSON
+    └── reports/                                 # generated weekly reports
+```
+
+## Quick Start
+
+```bash
+source venv/bin/activate
+
+# Dashboard — current week, targets, days to race
+python scripts/status.py
+
+# Pull activities from Garmin
+python scripts/sync.py --week 1
+
+# Generate weekly report
+python scripts/report.py --week 1
+
+# Generate report with fresh Garmin data
+python scripts/report.py --week 1 --sync
+```
+
+## Key Metrics Tracked
+
+- **Compliance Score (0-100%):** distance (30%), vert (20%), long run (20%), gym (15%), series (15%)
+- **Alerts:** HR drift, volume spikes, long run ratio, missed gym/series, recovery compliance
+
+## Data Sources
+
+- **Garmin Connect:** activities synced via `garminconnect` library
+- **plan.json:** weeks 1-4 have daily workouts, weeks 5-30 have weekly targets (updated monthly)
+
+
+---
+
+## [trail-running-coach] ARCHITECTURE.md
+
+# Architecture Overview
+
+This document serves as a critical, living template designed to equip agents with a rapid and comprehensive understanding of the Tarahumara Ultra Tracker Dashboard's architecture, enabling efficient navigation and effective contribution from day one. Update this document as the codebase evolves.
+
+## 1. Project Structure
+
+The dashboard is a single-page static application that visualizes training data from the Tarahumara Ultra Tracker CLI system. It lives alongside the existing Python-based tracker as a complementary visualization layer.
+
+```
+running/                          # Parent project root
+├── plan.json                     # Master 30-week training plan (source of truth)
+├── tracker/                      # Python package (CLI backend)
+│   ├── __init__.py
+│   ├── config.py                 # Constants: race info, thresholds, weights
+│   ├── models.py                 # Data classes: PlannedWorkout, WeekPlan, GarminActivity, WeekActual, Alert
+│   ├── plan_data.py              # Plan loading/querying from plan.json
+│   ├── garmin_sync.py            # Garmin Connect API integration (auth, pull, normalize)
+│   ├── analysis.py               # Planned vs actual comparison, compliance scoring
+│   ├── alerts.py                 # Rule-based alert engine (6 rules)
+│   └── report.py                 # Markdown report generation
+├── scripts/                      # CLI entry points
+│   ├── sync.py                   # Pull activities from Garmin Connect
+│   ├── report.py                 # Generate weekly markdown reports
+│   └── status.py                 # Quick terminal dashboard
+├── data/                         # Persisted data (gitignored secrets excluded)
+│   ├── activities/               # Cached Garmin JSON by date range
+│   │   └── YYYY-MM-DD_YYYY-MM-DD.json
+│   └── reports/                  # Generated markdown reports
+│       └── week_NN.md
+├── dashboard/                    # << THIS PROJECT
+│   ├── dashboard.html            # Single-file dashboard (HTML + CSS + JS)
+│   └── ARCHITECTURE.md           # This document
+└── venv/                         # Python 3.9 virtual environment
+```
+
+## 2. High-Level System Diagram
+
+```
+[Garmin Watch] --> [Garmin Connect Cloud]
+                          |
+                    (garminconnect lib)
+                          |
+                   [scripts/sync.py]
+                          |
+                   [data/activities/*.json]    [plan.json]
+                          |                        |
+                   [tracker/analysis.py] <---------+
+                          |
+                   [tracker/alerts.py]
+                          |
+              +-----------+-----------+
+              |                       |
+      [scripts/report.py]    [dashboard/dashboard.html]
+              |                       |
+      [data/reports/          [Browser - Static
+       week_NN.md]             Visualization]
+```
+
+The dashboard operates as a **data-driven single-page app** with all week data embedded in a JavaScript `WEEKS` array. It reads no files at runtime — plan targets, actual metrics, activities, and alerts are hardcoded in the HTML. The entire UI below the hero header is rendered dynamically, allowing the user to switch between weeks via a dropdown selector.
+
+**Data flow for adding new weeks**: After running `scripts/sync.py` and `scripts/report.py`, manually add the new week's data to the `WEEKS` array in `dashboard.html`. Each entry contains `plan` (targets), `actual` (recorded metrics or `null`), `compliance` (score or `null`), `activities` (array of Garmin activities), and `alerts`.
+
+**Future path**: The dashboard could be converted to read `plan.json` and `data/activities/*.json` dynamically via a local Python server or by generating the HTML via a build script.
+
+## 3. Core Components
+
+### 3.1. Frontend
+
+**Name**: Tarahumara Ultra Tracker Dashboard
+
+**Description**: A dark-mode, single-page dashboard that visualizes training progress for a 30-week ultra maratho
+
+---
+
+## [trail-running-coach] README.md
+
+# data/ — Runtime Data (gitignored)
+
+This directory stores cached Garmin data and generated reports. Contents are not committed to git.
+
+## activities/
+
+Cached raw JSON responses from Garmin Connect, one file per sync call:
+
+```
+2026-03-02_2026-03-08.json   # Week 1 activities
+2026-01-01_2026-01-31.json   # January full month
+```
+
+These files are created by `scripts/sync.py` and read by `scripts/report.py` to avoid hitting Garmin's API repeatedly. Delete a file and re-sync to refresh.
+
+## reports/
+
+Generated markdown weekly reports:
+
+```
+week_01.md
+week_02.md
+...
+```
+
+Created by `scripts/report.py`. Each report contains the planned vs actual comparison table, compliance score, activity details, and any triggered alerts for that week.
+
+
+---
+
+## [trail-running-coach] mental_psychology_research.md
+
+# Mental & Psychological Aspects of Trail Running, Ultramarathons, and Endurance Sports
+
+## Comprehensive Research for Building an AI Trail Running Coach
+
+---
+
+## Table of Contents
+
+1. [Race Psychology for Ultras](#1-race-psychology-for-ultras)
+2. [Training Motivation & Consistency](#2-training-motivation--consistency)
+3. [Visualization and Mental Rehearsal](#3-visualization-and-mental-rehearsal)
+4. [Mindfulness and Presence](#4-mindfulness-and-presence)
+5. [Race-Day Mental Strategy](#5-race-day-mental-strategy)
+6. [Key Books & Resources: Principles and Techniques](#6-key-books--resources)
+7. [The Tarahumara Connection](#7-the-tarahumara-connection)
+8. [Appendix: Specific Protocols, Scripts, and Techniques](#8-appendix-specific-protocols-scripts-and-techniques)
+
+---
+
+## 1. Race Psychology for Ultras
+
+### 1.1 Managing the "Dark Place"
+
+The "dark place" is an inevitable phase in ultramarathon racing where physical suffering, mental fatigue, and emotional despair converge. Understanding that it is temporary and cyclical is the first key insight.
+
+**Core principles:**
+- Ultramarathons are a rollercoaster of ups and downs. Tough periods are always followed by easier miles. The low point is never permanent.
+- When you enter a low, say it out loud. Acknowledge it verbally: "I'm in a low right now, and it will pass." Putting it into the universe externalizes it and reduces its power.
+- Often the dark place is physiological masquerading as psychological. When you feel you have entered a deep dark hole, EAT. Calorie depletion triggers deep mental lows, and consuming calories can dramatically shift mood within 15-20 minutes.
+- Sleep deprivation in longer ultras can cause hallucinations. Recognizing these as chemical artifacts rather than reality is critical.
+
+**The neuroscience:** According to Samuele Marcora's psychobiological model, perceived effort is the final arbiter of performance. Physical cues and psychological factors both contribute to perceived effort, meaning the dark place is real but also malleable through cognitive strategies.
+
+### 1.2 Positive Self-Talk Strategies
+
+Research shows that positive self-talk reduces perceived rate of exertion and increases endurance. It activates brain regions associated with motivation.
+
+**Protocol for effective self-talk:**
+1. Prepare specific mantras BEFORE the race, not during. A fatigued brain cannot generate helpful thoughts on demand.
+2. Combine motivational statements ("I've trained for this") with instructional cues ("focus on breathing").
+3. Use second-person "you" instead of "I" (e.g., "You've got this" instead of "I've got this"). This creates psychological distance between the suffering self and the coaching self.
+4. Keep mantras simple, repetitive, and actionable.
+
+**Elite runner mantra examples:**
+- Courtney Dauwalter: "Robot, robot, robot" (reduces movement to mechanical action, disconnects from pain), "Believe" (repeated to crowd out negative thoughts), "Right foot, left foot" (reduces the task to its simplest element)
+- Des Linden (Boston Marathon champion): "Calm, calm, calm. Relax, relax, relax"
+- Shalane Flanagan: "Cold execution"
+- Sara Hall: "Relax and roll"
+- Common ultrarunning mantras: "I can do hard things," "This too shall pass," "One step at a time," "I've come this far, just keep pushing"
+
+**Stage-specific mantras:**
+- Early race: "Patient and controlled"
+- Mid-race low point: "This too shall pass" / "Embrace the suck"
+- Late race push: "Give it everything you've got"
+
+### 1.3 Chunking (Breaking Race into Segments)
+
+Chunking is one of the most universally cited mental strategies among elite ultrarunners. It converts an overwhelming whole into manageable parts.
+
+**How to implement:**
+- Break the race into segments defined by aid stations, terrain changes, or distance markers.
+- Set a different process goal for each segment (e.g., "Maintain steady effort up this climb," "Eat 200 calories before next aid").
+- Never think about the finish line when you are deep in the
+
+---
+
+## [trail-running-coach] railway-token-refresh.md
+
+# Railway Garmin Token Refresh
+
+Garmin OAuth tokens expire periodically (~30 days for the refresh token). When Railway's sync fails with "Garmin sync failed", refresh the tokens.
+
+## Steps
+
+1. **Sync locally first** to refresh your local tokens:
+   ```bash
+   cd personal_health/running
+   source venv/bin/activate
+   python scripts/sync.py
+   ```
+
+2. **Generate base64 tokens** from your refreshed local tokens:
+   ```bash
+   python3 -c "
+   import base64, os
+   d = os.path.expanduser('~/.garminconnect')
+   print('GARMIN_OAUTH1:')
+   print(base64.b64encode(open(f'{d}/oauth1_token.json').read().encode()).decode())
+   print()
+   print('GARMIN_OAUTH2:')
+   print(base64.b64encode(open(f'{d}/oauth2_token.json').read().encode()).decode())
+   "
+   ```
+
+3. **Update Railway environment variables:**
+   - Go to [Railway Dashboard](https://railway.app/dashboard)
+   - Open your project → select the service
+   - Go to **Variables** tab
+   - Update `GARMIN_OAUTH1` and `GARMIN_OAUTH2` with the new values
+   - Railway will auto-redeploy
+
+## Note
+
+With the "local sync only" approach, Railway doesn't need these tokens for normal operation — it serves the static `weeks_cache.json`. Tokens are only needed if you want the Railway "Sync with Garmin" button to work directly.
+
+
+---
+
+## [trail-running-coach] trail_running_coach_knowledge_base.md
+
+# Trail Running Coach Knowledge Base
+## Injury Prevention, Recovery & Strength Training for Ultra Trail Athletes
+
+*Compiled from sports medicine research, peer-reviewed meta-analyses, and expert coaching resources. Intended as the foundational knowledge layer for an AI trail running coach.*
+
+---
+
+## Table of Contents
+
+1. [Common Trail Running Injuries](#1-common-trail-running-injuries)
+2. [Strength Training for Trail Runners](#2-strength-training-for-trail-runners)
+3. [Mobility and Flexibility](#3-mobility-and-flexibility)
+4. [Recovery Protocols](#4-recovery-protocols)
+5. [Altitude-Specific Considerations](#5-altitude-specific-considerations)
+6. [Key Resources & Frameworks](#6-key-resources--frameworks)
+7. [Sources](#7-sources)
+
+---
+
+## 1. Common Trail Running Injuries
+
+### Injury Prevalence Overview
+
+The "Big Six" overuse injuries account for approximately 90% of running injuries:
+- Hamstring tendinopathy
+- Patellofemoral pain syndrome (runner's knee)
+- IT band syndrome
+- Tibial stress injuries (shin splints)
+- Achilles tendinopathy (10.3% incidence)
+- Plantar fasciitis (6.1% incidence; up to 28.6% in trail runners during competition)
+
+Ankle sprains (5.8% incidence) are additionally prominent in trail running due to uneven terrain. Ultramarathon-specific patterns show higher rates of anterior compartment tendinopathy, patellofemoral pain, and Achilles issues.
+
+---
+
+### 1.1 IT Band Syndrome (ITBS)
+
+**What it is:** Compression/irritation of the iliotibial band at the lateral femoral epicondyle, causing outer-knee pain.
+
+**Causes:**
+- Weak hip abductors and external rotators (glute medius/minimus)
+- Excessive hip adduction and internal rotation during stance phase
+- Rapid increases in running volume or hill work
+- Excessive downhill running (increases lateral knee loading)
+- Poor lateral stability and trunk control
+
+**Early Warning Signs:**
+- Aching on the outside of the knee that appears at a consistent point during a run
+- Pain that initially resolves with rest but starts appearing earlier in successive runs
+- Mild tightness or "snapping" sensation over the lateral knee
+- Discomfort going down stairs
+
+**When to STOP vs. MODIFY:**
+- **STOP** if: pain starts within the first 10 minutes of running, pain exceeds 4/10, pain causes limping, or pain persists >24 hours post-run
+- **MODIFY** if: pain stays below 4/10, appears only late in longer runs, and resolves within a few hours
+
+**Recovery Protocol (6-12 weeks):**
+
+*Weeks 1-3: Reduce and Rehab*
+- Maintain current (reduced) volume; monitor symptoms
+- Focus on strength training (below)
+- Ice post-activity, 15 min
+
+*Key Exercises:*
+| Exercise | Sets x Reps | Frequency |
+|----------|-------------|-----------|
+| Side-lying hip abduction | 3 x 15 | Daily |
+| Clamshells (banded) | 3 x 15 | Daily |
+| Single-leg bridge | 3 x 12 each side | Daily |
+| Side plank | 3 x 30 sec each side | Daily |
+| Lateral band walks | 3 x 15 steps each direction | 3-4x/week |
+| Single-leg squat to box | 3 x 10 each side | 3x/week |
+
+*Weeks 4+: Gradual Return*
+- Increase weekly mileage by ~10% per week if pain-free
+- Avoid aggressive downhill for 2-3 more weeks
+- Continue strength work indefinitely as prevention
+
+---
+
+### 1.2 Plantar Fasciitis
+
+**What it is:** Overload and micro-tearing of the plantar fascia, the thick connective tissue spanning the bottom of the foot from heel to toes.
+
+**Causes:**
+- Rapid increases in running volume, elevation gain, or intensity
+- Weak intrinsic foot muscles and calf complex
+- Poor footwear (insufficient support or worn-out shoes)
+- Tight calves limiting ankle dorsiflexion
+- High training load on hard surfaces
+- High BMI or sudden weight changes
+
+**Early Warning Signs:**
+- Sharp heel pain with the first steps in the morning ("first-step pain")
+- Pain at the base of the heel that improves after warming up but returns after long periods of standing/running
+- Tenderness on palpation of the medial calcaneal tubercle
+- Stiffness in the arch after prolonged sitting
+
+**When to STOP
+
+---
+
+## [trail-running-coach] README.md
+
+# LinkedIn Post — Ultra Trail Tarahumara Tracker
+
+**Date:** 2026-05-03
+**Status:** Ready to publish
+**Author:** Emmanuel Diaz
+
+## What's in this folder
+
+| File | Purpose |
+|------|---------|
+| `post.txt` | **The actual post copy.** Open it, select all, paste into LinkedIn. |
+| `slide5.png` | Final slide 5 (stack list), 1080×1080, drop into the carousel as slide 5. |
+| `slide5-generator.py` | Python script that made slide5.png — re-run if you want to tweak it. |
+| `README.md` | This document — design rationale + screenshot guide for slides 1–4. |
+
+## TL;DR — what to do
+
+1. Capture screenshots for slides 1–4 from the live dashboard (see [Production checklist](#production-checklist))
+2. Crop each to 1080×1080 to match `slide5.png`
+3. Open LinkedIn, click "Start a post" → upload as 5-slide carousel in this order: 1, 2, 3, 4, slide5.png
+4. Paste the [post copy](#post-copy) below the carousel
+5. Publish
+
+## Goal
+
+Personal milestone share to existing LinkedIn network. Showcase the trail running training app I built, with the AI coach as the centerpiece feature. Race and app run side-by-side. No specific call to action.
+
+## Audience
+
+Existing LinkedIn network: mixed finance colleagues, friends, some tech contacts. Not aimed at recruiters and not aimed at the AI/dev crowd specifically.
+
+## Tone
+
+Confident-builder. Direct, no hedging. "I made this, here's what it does."
+
+Must sound human, not AI:
+- No em-dashes used as stylistic flair
+- No "production-ready," "grounded in," "leveraging"
+- No over-polished tricolons
+- Contractions OK
+- Specific concrete details over abstract claims
+
+## Format
+
+Carousel of 5 slides plus medium-length post copy (~175 words) below it.
+
+Constraints:
+- No live URL of the deployed dashboard
+- No personal photos, no training photos
+- Race context conveyed through copy, not imagery
+
+## Carousel slides
+
+### Slide 1 — Cover
+Full dashboard screenshot with the AI coach drawer open. Shows the whole app and the coach in one shot. The first thing the viewer sees is "training tracker + AI assistant."
+
+### Slide 2 — Week detail
+Plan vs actual view, weekly compliance score, at least one alert firing (HR drift, volume spike, or similar). Establishes the analytical substance of the app.
+
+### Slide 3 — Activity feed
+Live Garmin data: running, strength, trail run with route polyline visible. Establishes that this is real data, not a demo.
+
+### Slide 4 — Coach hero
+Zoomed screenshot of an actual Q&A turn with the AI coach. Pick one where the coach references concrete training data (HR zones, recent workouts, sleep, etc.).
+
+Slide 4 caption text:
+> Fed it real trail-running coaching material, professional nutrition guides, and my own Garmin health history. Not just another chatbot.
+
+### Slide 5 — Stack
+Pure text on a clean background:
+
+```
+Python · FastAPI · Postgres · Next.js · Garmin Connect · Anthropic Claude · Built solo with Claude Code
+```
+
+Match the dashboard's typographic style if possible (IBM Plex Mono).
+
+## Post copy
+
+See `post.txt` in this folder for the canonical, copy-pasteable version. Reproduced here for review:
+
+```
+First real web app I've built. First Garmin API integration. First time I've worked with an LLM.
+
+All in one project: a training tracker for my first ultra. In 5 months I'm running 59km through the Sierra Tarahumara, with 2,400m of vertical gain. Built it to keep me honest.
+
+It syncs every workout from my Garmin, compares what I actually did against the 30-week plan, and gives me a weekly compliance score. Six rules watch for things like HR drift, volume spikes, or skipped long runs and call them out before things go sideways.
+
+The piece I'm most proud of is the AI coach. I fed it actual trail-running coaching material, professional nutrition guides, and my own Garmin health history. So when I ask it whether I should push my long run this Saturday or hold back, it pulls from my last few weeks of HR, sleep, and stress data and gives me an answer that fits my body, not the average runner. It's not just
+
+---
+
+## [trail-running-coach] 2026-03-18-trail-running-coach-phase1.md
+
+# Trail Running Coach — Phase 1: Rule Engine Core
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Build the deterministic rule engine that analyzes training data across multiple weeks and produces structured coaching JSON — trends, readiness scores, and plan adjustment recommendations.
+
+**Architecture:** Six new modules (2 in tracker, 4 in coach) extending the existing Tarahumara Ultra Tracker. The tracker gains an activity classifier and multi-week data loader. The coach package contains trend analysis, readiness scoring, plan adjustments, and an orchestrating engine. A CLI entry point (`coach.py`) outputs structured coaching JSON to the terminal.
+
+**Tech Stack:** Python 3.9, pytest, existing tracker package (models, config, analysis, alerts, plan_data, garmin_sync)
+
+**Important:** All Python files MUST start with `from __future__ import annotations` (Python 3.9 requirement for 3.10+ type hints). Follow existing patterns: dataclasses for data objects, pure functions, defensive null checks, `| None` union syntax.
+
+---
+
+## File Map
+
+| Action | File | Responsibility |
+|--------|------|----------------|
+| Create | `athlete.json` | Athlete profile (weight, HR zones, race, history) |
+| Create | `knowledge.json` | Coaching thresholds (ACWR zones, nutrition, trends) |
+| Create | `tracker/classify.py` | Activity intensity classification (easy/tempo/intervals/gym) |
+| Create | `tracker/data_loader.py` | Load & merge activities across multiple weeks |
+| Create | `coach/__init__.py` | Package init |
+| Create | `coach/models.py` | Coaching output dataclasses |
+| Create | `coach/trends.py` | Multi-week trend analysis |
+| Create | `coach/readiness.py` | ACWR calculation and fatigue scoring |
+| Create | `coach/adjustments.py` | Plan adjustment recommendations |
+| Create | `coach/engine.py` | Orchestrator — runs all modules, assembles coaching JSON |
+| Create | `coach.py` | CLI entry point |
+| Create | `tests/conftest.py` | Shared test fixtures (fake activities, plans) |
+| Create | `tests/test_classify.py` | Tests for intensity classifier |
+| Create | `tests/test_data_loader.py` | Tests for multi-week loader |
+| Create | `tests/test_trends.py` | Tests for trend analyzer |
+| Create | `tests/test_readiness.py` | Tests for readiness scorer |
+| Create | `tests/test_adjustments.py` | Tests for plan adjuster |
+| Create | `tests/test_engine.py` | Tests for engine orchestrator |
+| Modify | `requirements.txt` | Add pytest |
+
+---
+
+## Task 1: Test Infrastructure & Data Files
+
+**Files:**
+- Modify: `requirements.txt`
+- Create: `pytest.ini`
+- Create: `athlete.json`
+- Create: `knowledge.json`
+- Create: `tests/__init__.py`
+- Create: `tests/conftest.py`
+
+- [ ] **Step 1: Add pytest to requirements and install**
+
+Add `pytest>=7.0.0` to `requirements.txt` and install:
+
+```
+Run: source venv/bin/activate && pip install pytest>=7.0.0
+```
+
+- [ ] **Step 2: Create pytest.ini**
+
+```ini
+[pytest]
+testpaths = tests
+pythonpath = .
+```
+
+- [ ] **Step 3: Create athlete.json**
+
+```json
+{
+  "name": "Emmanuel Diaz",
+  "date_of_birth": "1995-12-15",
+  "weight_kg": 70,
+  "altitude_m": 2600,
+  "hr_zones": {
+    "z1": [0, 125],
+    "z2": [125, 145],
+    "z3": [145, 160],
+    "z4": [160, 175],
+    "z5": [175, 200]
+  },
+  "race": {
+    "name": "Ultra Trail Tarahumara",
+    "date": "2026-10-02",
+    "distance_km": 59,
+    "vert_m": 2400
+  },
+  "history": {
+    "recent_race": {
+      "distance_km": 33.3,
+      "vert_m": 1184,
+      "time": "4:38:00",
+      "avg_hr": 149
+    },
+    "baseline_weekly_km": 21
+  },
+  "nutrition": {
+    "gut_training_start": null,
+    "target_carb_per_hr": null,
+    "caffeine_sensitivity": "normal"
+  }
+}
+```
+
+- [ ] **Step 4: Create knowledge.json**
+
+```json
+{
+  "acwr_zones": {
+    "optimal": [0.8, 1.3],
+    "caution": [1.3, 1.5],
+    "danger": [1.5, null]
+  },
+  "volume_progr
+
+---
+
+## [trail-running-coach] 2026-03-22-route-preview.md
+
+# Route Preview Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Show a subtle SVG route watermark on running activity cards in the dashboard.
+
+**Architecture:** During Garmin sync, fetch GPS polyline per running activity, convert to an SVG path string via equirectangular projection + RDP simplification, store in cached JSON. Dashboard renders the SVG as an 8%-opacity background behind card content.
+
+**Tech Stack:** Python 3.9, garminconnect library, single-file HTML/JS dashboard
+
+**Spec:** `docs/superpowers/specs/2026-03-22-route-preview-design.md`
+
+---
+
+### Task 1: Add `route_svg` field to GarminActivity model
+
+**Files:**
+- Modify: `tracker/models.py:36-47`
+
+- [ ] **Step 1: Add the field**
+
+In `tracker/models.py`, add `route_svg` as the last field of the `GarminActivity` dataclass:
+
+```python
+@dataclass
+class GarminActivity:
+    activity_id: str
+    date: str                   # "2026-03-03"
+    activity_type: str          # "running", "trail_running", "strength_training"
+    name: str
+    distance_km: float
+    duration_seconds: float
+    avg_hr: Optional[int]
+    max_hr: Optional[int]
+    avg_pace_min_km: Optional[float]  # minutes per km as float
+    elevation_gain_m: Optional[int]
+    calories: Optional[int]
+    route_svg: Optional[str] = None   # SVG path d-attribute for route trace
+```
+
+- [ ] **Step 2: Verify existing tests still pass**
+
+Run: `cd /Users/emmanueldiaz/Documents/Main_Brain/personal_health/running && source venv/bin/activate && python -m pytest tests/ -v --tb=short 2>&1 | tail -20`
+
+Expected: All existing tests pass (the new field has a default value so nothing breaks).
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add tracker/models.py
+git commit -m "feat(models): add route_svg field to GarminActivity"
+```
+
+---
+
+### Task 2: Implement `polyline_to_svg()` with inline RDP simplification
+
+**Files:**
+- Create: `tracker/route.py`
+- Create: `tests/test_route.py`
+
+- [ ] **Step 1: Write the failing tests**
+
+Create `tests/test_route.py`:
+
+```python
+from __future__ import annotations
+
+import re
+
+from tracker.route import polyline_to_svg
+
+
+def test_returns_none_for_empty_input():
+    assert polyline_to_svg([]) is None
+
+
+def test_returns_none_for_single_point():
+    assert polyline_to_svg([(19.3, -99.3)]) is None
+
+
+def test_returns_none_for_identical_points():
+    assert polyline_to_svg([(19.3, -99.3), (19.3, -99.3), (19.3, -99.3)]) is None
+
+
+def test_simple_two_point_path():
+    result = polyline_to_svg([(19.0, -99.0), (19.1, -99.1)])
+    assert result is not None
+    assert result.startswith("M")
+    assert "L" in result
+
+
+def test_output_matches_svg_path_grammar():
+    """Output must only contain M, L, digits, dots, commas, spaces, and minus signs."""
+    points = [
+        (19.30, -99.30), (19.31, -99.29), (19.32, -99.28),
+        (19.33, -99.27), (19.32, -99.26), (19.31, -99.27),
+    ]
+    result = polyline_to_svg(points)
+    assert result is not None
+    assert re.match(r'^[ML0-9., -]+$', result), f"Invalid SVG path chars: {result}"
+
+
+def test_fits_within_viewbox():
+    """All coordinates must be within 0-240 (x) and 0-200 (y)."""
+    points = [
+        (19.30, -99.30), (19.35, -99.25), (19.40, -99.20),
+        (19.35, -99.15), (19.30, -99.20),
+    ]
+    result = polyline_to_svg(points)
+    assert result is not None
+    # Parse all numbers from the path
+    nums = re.findall(r'-?[\d.]+', result)
+    coords = [float(n) for n in nums]
+    # X values (even indices after M/L parsing) should be 0-240
+    # Y values (odd indices) should be 0-200
+    # Simple check: all values should be within padded bounds
+    for v in coords:
+        assert 0 <= v <= 240, f"Coordinate {v} out of viewBox bounds"
+
+
+def test_rdp_reduces_point_count():
+    """A straight line with many collinear points should simplify heavily."""
+    # 100 poi
+
+---
+
+## [trail-running-coach] 2026-03-22-trail-running-coach-phase2.md
+
+# Trail Running Coach — Phase 2 (LLM Narrator) Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Add an LLM narrator layer that translates the rule engine's structured `CoachingOutput` JSON into natural, coach-like language — plus a keyword-based question classifier and conversational CLI mode.
+
+**Architecture:** The classifier routes user questions by type (data/coaching/knowledge/off-topic) using keyword pattern matching (no API calls). The narrator wraps the Claude API with a rich system prompt embodying the coach persona — it receives only pre-digested `CoachingOutput` JSON, never raw activity data. The CLI gains a conversational mode: `python coach.py "how's my week?"`.
+
+**Tech Stack:** Python 3.9, `anthropic` SDK (0.86.0, already in venv), Claude claude-sonnet-4-5-20250514 for narration.
+
+**Spec:** `docs/superpowers/specs/2026-03-18-trail-running-coach-agent-design.md`
+
+**Spec deviation:** This plan moves `classifier.py` from Phase 4 to Phase 2 because the conversational CLI mode depends on question routing to work properly. The classifier is pure Python with zero external dependencies.
+
+**Existing code context:**
+- `coach/models.py` — `CoachingOutput` dataclass with `to_dict()` method (the narrator contract)
+- `coach/engine.py` — `run_coaching(plan, current, history, prev_plan)` returns `CoachingOutput`
+- `coach.py` — CLI entry point with `status` and `report` subcommands
+- `athlete.json` — athlete profile (name, weight, HR zones, race info)
+- `knowledge.json` — coaching thresholds (ACWR zones, nutrition targets, etc.)
+- `data/coaching/week_01_coaching.json` — real example of coaching JSON output
+- `tests/conftest.py` — shared fixtures (`make_activity`, `make_week_plan`, `make_week_actual`)
+- All commands run from `personal_health/running/` with venv activated
+
+---
+
+## File Structure
+
+| Action | Path | Responsibility |
+|--------|------|---------------|
+| Create | `coach/classifier.py` | Keyword-based question routing — classifies user input into `data`, `coaching`, `knowledge`, or `general` |
+| Create | `coach/narrator.py` | Claude API wrapper — takes `CoachingOutput` dict + optional user question → natural language coaching response |
+| Create | `tests/test_classifier.py` | Tests for classifier |
+| Create | `tests/test_narrator.py` | Tests for narrator (mocked API calls) |
+| Modify | `coach.py` | Add conversational mode, `--regenerate` flag for reports, narrative output |
+| Modify | `requirements.txt` | Add `anthropic>=0.80.0` |
+
+---
+
+## Task 1: Question Classifier
+
+**Files:**
+- Create: `tests/test_classifier.py`
+- Create: `coach/classifier.py`
+
+The classifier is pure Python pattern matching. It routes user questions to determine which coaching modules to emphasize in the narrator context. Four categories per spec:
+
+| Type | Example | Behavior |
+|------|---------|----------|
+| `data` | "What was my vert last week?" | Rule engine data → minimal LLM wrapping |
+| `coaching` | "Should I push harder?" | Readiness + trends + adjustments → LLM narrates |
+| `knowledge` | "What to eat at aid stations?" | Knowledge.json context → LLM narrates |
+| `general` | Anything unmatched | LLM responds with full coaching context |
+
+- [ ] **Step 1: Write classifier tests**
+
+```python
+# tests/test_classifier.py
+from __future__ import annotations
+
+from coach.classifier import classify_question
+
+
+class TestClassifyQuestion:
+    """Tests for keyword-based question classification."""
+
+    # Data questions — ask about specific metrics or past weeks
+    def test_data_question_vert(self):
+        assert classify_question("What was my vert last week?") == "data"
+
+    def test_data_question_distance(self):
+        assert classify_question("How far did I run this week?") == "data"
+
+    def test_data_question_compliance(self):
+        assert classify_
+
+---
+
+## [trail-running-coach] 2026-04-04-trail-running-coach-phase3.md
+
+# Phase 3 — Web Interface Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Add a chat drawer to the Tarahumara Ultra Tracker dashboard backed by a FastAPI server with SSE streaming, persistent conversation history, and all existing dashboard endpoints preserved.
+
+**Architecture:** FastAPI app (`api/app.py`) replaces `dashboard/serve.py` as the entrypoint. Existing dashboard functions are imported directly (no rewrite). New coach endpoints handle chat with SSE streaming via `sse-starlette`. Chat drawer is appended to `dashboard.html` as CSS/JS.
+
+**Tech Stack:** FastAPI, uvicorn, sse-starlette, Anthropic streaming API, existing coach/tracker packages
+
+**Branch:** `feature/phase3-web-interface` (already created)
+
+---
+
+### Task 1: Dependencies and project scaffolding
+
+**Files:**
+- Modify: `requirements.txt`
+- Modify: `.gitignore`
+- Create: `api/__init__.py`
+- Create: `data/conversations/.gitkeep`
+
+- [ ] **Step 1: Add dependencies to requirements.txt**
+
+Add three new packages after the existing ones:
+
+```
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sse-starlette>=2.0.0
+```
+
+The full `requirements.txt` should be:
+```
+garminconnect==0.2.8
+tabulate==0.9.0
+pytest>=7.0.0
+anthropic>=0.80.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sse-starlette>=2.0.0
+```
+
+- [ ] **Step 2: Add conversations dir to .gitignore**
+
+Append to `.gitignore`:
+```
+data/conversations/
+```
+
+- [ ] **Step 3: Create api package and conversations directory**
+
+```bash
+mkdir -p api data/conversations
+touch api/__init__.py data/conversations/.gitkeep
+```
+
+- [ ] **Step 4: Install dependencies**
+
+```bash
+cd /Users/emmanueldiaz/Documents/Main_Brain/personal_health/running
+source venv/bin/activate
+pip install fastapi "uvicorn[standard]" sse-starlette
+```
+
+- [ ] **Step 5: Verify imports**
+
+```bash
+python -c "import fastapi; import uvicorn; import sse_starlette; print('OK')"
+```
+
+Expected: `OK`
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add requirements.txt .gitignore api/__init__.py data/conversations/.gitkeep
+git commit -m "feat(phase3): add FastAPI dependencies and project scaffolding"
+```
+
+---
+
+### Task 2: Conversation history module
+
+**Files:**
+- Create: `api/conversation.py`
+- Create: `tests/test_conversation.py`
+
+This is the data layer for persistent chat history. JSON files per day in `data/conversations/`.
+
+- [ ] **Step 1: Write the failing tests**
+
+Create `tests/test_conversation.py`:
+
+```python
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import tempfile
+from datetime import datetime
+
+import pytest
+
+from api.conversation import save_message, load_history, clear_history
+
+
+@pytest.fixture
+def conv_dir(tmp_path):
+    """Use a temp directory for conversations, then clean up."""
+    d = tmp_path / "conversations"
+    d.mkdir()
+    original = os.environ.get("CONVERSATIONS_DIR")
+    os.environ["CONVERSATIONS_DIR"] = str(d)
+    yield d
+    if original is None:
+        os.environ.pop("CONVERSATIONS_DIR", None)
+    else:
+        os.environ["CONVERSATIONS_DIR"] = original
+
+
+def test_save_and_load(conv_dir):
+    save_message("How's my week?", "coaching", "Looks rough.", 5)
+    save_message("What should I eat?", "knowledge", "Carbs before long runs.", 5)
+
+    result = load_history(limit=50)
+    assert len(result["messages"]) == 2
+    assert result["messages"][0]["question"] == "How's my week?"
+    assert result["messages"][1]["question"] == "What should I eat?"
+    assert result["has_more"] is False
+
+
+def test_load_respects_limit(conv_dir):
+    for i in range(5):
+        save_message(f"Q{i}", "general", f"A{i}", 5)
+
+    result = load_history(limit=3)
+    assert len(result["messages"]) == 3
+    assert result["has_more"] is True
+
+
+def test_clear_history(conv_dir):
+    save_message("test", "general", "response", 5)
+    assert len(list(conv_dir.iterdir())) > 0
+
+---
+
+## [trail-running-coach] 2026-04-12-postgres-migration.md
+
+# Postgres Migration Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Replace all JSON file storage with a single Railway PostgreSQL database for activities, daily health, conversations, week snapshots, and a mutable training plan with audit trail.
+
+**Architecture:** New `tracker/db.py` module owns all database access (psycopg2, raw SQL). Existing modules swap file I/O calls for `db.*` functions. Schema auto-creates on startup via `CREATE TABLE IF NOT EXISTS`. One-time `seed_db.py` backfills historical data.
+
+**Tech Stack:** psycopg2-binary, PostgreSQL (Railway-hosted), existing FastAPI + Python 3.9
+
+**Spec:** `docs/superpowers/specs/2026-04-12-postgres-migration-design.md`
+
+---
+
+## File Structure
+
+### New files
+| File | Purpose |
+|---|---|
+| `tracker/schema.sql` | All CREATE TABLE / CREATE INDEX statements |
+| `tracker/db.py` | Connection pool + all query functions |
+| `scripts/seed_db.py` | One-time migration: load JSON data into Postgres |
+| `tests/test_db.py` | Unit tests for db.py |
+
+### Modified files
+| File | Change |
+|---|---|
+| `requirements.txt` | Add `psycopg2-binary>=2.9.0` |
+| `api/app.py` | Call `db.init_db()` on startup, `db.close_pool()` on shutdown |
+| `tracker/garmin_sync.py` | Replace JSON file read/write with `db.save_activities()` / `db.get_activities()`. Add `sync_daily_health()`. |
+| `tracker/plan_data.py` | `load_plan()` and `get_week()` read from DB, fallback to `plan.json` |
+| `api/conversation.py` | Rewrite `save_message()`, `load_history()`, `clear_history()` to use DB |
+| `dashboard/serve.py` | `_update_weeks_cache()` → `db.upsert_week_snapshot()`. `_handle_weeks()` reads from DB. |
+| `api/routes_dashboard.py` | `get_weeks()` reads from DB. Remove cache file fallback. |
+| `api/routes_coach.py` | Remove `_build_coaching_data_from_cache()`. Add daily health + plan changes to coaching context. |
+
+### Deleted files
+| File | Reason |
+|---|---|
+| `scripts/push_data.py` | No longer needed — DB replaces git-push workflow |
+
+---
+
+## Task 1: Schema + Dependencies
+
+**Files:**
+- Create: `tracker/schema.sql`
+- Modify: `requirements.txt`
+
+- [ ] **Step 1: Add psycopg2-binary to requirements.txt**
+
+```
+garminconnect==0.2.8
+tabulate==0.9.0
+pytest>=7.0.0
+anthropic>=0.80.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sse-starlette>=2.0.0
+psycopg2-binary>=2.9.0
+```
+
+- [ ] **Step 2: Install the new dependency**
+
+Run: `source venv/bin/activate && pip install psycopg2-binary>=2.9.0`
+Expected: Successfully installed psycopg2-binary-2.9.x
+
+- [ ] **Step 3: Create tracker/schema.sql**
+
+```sql
+-- Tarahumara Ultra Tracker — Database Schema
+-- Run on every startup; all statements are idempotent (IF NOT EXISTS).
+
+CREATE TABLE IF NOT EXISTS activities (
+    id              SERIAL PRIMARY KEY,
+    profile_id      TEXT NOT NULL DEFAULT 'default',
+    garmin_id       BIGINT UNIQUE,
+    activity_date   DATE NOT NULL,
+    week_number     SMALLINT NOT NULL,
+    activity_type   TEXT,
+    activity_name   TEXT,
+    distance_km     REAL,
+    elevation_m     REAL,
+    duration_min    REAL,
+    avg_hr          REAL,
+    avg_pace        TEXT,
+    calories        REAL,
+    sets            INTEGER,
+    reps            INTEGER,
+    route_svg       TEXT,
+    raw_json        JSONB,
+    synced_at       TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_activities_week ON activities (week_number, profile_id);
+CREATE INDEX IF NOT EXISTS idx_activities_date ON activities (activity_date);
+
+CREATE TABLE IF NOT EXISTS daily_health (
+    date            DATE NOT NULL,
+    profile_id      TEXT NOT NULL DEFAULT 'default',
+    sleep_hours     REAL,
+    sleep_score     SMALLINT,
+    deep_sleep_min  REAL,
+    rem_sleep_min   REAL,
+    light_sleep_min REAL,
+    hrv_weekly_avg  REAL,
+    hrv_last_night  REAL,
+    resting_hr      SMALLINT,
+    body_batt
+
+---
+
+## [trail-running-coach] 2026-03-18-trail-running-coach-agent-design.md
+
+# Trail Running Coach Agent — Design Spec
+
+**Date:** 2026-03-18
+**Author:** Emmanuel Diaz + Claude
+**Status:** Draft
+
+## Overview
+
+An AI-powered trail running coach built as a rule engine with an LLM narrator layer. The rule engine makes deterministic coaching decisions from structured training data. The LLM (Claude API) translates those decisions into natural, coach-like language. Personalized for Emmanuel's Ultra Trail Tarahumara preparation (59km / 2,400m D+, October 2, 2026) but designed so any athlete can plug in their own `athlete.json` and `plan.json`.
+
+### Interaction Modes
+
+1. **Conversational** — CLI and web chat for interactive coaching Q&A
+2. **Automated weekly reports** — coaching narrative generated after each Garmin sync
+
+### Knowledge Scope
+
+- Trail running & ultramarathon training (periodization, HR zones, altitude)
+- Endurance science (aerobic base, polarized training, ACWR)
+- Nutrition & fueling (daily nutrition, race-day fueling, gut training, supplements)
+- Injury prevention & recovery (common injuries, strength programming, mobility)
+- Mental performance (race psychology, visualization, motivation, Tarahumara culture)
+
+### Knowledge Strategy
+
+- **Phase 1:** Coaching expertise distilled into structured decision tables (`knowledge.json`) and a rich narrator system prompt
+- **Phase 2 (future):** RAG over a library of books, research papers, and articles
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    User Interfaces                       │
+│                                                         │
+│   CLI Mode                        Web Chat UI           │
+│   $ coach "how's my week?"        Browser-based chat    │
+│   $ coach report                  Same backend API      │
+└──────────────┬──────────────────────────┬───────────────┘
+               │                          │
+               ▼                          ▼
+┌─────────────────────────────────────────────────────────┐
+│              Python Backend (FastAPI)                     │
+│                                                         │
+│   /api/chat     — conversational endpoint               │
+│   /api/report   — weekly coaching narrative              │
+│   /api/status   — quick training snapshot                │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+┌──────────────┐ ┌──────────┐ ┌──────────────┐
+│ Rule Engine  │ │ Existing │ │ LLM Narrator │
+│ (new)        │ │ Tracker  │ │ (Claude API) │
+│              │ │          │ │              │
+│ • Trends     │ │ • Sync   │ │ Takes struct │
+│ • Fatigue    │ │ • Alerts │ │ coaching     │
+│ • Readiness  │ │ • Comply │ │ output →     │
+│ • Nutrition  │ │ • Report │ │ natural      │
+│ • Adjustment │ │          │ │ language     │
+│ • Pacing     │ │          │ │              │
+└──────────────┘ └──────────┘ └──────────────┘
+                       │
+                       ▼
+              ┌────────────────┐
+              │  Data Layer    │
+              │                │
+              │ plan.json      │
+              │ activities/    │
+              │ athlete.json   │
+              │ knowledge.json │
+              └────────────────┘
+```
+
+**Dependency direction:** `coach → tracker → data` (coach imports from tracker, never the reverse)
+
+---
+
+## Shared Utilities
+
+### Activity Intensity Classifier (`tracker/classify.py` — new addition to tracker)
+
+The existing tracker classifies activities as `"run"`, `"gym"`, or `"other"`. The coach needs finer-grained intensity classification for ACWR calculation and trend analysis. This classifier extends the tracker (not the coach) because it's a data-level concern.
+
+**Classification rules (using existing GarminActivity fields):**
+
+| Intensity Type | Criteria | Factor |
+|---------------|----------|--------|
+| `easy` | Run, NOT series (per existing `_is_series()` heuristic), avg HR < Z3 ceiling | 1.
+
+---
+
+## [trail-running-coach] 2026-03-22-route-preview-design.md
+
+# Route Preview on Activity Cards
+
+## Summary
+
+Add a subtle SVG route trace as a background watermark on trail running and road running activity cards in the dashboard. The route shape is fetched from Garmin during sync, converted to an SVG path, and rendered at 8% opacity in the dashboard's copper color.
+
+## Data Pipeline
+
+### 1. Fetch GPS data during sync
+
+During `sync_activities()`, after fetching the activity list via `get_activities_by_date()`, make an additional call for each running/trail activity:
+
+```python
+details = client.get_activity_details(activity_id, maxpoly=500)
+```
+
+`maxpoly=500` keeps the point count low — enough for a recognizable shape, small enough for inline SVG strings. Skip this call for strength_training and other non-GPS activities.
+
+**Error handling:** Wrap each `get_activity_details()` call in try/except. On failure, log a warning and set `route_svg = None` for that activity. Add a 0.5s sleep between calls to avoid Garmin rate limiting. A failed details call must not break the overall sync.
+
+**Sync impact:** Changes sync from 1 API call to N+1 (where N is the number of running activities, typically 2-4 per week). Adds ~2-4 seconds to sync time.
+
+### 2. Extract polyline points
+
+The details response contains GPS coordinates at `geoPolylineDTO.polyline`:
+
+```python
+poly_dto = details.get("geoPolylineDTO") or {}
+raw_points = poly_dto.get("polyline", [])
+points = [(p["lat"], p["lon"]) for p in raw_points if "lat" in p and "lon" in p]
+```
+
+If `geoPolylineDTO` is null or `polyline` is empty, set `route_svg = None`.
+
+### 3. Convert polyline to SVG path
+
+A new utility function `polyline_to_svg(points)` in `garmin_sync.py`:
+
+- **Input:** List of `(lat, lon)` tuples
+- **Early exit:** Return `None` if fewer than 2 distinct points.
+- **Projection:** Simple equirectangular — multiply lon by `cos(radians(mid_lat))` for aspect correction. Mercator is unnecessary at trail scale (~20km).
+- **Normalize:** Scale points to fit a `0 0 240 200` viewBox with 10px padding on all sides (effective drawing area: 220x180).
+- **Simplify:** Apply Ramer-Douglas-Peucker with epsilon ~1.5 to reduce points to ~50-100, keeping the route recognizable while producing short SVG strings. Implement RDP inline (~30 lines of Python, no new dependency).
+- **Output:** SVG path `d` attribute string using `M` (move) and `L` (line) commands. Typical output: 300-600 characters.
+- **Validation:** Verify the output matches `^[ML0-9., -]+$` before returning. Return `None` if it doesn't match.
+
+### 4. Store in cached JSON
+
+Inject `route_svg` into the raw activity dict before caching to JSON:
+
+```json
+{
+  "activityId": 22264525000,
+  "activityName": "Cuajimalpa de Morelos Trail Running",
+  "route_svg": "M60,180 L55,165 L45,155 L40,140 ...",
+  ...
+}
+```
+
+Activities without GPS data (strength, indoor) will have `route_svg: null`.
+
+## Model Changes
+
+Add to `GarminActivity` dataclass in `tracker/models.py`:
+
+```python
+route_svg: Optional[str] = None
+```
+
+Update `_normalize_activity()` in `garmin_sync.py` to read `route_svg` from the raw dict on cache load:
+
+```python
+route_svg=raw.get("route_svg"),
+```
+
+This ensures `route_svg` survives both the sync path (computed and injected) and the cache-load path (read from stored JSON).
+
+## Server Changes
+
+In `dashboard/serve.py`, add the `route` field to the activity serialization:
+
+```python
+entry = {
+    ...existing fields...
+    "route": a.route_svg,  # SVG path d-attribute or null
+}
+```
+
+## Dashboard Changes
+
+In `dashboard/dashboard.html`:
+
+**CSS:** Add `position: relative; overflow: hidden;` to `.activity-card`. Both are required — `position: relative` scopes the SVG's absolute positioning to the card, `overflow: hidden` clips the SVG at card edges.
+
+**JS:** Modify the activity card rendering. Wrap existing card content in a `<div>` with `position: relative; z-index: 1` so text stays above the SVG. Add the SVG before the content div:
+
+```javascript
+// Only for running activities with route data
+let routeSvg =
+
+---
+
+## [trail-running-coach] 2026-04-04-trail-running-coach-phase3-design.md
+
+# Phase 3 — Web Interface Design
+
+**Date:** 2026-04-04
+**Status:** Approved
+**Builds on:** Phase 1 (Rule Engine), Phase 2 (LLM Narrator)
+
+## Goal
+
+Add a browser-based chat interface to the existing Tarahumara Ultra Tracker dashboard so Emmanuel can talk to his trail running coach from any device. Replace the current `dashboard/serve.py` (built-in `http.server`) with a FastAPI app that serves both the dashboard and the new coach API — single service, single Railway deployment.
+
+## Non-Goals
+
+- **Dashboard endpoint migration is NOT in scope.** Existing `/api/weeks`, `/api/sync`, and `/api/push-workout` logic is imported as-is from `serve.py` functions into FastAPI routes — no rewrite, no refactor. Full migration to idiomatic FastAPI is deferred (tracked as tech debt).
+- No new coach domain modules (nutrition, pacing, mental — those are Phase 4).
+- No changes to the rule engine or narrator logic.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│              FastAPI (uvicorn)               │
+│                                             │
+│  Static files:  dashboard.html, sw.js, etc. │
+│                                             │
+│  Dashboard endpoints (imported, not rewritten):
+│    GET  /api/weeks      → build_all_weeks_json()
+│    POST /api/sync       → sync + _update_weeks_cache()
+│    POST /api/push-workout → push_workout()
+│    GET  /api/profiles   → profile list
+│                                             │
+│  Coach endpoints (new):                     │
+│    POST /api/coach/chat     (SSE streaming) │
+│    GET  /api/coach/history                  │
+│    DELETE /api/coach/history                │
+│    GET  /api/coach/status                   │
+│                                             │
+│  Health:                                    │
+│    GET  /health                              │
+│                                             │
+│  Shared: Bearer token auth, rate limiting   │
+├─────────────────────────────────────────────┤
+│  coach/    tracker/    dashboard/            │
+│  (existing packages — unchanged)            │
+└─────────────────────────────────────────────┘
+```
+
+**Key principle:** The FastAPI app is a thin HTTP layer. All logic lives in existing modules (`coach/engine.py`, `coach/narrator.py`, `coach/classifier.py`, `tracker/*`). The API routes are glue code only.
+
+## Chat Drawer UI
+
+The coach chat is a **right slide-out panel** embedded in the existing `dashboard.html`:
+
+- **Trigger:** Floating action button (FAB) in bottom-right corner, same style as existing sync FAB
+- **Panel:** Slides in from the right edge, ~350px wide. Dashboard content shrinks to accommodate.
+- **Components:**
+  - Header bar with "Coach" title and close button
+  - Scrollable message area (coach messages left-aligned, user messages right-aligned)
+  - Text input with send button at the bottom
+  - Loading indicator during streaming (typing dots)
+- **Styling:** Matches existing dashboard design system — dark background (#111), copper accents, JetBrains Mono for labels, Outfit for body text
+- **Responsive:** On mobile (<768px), panel goes full-width overlay instead of side-by-side
+
+Chat drawer JS/CSS is appended to the existing `dashboard.html`. No separate HTML file.
+
+## API Endpoints
+
+### POST /api/coach/chat
+
+Send a question, receive a streamed coaching response.
+
+**Request:**
+```json
+{
+  "question": "How's my week going?"
+}
+```
+
+**Response:** Server-Sent Events (SSE) stream.
+
+```
+data: {"token": "This"}
+data: {"token": " week"}
+data: {"token": " is"}
+data: {"token": " rough"}
+...
+data: {"meta": {"category": "coaching", "week": 5}}
+data: [DONE]
+```
+
+Each event contains a single token. The final `meta` event includes classification and context. `[DONE]` signals stream end.
+
+**Flow:**
+1. Classify question via `coach/classifier.py`
+2. Build coaching data via `coach/engine.py` (current week)
+3. Call `narrator.answer_question()` with Anthropic streaming enabled
+4. Forward each token as an SSE event
+5. After stream com
+
+---
+
+## [trail-running-coach] 2026-04-12-postgres-migration-design.md
+
+# Postgres Migration — Design Spec
+
+**Date:** 2026-04-12
+**Status:** Approved
+**Branch:** `feat/postgres-migration` (to be created)
+
+## Problem
+
+The Tarahumara Ultra Tracker stores all data as JSON files on disk. On Railway (production), the filesystem is ephemeral — `data/activities/` and `data/conversations/` are gitignored and lost on every deploy. This causes:
+
+- The coach LLM has no training data on prod (says "no training logged yet")
+- Conversation history doesn't persist across deploys
+- A manual `push_data.py` → git push workflow is needed to update the dashboard cache
+- No way to query training data (e.g., "show all weeks where compliance < 70%")
+- No way to modify the training plan dynamically or track changes over time
+
+## Solution
+
+Migrate to a single Railway-hosted PostgreSQL database using psycopg2 (raw SQL). Both local development and production connect to the same database via `DATABASE_URL`.
+
+## Decisions
+
+| Decision | Choice | Rationale |
+|---|---|---|
+| Scope | Activities + Conversations + Weeks cache + Training plan + Daily health | Covers prod needs + adds health tracking + mutable plan |
+| Environment | Single Railway Postgres (local + prod) | One source of truth, no sync headaches |
+| File workflow | Clean break — no more JSON writes | Simplicity, DB is the single source |
+| DB layer | psycopg2, raw SQL | 6 tables, single user, straightforward queries — no ORM overhead needed |
+| Plan modifications | Dedicated API endpoint (phase 1), LLM tool-calling (future) | Incremental — get the data layer right first |
+
+## Schema
+
+### `activities`
+
+Replaces `data/activities/*.json`. One row per Garmin activity.
+
+```sql
+CREATE TABLE IF NOT EXISTS activities (
+    id              SERIAL PRIMARY KEY,
+    profile_id      TEXT NOT NULL DEFAULT 'default',
+    garmin_id       BIGINT UNIQUE,
+    activity_date   DATE NOT NULL,
+    week_number     SMALLINT NOT NULL,
+    activity_type   TEXT,
+    activity_name   TEXT,
+    distance_km     REAL,
+    elevation_m     REAL,
+    duration_min    REAL,
+    avg_hr          REAL,
+    avg_pace        TEXT,
+    calories        REAL,
+    sets            INTEGER,
+    reps            INTEGER,
+    route_svg       TEXT,
+    raw_json        JSONB,
+    synced_at       TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_activities_week ON activities (week_number, profile_id);
+CREATE INDEX IF NOT EXISTS idx_activities_date ON activities (activity_date);
+```
+
+- `garmin_id` UNIQUE prevents duplicate inserts on re-sync
+- `raw_json` stores full Garmin payload — future-proofs against new fields
+- `route_svg` stores the SVG path string for the dashboard map visualization
+
+### `daily_health`
+
+New table. One row per day with wellness/recovery metrics from Garmin.
+
+```sql
+CREATE TABLE IF NOT EXISTS daily_health (
+    date            DATE NOT NULL,
+    profile_id      TEXT NOT NULL DEFAULT 'default',
+    sleep_hours     REAL,
+    sleep_score     SMALLINT,
+    deep_sleep_min  REAL,
+    rem_sleep_min   REAL,
+    light_sleep_min REAL,
+    hrv_weekly_avg  REAL,
+    hrv_last_night  REAL,
+    resting_hr      SMALLINT,
+    body_battery_am SMALLINT,
+    body_battery_pm SMALLINT,
+    training_readiness SMALLINT,
+    stress_avg      SMALLINT,
+    spo2_avg        REAL,
+    weight_kg       REAL,
+    body_fat_pct    REAL,
+    raw_json        JSONB,
+    synced_at       TIMESTAMPTZ DEFAULT NOW(),
+    PRIMARY KEY (date, profile_id)
+);
+```
+
+- UPSERT by `(date, profile_id)` — re-syncing a day overwrites with latest
+- `raw_json` captures everything from all Garmin health endpoints for the day
+
+### `conversations`
+
+Replaces `data/conversations/*.json`. One row per chat exchange.
+
+```sql
+CREATE TABLE IF NOT EXISTS conversations (
+    id              SERIAL PRIMARY KEY,
+    timestamp       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    question        TEXT NOT NULL,
+    category        TEXT NOT NULL,
+    response        TEXT NOT NULL,
+    week_number     SMALLINT NOT NULL
+);
+```
+
+### `week_snapshots`
+
+Replaces `dashboard/week
+
+---
+
+## [trail-running-coach] README.md
+
+# scripts/ — CLI Tools
+
+Command-line scripts to interact with the tracker. Run from the `running/` directory with the venv activated.
+
+## sync.py — Pull Garmin Data
+
+```bash
+# Sync current week
+python scripts/sync.py
+
+# Sync a specific week
+python scripts/sync.py --week 3
+```
+
+Downloads activities from Garmin Connect and caches the raw JSON in `data/activities/`. First run requires Garmin credentials (via `.env` file or interactive prompt). Subsequent runs use saved tokens.
+
+## report.py — Weekly Report
+
+```bash
+# Report from cached data (run sync first)
+python scripts/report.py --week 1
+
+# Report with fresh Garmin pull
+python scripts/report.py --week 1 --sync
+```
+
+Generates a markdown report comparing planned vs actual training. Includes compliance score, activity breakdown, and alerts. Reports are printed to terminal and saved to `data/reports/`.
+
+### Example Output
+
+```
+# Week 1 Report (2026-03-02 to 2026-03-08)
+Phase: Base | Recovery: No
+
+| Metric        | Planned | Actual | Delta  |
+|---------------|---------|--------|--------|
+| Distance (km) | 27.0    | 26.3   | -2.6%  |
+| Vert (m)      | 400     | 715    | +78.8% |
+| Long Run (km) | 14.0    | 14.0   | +0.0%  |
+| Gym Sessions  | 3       | 5      | +2     |
+
+Compliance Score: 99%
+```
+
+## status.py — Quick Dashboard
+
+```bash
+python scripts/status.py
+```
+
+Shows at a glance:
+- Current week number and progress bar
+- Training phase (Base / Specific / Taper)
+- Days until race
+- This week's targets (distance, vert, long run, gym, series)
+
+
+---
+
+## [trail-running-coach] README.md
+
+# tracker/ — Core Python Package
+
+The engine behind the Tarahumara Ultra Tracker. Each module handles one responsibility.
+
+## Modules
+
+### config.py
+Constants and thresholds used across the project:
+- File paths (plan.json, data directories)
+- Race info (date, distance, vert)
+- Alert thresholds (HR drift: 10bpm, volume spike: 10%, long run ratio: 30%)
+- Compliance score weights
+- Activity type mappings (which Garmin types count as "run" vs "gym")
+
+### models.py
+Dataclasses that define the data structures:
+- `PlannedWorkout` — a single planned session (day, type, distance, pace, HR targets)
+- `WeekPlan` — weekly plan with targets and list of workouts
+- `GarminActivity` — normalized activity from Garmin (distance in km, pace in min/km)
+- `WeekActual` — aggregated weekly actuals (total distance, vert, gym count, etc.)
+- `Alert` — triggered alert with level, category, and message
+
+### plan_data.py
+Loads and queries the training plan:
+- `load_plan()` — parse plan.json into WeekPlan objects
+- `get_week(n)` — get a specific week (1-30)
+- `get_current_week()` — calculate current week from today's date
+- `get_week_dates(n)` — Monday-Sunday date range for a week
+- `days_to_race()` — countdown to October 2, 2026
+
+### garmin_sync.py
+Garmin Connect integration:
+- Auth flow: saved tokens → .env credentials → interactive prompt
+- Pulls activities via `get_activities_by_date()`
+- Normalizes Garmin fields (meters→km, seconds→min/km pace)
+- Caches raw JSON to `data/activities/`
+- Token persistence at `~/.garminconnect/`
+
+### analysis.py
+Compares actual activities against the plan:
+- `classify_activity()` — maps Garmin types to run/gym/other
+- `build_week_actual()` — aggregates activities into weekly totals
+- `compute_deltas()` — planned vs actual with percentage differences
+- `compliance_score()` — weighted 0-100 score
+
+### alerts.py
+Rule-based alert engine (6 rules):
+- **HR Drift** — easy run HR >10bpm above 4-week rolling average
+- **Volume Spike** — >10% increase over previous week
+- **Long Run Ratio** — longest run >30% of weekly volume
+- **Missed Gym** — fewer sessions than planned
+- **Missed Series** — planned interval workout not detected
+- **Recovery Week** — volume not reduced ≥20% in recovery weeks
+
+### report.py
+Generates markdown reports:
+- Weekly summary table (planned vs actual vs delta)
+- Compliance score
+- Activity list with pace/HR/vert details
+- Alert section
+- Saves to `data/reports/week_NN.md`
+
+
+---
+
+## [training-plan] README.md
+
+training-plan
+=============
+
+Displays training plan for 5K, 10K, Half-Marathon, Novice Marathon and Marathon using the FIRST training plan.
+
+# What is it ?
+The Furman FIRST training plan from [Furman University](http://www.furmanfirst.com/) is well described in 
+Runner's World book [Run Less Run Faster](http://www.amazon.com/gp/product/159486649X/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=159486649X&linkCode=as2&tag=stephasthough-20).
+
+Basically, it is a simple 12 or 16-week program with moderate running sessions that try to emphasize a 3+2 approach: 3 run sessions and 2 cross-training sessions. Each run session is called 'key run' and there are 3 different key runs:
+
+* key run 1 - track repeats to improve economy, running speed and vo2 max
+* key run 2 - tempo run paces to improve lactate tolerances
+* key run 3 - long run paces to improve skeletal and cardiac muscle adaptation
+
+The 12-week program is for the 5K and 10K while the 16-week program is for the half-marathon and marathon.
+
+# What problem does it solve ?
+It can be a bit time-consuming to look in the charts and get an entire plan laid out, so
+this small script is intended to be a starting point and get a quick overview of it.
+
+FURMAN provides a calculator online, but this is all but convenient for an entire plan (moreover it is only in miles), so the script will do the entire plan and gives you the paces to run each key-run once you have your 5K reference time.
+
+# What's next ?
+
+A couple of things can be done, time permitting:
+
+* This needs some serious clean up
+* Fix the workout to support pace zone (low/high) to match Garmin workout instead of single zone. Probably pace zone could be thought as 5K time +/- 30 seconds
+* Export workouts as TCX to be able to be imported in [Garmin Training Center](http://www.garmin.com/garmin/cms/intosports/training_center) assuming it can do so. It would be helpful if [Garmin Connect](http://connect.garmin.com/)
+was supporting workout import too at some point. For now how to interact with both and the Garmin Agent is a bit in the nebulous side.
+
+# How to run it
+I'm still working on it and it's a bit 'look at the code', but the script is straightforward to use right now.
+
+    ./plan.rb --time 22:40 --program half-marathon
+
+will just display the half-marathon plan for a 22:40 5K reference time.
+
+# Why is this in metrics and not in miles ?
+Speed intervals are expressed in metrics, in particular because their reference is obviously based on the distance of a race track which is 400m, so it makes practically little sense to express a workout plan in a mix bag of metrics and miles with a mile pace, so metrics is used everywhere. A running watch such as [Garmin Forerunner](https://buy.garmin.com/shop/shop.do?cID=142&ra=true) or even iPhone applications such as [Runkeeper](http://www.runkeeper.com/) can be set to display in metrics or miles.
+
+# What is the output like ?
+For now, it will just output something like:
+
+    Training Program for Half-Marathon with a 22:40 5K time
+    Week 16
+      KR1
+        Interval: 15min @ 5:41
+        12 x (Interval: 0.4km @ 4:07 - RI 0.4km)
+        Interval: 10min @ 5:41
+      KR2
+        Interval: 3.0km @ 5:41
+        Interval: 5.0km @ 4:42
+        Interval: 1.5km @ 5:41
+      KR3
+        Interval: 12.5km @ 5:11
+
+    Week 15
+      KR1
+        Interval: 15min @ 5:41
+        Interval: 0.4km @ 4:07
+        RI 0.4km
+        Interval: 0.6km @ 4:11
+        RI 0.4km
+        Interval: 0.8km @ 4:13
+        RI 0.4km
+        Interval: 1.2km @ 4:17
+        RI 0.4km
+        Interval: 0.8km @ 4:13
+        RI 0.4km
+        Interval: 0.6km @ 4:11
+        RI 0.4km
+        Interval: 0.4km @ 4:07
+        RI 0.4km
+        Interval: 10min @ 5:41
+      KR2
+        Interval: 3.0km @ 5:41
+        Interval: 5.0km @ 4:52
+        Interval: 1.5km @ 5:41
+      KR3
+        Interval: 12.5km @ 5:11
+
+    Week 14
+      KR1
+        Interval: 15min @ 5:41
+        6 x (Interval: 0.8km @ 4:13 - RI 90s)
+        Interval: 10min
+
+---
+
+## [training-planner] README.md
+
+# Training Planner
+
+Training Planner is a web application for creating a training program for a running event and tracking progress against the plan.
+
+<img width="1040" alt="training-planner" src="https://user-images.githubusercontent.com/3161230/128660943-e604e92a-5d3c-49b1-8472-ba6efddb1fa8.png">
+
+## Installation
+
+Install the [yarn](https://yarnpkg.com) package manager and run the following command at the root of the git repository:
+
+```bash
+yarn install
+```
+
+## Development
+
+Run the following command to build the app and run locally:
+
+```bash
+yarn start
+```
+
+If you want to deploy the app to a web server, run the following command, which compiles and minifies the app and saves the output to the `build` folder:
+
+```bash
+yarn build
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+---
+
+## [training_plan_to_ics] README.md
+
+This tool helps convert a copy-and-pasted running race training plan, into an ICS file that can be imported into a calendar system.
+
+This tool adds assumes that each day of the week has the same type of activity each week, and adds corresponding notes to the ICS event field. It also adds the URL to the bottom of the description.
+
+To use:
+1. Set a `start_date` or `end_date` below (but not both).
+2. Copy/paste the tab-split training plan table into the `raw_data` string below.
+3. Then add `day_of_week_details` entries for each day of the week (if you want).
+4. If you want an URL added to the end of the details, add one to the `url` variable below.
+5. The output ICS file will be written to the file `output_filename`, change this filename if you like.
+
+Assumptions and limitations:
+* Assumes the training plan is full weeks (no partial weeks).
+* Assumes the same details for each day of the week, so you'll have to edit the event descriptions for exceptional events (like a race).
+
+
+---
+
+## [trifecta] README.md
+
+***DISCLAIMER:*** Trifecta was originally created as a fourth-year engineering project for the University of Waterloo. Unfortunately, at this time, we have decided to move onto other projects. This project now has been open-sourced for documentation purposes - if the code here helps you in any way then it has fulfilled its purpose. It is not expected to be run in whole without modification/configuring.
+
+# Trifecta
+
+Trifecta is a web application build with the goal of dramatically simplifying the process of creating a training routine. This project is primarily targeted at cyclists, runners, and swimmers, though the basic premise should hold true for physical activity in general. Trifecta aims to simplify training routine creation through three tasks: activity generation, activity scheduling, and activity routing.
+
+## Motivation
+
+Over 100 million users already use online fitness tracking services such as Strava, Endomondo and MyFitnessPal. These services allow users to track and visualize data that has been collected by the sensors on various devices. These services provide a wealth of data and visual tools but fail to provide users with any actionable plans for improvement. A survey of over one hundred casual athletes found that the majority are unhappy with their planning process. Over fifty percent of respondents either use a generic training plan found online or don’t use any plan at all. Creating personalized training plans currently takes either a significant investment of time or money.
+
+## Services
+
+Trifecta consists of several microservices which work together to deliver a full application experience. We named each of these microservices after birds, cause that's just how we roll.
+
+![bird-roll](https://media.giphy.com/media/3kGnImAIzMnuM/giphy.gif)
+
+While the goal of this project was to based around physical activity, a technical requirement of it was a resulting scalable web service. As such, the infrastructure tooling and templates are included as part of the project.
+
+### Osprey
+
+[README](https://github.com/trifectalabs/trifecta/blob/master/osprey/README.md)
+
+Osprey is the central API responsible for main database interaction and periodic jobs. Osprey is the gateway to the outside world for Trifecta and how clients communicate with the service.
+
+### Raven
+
+[README](https://github.com/trifectalabs/trifecta/blob/master/raven/README.md)
+
+Raven is the training plan generation engine for Trifecta. It is responsible for calculating an athlete's current fitness level as per the Banister Model [[1]](http://fellrnr.com/wiki/Modeling_Human_Performance#The_Banister_Model). As an example, below is a visualization of [this athletes'](https://www.strava.com/athletes/1271201) calculated fitness level over time.
+
+![fitness](https://cloud.githubusercontent.com/assets/4529818/18689300/7380236c-7f56-11e6-89fe-6eface4ecd07.png)
+
+Raven is also responsible for generating training activities based on an athlete's fitness level. This is done using a Particle Swarm Optimization on the training activity space. The optimality of a set of training activities is measured by maximizing the effort output per activity while penalizing for three key factors.
+
+1. **Recovery Time:** ensure that there is enough time in two weeks to recover from two weeks worth of activities.
+2. **Level Appropriate:** ensure that each activity is not too easy or too difficult for an athlete.
+3. **Activity Variation:** ensure that activities are not all identical.
+
+### Peacock
+
+[README](https://github.com/trifectalabs/trifecta/blob/master/peacock/README.md)
+
+Peacock is the front-end web application for Trifecta which was written in Elm but scrapped due to time constraints and hacked together in JavaScript. Peacock sources data via JSON from Osprey.
+
+### Arctic Tern
+
+[README](https://github.com/trifectalabs/trifecta/blob/master/arctic-tern/README.md)
+
+Arctic Tern is the (fairly naïve) route generation service for Trifecta. Routes are generated by creating a random diamon
+
+---
+
+## [trifecta] README.md
+
+
+# Condor 
+
+![Condor](https://cloud.githubusercontent.com/assets/4472397/9979661/1cd96e00-5f2d-11e5-859c-db798a8b492b.png)
+
+=======
+General infrastructure of Trifecta. Includes configuration, deployment, and general upkeep of services.
+
+
+##The Stack
+
+
+####Docker
+-----
+Docker is a container platform that allows for shipping code in an isolated space. This makes setting up an application's runtime very easy. Trifecta services each run in their own stateless docker container, allowing for quick, independent scaling. 
+    
+####Mesos
+-----
+Apache Mesos is a distributed systems kernel, that abstracts away CPU, memory, storage and other resources from the machines it manages. It is tasking engine that enables fault-tolerance and elastic distributed systems easily. Tasks get paired with offers from the resources, such that multiple instances of services can be load balanced on a cluster of slave nodes.
+
+Trifecta services are considered 'tasks' in Mesos. This enables fault tolerance (if one instance of a service dies, another will spawn and take its place), and for elastic scalability to meet demand (if thresholds are met, more 'tasks' of the service will be spawned and load balanced to meet the new demand)
+
+####Marathon
+-----
+Marathon is a task scheduler framework for Mesos. It handles service deployment, converting the service to be run into a respective Mesos task. Marathon offers a dashboard of all the services running, and allows for manual scaling up/down, service deployment, restart and killing. 
+
+####HAProxy
+-----
+HAProxy is the proxy and load balancer that routes traffic to the appropriate instances where services will live. When a new instance of a service is spun up, it must be included in the service pool to receive traffic. HAProxy rules will be updated (not done yet, but probably with [Bamboo](https://github.com/QubitProducts/bamboo)) as services are created in Marathon.
+
+
+
+
+##Local Dev
+The process for testing out a service you're developing or testing on your local machine is quick and easy. 
+
+Before you can start, make sure that you have [Docker 1.9](https://www.docker.com/docker-toolbox) and Docker Compose 1.5 (should be included in Docker toolbox) installed. 
+
+1) Start Mesos cluster on your Mac OS X machine.
+
+Navigate to the condor/docker directory and 
+
+	docker-compose up
+	
+2) Launch any services that you may need. Marathon service descriptions live in condor/marathon/apps/, and can be launched with 
+
+	marathonctl create [service_file]
+	
+3) Build the Docker image for your service. *TODO:* For Play applications that extend TrifectaPlay project, this will be easy
+
+	sbt dockerBuildAndPush
+	
+4) Create a Marathon service description for your service. *TODO:* Play applications should extend the TrifectaPlay project to make this a bit easier 
+
+5) Launch your service on your local Marathon instance!
+
+	marathonctl create [your_new_service_file]
+	
+6) You can scale, destroy, update, restart, etc as needed. [marathonctl doc](https://github.com/shoenig/marathonctl).
+
+
+##Random Instructions
+####Make a new SSL certificate
+When we receive an SSL certificate from Comodo (PositiveSSL), we normally receive the domain certificate and a CA bundle. In order to ensure proper functionality across all browsers/OS/services, you need to build the correct trust chain. To do this, simply concatenate the bundled certificates after your domain cert. Finally, you also need to include the private RSA key that was used to generate the certificate (host validation). 
+
+    cat comodo_domain.crt comodo_domain.ca-bundle domain.key > domain.chained.crt
+
+Now use that chained certificate everywhere needed. 
+
+---
+
+## [trifecta] README.md
+
+
+aws cloudformation create-stack  \
+  --template-body file://bamboo.json \
+  --stack-name bamboo-cluster \
+  --parameters \
+    ParameterKey=KeyName,ParameterValue= \
+    ParameterKey=ExhibitorDiscoveryUrl,ParameterValue= \
+    ParameterKey=ZkClientSecurityGroup,ParameterValue= \
+    ParameterKey=VpcId,ParameterValue=vpc-78db5a1c \
+    ParameterKey=Subnets,ParameterValue= \
+    ParameterKey=AdminSecurityGroup,ParameterValue= \
+    ParameterKey=BambooDockerImage,ParameterValue=thefactory/bamboo:latest \
+    ParameterKey=ClusterSize,ParameterValue=1 \
+    ParameterKey=InstanceAmi,ParameterValue= \
+    ParameterKey=MarathonEndpoint,ParameterValue=
+
+
+---
+
+## [trifecta] README.md
+
+aws cloudformation create-stack \
+  --template-body file://cassandra-seeds.json \
+  --stack-name cassandra-seed-cluster \
+  --parameters \
+    ParameterKey=KeyName,ParameterValue=\
+    ParameterKey=VpcId,ParameterValue= \
+    ParameterKey=Subnets,ParameterValue= \
+    ParameterKey=AdminSecurityGroup,ParameterValue= \
+    ParameterKey=ClusterSize,ParameterValue=3 \
+    ParameterKey=InstanceAmi,ParameterValue=
+
+
+---
+
+## [trifecta] README.md
+
+aws cloudformation create-stack \
+    --template-body file://docker-registry.json \
+    --stack-name docker-registry \
+    --capabilities CAPABILITY_IAM \
+    --parameters \
+        ParameterKey=KeyName,ParameterValue= \
+        ParameterKey=RegistryAuth,ParameterValue='' \
+        ParameterKey=S3Bucket,ParameterValue= \
+        ParameterKey=AvailabilityZones,ParameterValue=us-east-1a \
+        ParameterKey=SslCertificate,ParameterValue= \
+        ParameterKey=DnsPrefix,ParameterValue= \
+        ParameterKey=DnsZone,ParameterValue= \
+        ParameterKey=VpcId,ParameterValue= \
+        ParameterKey=Subnets,ParameterValue= \
+        ParameterKey=AdminSecurityGroup,ParameterValue=
+
+
+---
+
+## [trifecta] README.md
+
+![Osprey](https://cloud.githubusercontent.com/assets/4472397/6365683/d2e4e4c8-bc89-11e4-8afd-12da522611f3.png)
+Osprey
+=======
+
+Central Trifecta core service and API.
+
+[API Documentation](http://www.apidoc.me/trifectalabs.com/osprey/latest)
+
+[ ![Codeship Status for trifectalabs/osprey](https://codeship.com/projects/f5d78e90-b08c-0132-6835-3a7a9fb44a4e/status?branch=master)](https://codeship.com/projects/69590)
+
+#####Responsibilities:
+
+- Data import from Strava
+- Match and bet creation
+- Generate Cumulative Activities
+- API for all core models
+- Job System
+	- Close expired matches and bets
+	- Poll for new Activities from Strava
+	- Close Ranking periods
+
+
+Dev Environment Setup
+=====================
+
+#####OS X Setup (with Homebrew and SBT)
+-----
+######Setup Postres
+	brew install postgresql
+	initdb /usr/local/var/postgres -E utf8
+	createuser trifecta_admin -S
+	createdb trifecta_web -U trifecta_admin
+
+#####Update Local Schema
+**This will wipe your existing DB**
+
+	> From the Osprey git directory
+	dropdb trifecta_web && createdb trifecta_web
+	pg_restore -h localhost --clean -C -O -d trifecta_web -U trifecta_admin db.tar
+
+#####Modify DB Schema
+1) Make sure you have the latest schema locally (see above)
+
+2) Make changes to your local DB as needed (using PSQL, PGAdmin, etc)
+
+3) When ready to test new schema, run...
+
+	pg_dump -h localhost -C -O -n trifecta -s -f db.tar -F tar trifecta_web
+
+3) Run test_setup.sh to update the test db with the new schema.
+
+4) Test
+
+4) When finished, add `db.tar` in your commit along with the respective model changes as needed. 
+
+
+Run/Deploy
+===========
+
+#####Locally
+-------
+With Postgres running,
+
+	sbt run
+
+To run with the Job system, edit `conf/application.conf` and change
+
+	job.service.bool = false
+to
+
+	job.service.bool = true
+and then run.
+
+Osprey runs on port 9000
+
+#####Staging
+-------
+Script coming soon
+
+#####Production
+-------
+Script coming soon
+
+
+---
+
+## [trifecta] README.md
+
+![Peacock](https://cloud.githubusercontent.com/assets/4472397/6365720/3c350660-bc8a-11e4-8462-6312214b122d.jpg)
+#Peacock
+Front-end web application for Trifecta
+
+## How to build
+
+### [Web Application build instructions](peacock-web/README.md)
+
+### [Server build instructions](peacock-server/README.md)
+
+## How to run
+
+1. Web application
+
+  ```
+  cd peacock-web
+  gulp
+  ```
+2. Server
+
+  ```
+  sbt
+  > project peacock-server
+  > run
+  ```
+
+
+---
+
+## [trifecta] README.md
+
+# Peacock Web
+
+## Build Instructions
+
+1. Install [Elm](http://elm-lang.org/install) 0.16 ([Mac](http://install.elm-lang.org/Elm-Platform-0.16.pkg), [Windows](http://install.elm-lang.org/Elm-Platform-0.16.exe))
+2. Install elm dependencies
+
+  ```
+  elm-package install
+  ```
+3. Install npm dependencies
+
+  ```
+  npm install gulp --global
+  npm install
+  ```
+
+
+---
+
+## [trifecta] README.md
+
+![Raven](https://cloud.githubusercontent.com/assets/4529818/7527551/63ab9b58-f4ea-11e4-8acd-68bfa32402b5.jpeg)
+
+#Raven
+Intelligent Training Assistant
+
+[ ![Codeship Status for trifectalabs/raven](https://codeship.com/projects/5a0ceda0-db33-0132-d711-5ad94843e341/status?branch=master)](https://codeship.com/projects/79561)
+
+Raven Port: 9002
+
+
+
+---
+
+## [vdot-calculator] README.md
+
+# VDOT Calculator
+
+Calculate your VDOT from race results, get Daniels training paces, and predict race times — based on Jack Daniels' Running Formula.
+
+**[Try the online calculator](https://stas.run/tools/vdot-calculator)** — no install needed.
+
+## What is VDOT?
+
+VDOT is a measure of your current running fitness, developed by coach Jack Daniels. Enter a recent race result, and it gives you:
+
+- **Training paces** for 5 zones: Easy, Marathon, Threshold, Interval, Repetition
+- **Race predictions** for distances from 1500m to marathon
+
+## Install
+
+```bash
+npm install vdot-calculator
+```
+
+## Usage
+
+### Calculate VDOT from a race result
+
+```typescript
+import { calculateVDOT } from "vdot-calculator";
+
+// 5K in 20:54
+const vdot = calculateVDOT(5, 1254);
+// => 40
+
+// Half marathon in 1:43:00
+const vdot2 = calculateVDOT(21.0975, 6180);
+// => 37
+
+// Marathon in 3:30:00
+const vdot3 = calculateVDOT(42.195, 12600);
+// => 39
+```
+
+### Get training paces
+
+```typescript
+import { getTrainingPaces, formatPace } from "vdot-calculator";
+
+const paces = getTrainingPaces(45);
+// paces.E => 368 (Easy:      6:08/km)
+// paces.M => 333 (Marathon:  5:33/km)
+// paces.T => 312 (Threshold: 5:12/km)
+// paces.I => 283 (Interval:  4:43/km)
+// paces.R => 257 (Repetition: 4:17/km)
+
+console.log(`Easy pace: ${formatPace(paces.E)}/km`);
+// => "Easy pace: 6:08/km"
+```
+
+### Get race predictions
+
+```typescript
+import { getRacePredictions, formatTime } from "vdot-calculator";
+
+const predictions = getRacePredictions(50);
+// predictions["5K"]  => 1043  (17:23)
+// predictions["10K"] => 2163  (36:03)
+// predictions.HM     => 4758  (1:19:18)
+// predictions.M      => 10380 (2:53:00)
+
+console.log(`Marathon: ${formatTime(predictions.M)}`);
+// => "Marathon: 2:53:00"
+```
+
+### Full lookup (VDOT + paces + predictions in one call)
+
+```typescript
+import { lookupVDOT } from "vdot-calculator";
+
+const result = lookupVDOT(10, 50 * 60); // 10K in 50:00
+// result.vdot            => 37
+// result.trainingPaces.E => 420 (7:00/km)
+// result.racePredictions.HM => 6180 (1:43:00)
+```
+
+## API Reference
+
+### Core functions
+
+| Function | Description |
+|----------|-------------|
+| `calculateVDOT(distanceKm, timeSeconds)` | Calculate VDOT from a race result. Returns 30–85 or null. |
+| `getTrainingPaces(vdot)` | Get training paces (sec/km) for 5 zones. |
+| `getRacePredictions(vdot)` | Get predicted race times (seconds) for 8 distances. |
+| `lookupVDOT(distanceKm, timeSeconds)` | All-in-one: VDOT + paces + predictions. |
+
+### Utility helpers
+
+| Function | Description |
+|----------|-------------|
+| `formatPace(secondsPerKm)` | Format pace: `312` → `"5:12"` |
+| `formatTime(totalSeconds)` | Format time: `6180` → `"1:43:00"` |
+| `parsePace(paceString)` | Parse pace: `"5:12"` → `312` |
+| `parseTime(timeString)` | Parse time: `"1:43:00"` → `6180` |
+
+### Types
+
+```typescript
+interface TrainingPaces {
+  E: number; // Easy (sec/km)
+  M: number; // Marathon (sec/km)
+  T: number; // Threshold (sec/km)
+  I: number; // Interval (sec/km)
+  R: number; // Repetition (sec/km)
+}
+
+interface RaceTimes {
+  "1500": number; "3000": number; mile: number;
+  "5K": number; "10K": number; "15K": number;
+  HM: number; M: number;
+}
+```
+
+## VDOT range
+
+Supported VDOT values: **30 to 85** (covers most recreational to elite runners).
+
+| VDOT | ~5K time | ~Marathon time | Level |
+|------|----------|----------------|-------|
+| 30 | 26:09 | 4:14:00 | Beginner |
+| 40 | 20:54 | 3:26:00 | Recreational |
+| 50 | 17:23 | 2:53:00 | Competitive |
+| 60 | 14:58 | 2:28:00 | Advanced |
+| 70 | 13:13 | 2:10:00 | Elite |
+| 80 | 11:54 | 1:58:00 | World class |
+
+## Related tools
+
+- [VDOT Calculator](https://stas.run/tools/vdot-calculator) — interactive online calculator
+- [Running Pace Calculator](https://stas.run/tools/running-pace-calculator) — convert between pace, speed, and race times
+- [HR Zone Calculator](https://stas.run/tools/hr-zone-calculator) — calculate heart rate training zones
+- [How to connect your watch to an AI running coach](https://stas
+
+---
+
+## [vtrain] CLAUDE.md
+
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+vtrain is a single-page static site that generates 12-week running training plans following Jack Daniels' VDOT methodology. Hosted on GitHub Pages at `vtrain.jandroav.net`. The UI is bilingual (English default, Spanish toggle) and supports both km and miles via a unit toggle. UI copy lives in `I18N`. Workouts in `PLAN_CONFIG` are stored in km + Spanish Daniels notation and converted at render time: `translateWorkout` for ES→EN, `applyUnitToWorkout`/`paceKmToMi`/`applyUnitToKmTotal` for km→mi (track meter reps stay metric — track is universal). Distance precision: continuous values round to 0.25 mi, weekly totals round to whole miles.
+
+VDOT is computed via Daniels' canonical formula in `computeVDOT(distanceKm, raceTimeSeconds)` — no race-time lookup tables. This gives consistent values for any race distance (predefined or custom). Custom distances route to the closest predefined plan template (10/21/42 km) via `closestTemplate(distanceKm)`.
+
+## Files
+
+- **`index.html`** — form (distance / race date / goal time) and output container. Inline CSS, dark theme.
+- **`vtrain.js`** — all logic and data. No build step, no framework, no dependencies; loaded directly by `index.html`.
+- **`CNAME`** — pins GitHub Pages to the custom domain `vtrain.jandroav.net`. Required at repo root for the apex `vtrain.jandroav.net` setup.
+
+There is no toolchain. Edit, save, refresh.
+
+## How `vtrain.js` is organized
+
+Everything lives in one file in this order:
+
+1. **VDOT race-time tables** (`HALF_MARATHON_VDOT`, `MARATHON_VDOT`, `TEN_K_VDOT`) — VDOT → race time at that effort. Sourced from Daniels' Running Formula.
+2. **Pace tables** (`PACE_S`, `PACE_M`, `PACE_U`, `PACE_I`, `PACE_R`) — VDOT → min/km for the five Daniels paces (Suave/Easy, Maratón, Umbral/Threshold, Intervalo, Repetición).
+3. **`PLAN_CONFIG`** — the 12-week plan content. One object per week (`s1`..`s12`). Each week has:
+   - `phase` — language-neutral phase key (`FI` / `EQ` / `TQ` / `FQ` / `TAPER`); rendered via `I18N[lang].phases`.
+   - `c1-XX` / `c2-XX` per distance — Q1 and Q2 quality sessions (positions 3 and 6 of the 7-day rhythm). The `0` (general) variant uses `pre1`/`pre2`. Stored in Spanish Daniels notation.
+   - `d1-XX` / `d2-XX` / `d4-XX` / `d5-XX` / `d7-XX` per distance — easy-day volumes at positions 1/2/4/5/7. Position 7 is the long run (or race in week 12). Empty string renders as the localized "Rest"/"Descanso". **Field names encode position-relative-to-race, not weekday** — the actual weekday for each slot is computed from the calendar date, so the plan adapts to any race weekday.
+   - `km-XX` — decorative weekly total per distance.
+4. **`I18N`** — `{ en, es }` parallel dictionaries with matching keys: page strings, day names, phase labels, pace labels, error messages. Both objects MUST have the same key shape — the renderer assumes a value exists for every key in the active language.
+5. **`translateWorkout(text, lang)`** — converts Spanish Daniels notation to English at render time when `lang === "en"` (S→E, U→T, A/D→ST, C/→w/, TR→jog, MIN→min, X→x). Identity for `lang === "es"`. Edits to workout strings in `PLAN_CONFIG` should keep the Spanish form so this translator stays the single source of conversion.
+6. **Helpers** — `parseTimeToSeconds`, `getVDOT` (closest-VDOT lookup), `calculatePaces` (returns language-neutral pace keys: `Easy`/`Marathon`/`Threshold`/`Interval`/`Repetition`), `selectWeek` (collapses per-distance fields into a flat position-indexed object: `d1`/`d2`/`q1`/`d4`/`d5`/`q2`/`d7`), `parseLocalDate` (avoids `new Date("YYYY-MM-DD")` UTC drift), `dayKey(date)` (maps `getDay()` → `sun`/`mon`/.../`sat`).
+7. **`buildPlan(distance, raceDate, raceTime)`** — walks 12 weeks back from race date. Returns `{ weeks, vdot, paces }`. Each schedule entry has a `day` key derived from the actual calendar date — Q1 lands on (raceWeekday − 4 days)
+
+---
+
+## [vtrain] README.md
+
+# vtrain
+
+12-week training plan generator following [Jack Daniels'](https://en.wikipedia.org/wiki/Jack_Daniels_(coach)) VDOT methodology — for 10k, half-marathon, marathon, or any custom race distance.
+
+🔗 **[vtrain.jandroav.net](https://vtrain.jandroav.net)**
+
+## Features
+
+- **Any race distance**: pick from the four predefined distances (marathon, half, 10k) or enter a custom distance — vtrain routes custom distances to the closest predefined plan template
+- **Daniels methodology**, 12 weeks across the four phases:
+  - **Phase I — Foundation** (s1–s3): easy running + strides
+  - **Phase II — Early Quality** (s4–s6): repetition (R) work
+  - **Phase III — Transition Quality** (s7–s9): intervals (I) + threshold (T)
+  - **Phase IV — Final Quality** (s10–s11) + taper (s12)
+- **Daniels' volume caps respected**: T ≤ 10%, I ≤ 8%, R ≤ 5% of weekly km, single I-rep ≤ ~1.2 km (~5 min ceiling)
+- **Any race weekday**: rhythm anchors to your race — long run on race weekday, Q1 four days before, Q2 the day before
+- **Bilingual UI**: English ↔ Spanish toggle, persistent
+- **km ↔ miles toggle**: paces, distances, weekly totals, mileage chart, and calendar export all convert (track meter reps `1000 I`, `400 R` etc. stay metric — track is universal)
+- **Export**:
+  - **PDF** via browser print (A4, page-break aware, phase color accents preserved)
+  - **`.ics`** calendar file (84 events covering every training day) for Google Calendar / Apple Calendar / Outlook
+- **No backend**: pure HTML + vanilla JavaScript, runs entirely in the browser
+
+## How it works
+
+Enter your distance, race date (any weekday), and goal time. vtrain computes your VDOT from the time-distance combination, derives the five Daniels training paces (Easy, Marathon, Threshold, Interval, Repetition), and generates a phase-progressed 12-week plan with quality sessions on days 3 and 6 of each week and the long run / race on day 7.
+
+More on the methodology in [Daniels' Running Formula](https://www.amazon.com/Daniels-Running-Formula-Jack-Tupper/dp/1450431836).
+
+## Development
+
+No build step — plain HTML + vanilla JS. Serve locally:
+
+```bash
+python3 -m http.server 8000
+```
+
+then open `http://localhost:8000`.
+
+Run tests (Node 18+, no dependencies):
+
+```bash
+node --test tests/vtrain.test.mjs
+```
+
+Tests run on every push and pull request via [GitHub Actions](.github/workflows/test.yml).
+
+
+---
+
+## [workout-planner] README.md
+
+# Workout planner
+
+Workout-planner is a simple python application for organizing your workouts races for sports activities. It is designed to work locally on any UNIX-like system running Python.
+
+The file allows you to visualize the training volume and to program your season while preferring a progressive staircase to limit injuries and over-training.
+I use the "[Trimps](https://blog.nolio.io/post/utiliser-la-charge-dentrainement-pour-mieux-sentrainer)" method.
+The load is calculated for each session as a function of the time spent in the different heart rate zones (Z1=50%-60% fcmax, ..., Z5=90%-100% fcmax) in arbitrary units. Then the acute load over the week and the monotonicity index are calculated.According to the work of Foster, 1998: "decrease in performance capacity and appearance of fatigue beyond an index of 2, occurrence of injuries beyond 2.5". This monotonicity index should therefore be monitored. The chronic loads over 4 and 8 weeks are then calculated, as well as the load variation over these periods. An index below 1.0 indicates that the body is recovering (before a race, or after a training cycle). An index above 1.3 indicates an increase in load of more than 30%, which can be difficult to tolerate and usually leads to injury if several weeks in a row are loaded. The ideal is to remain between 1.0 and 1.3, in order to create an overcompensation on the part of the body, and thus an adaptive response. However, this variation should be kept to a minimum and the body should be given time to recover. This index should therefore be monitored.
+
+I have deliberately left some examples for visualization. 
+
+
+## Features
+
+* Organisation of a full sports season taking into account the upstream load.
+* Calculation of objective sports data. 
+* Adapting the sessions to the training. 
+* Keeping an eye on the goals. 
+* Avoiding injuries !
+
+## To do
+
+## Status
+
+This app is still in developpement. Things will be added, modified in the future. I would be happy to receive bug reports and opinions.
+
+## Getting Started
+
+TODO
+
+## Gallery
+
+TODO
+
+## Changelog
+
+See [Changelog](https://github.com/fgebhart/workoutizer/blob/main/CHANGELOG.md).
+
+## Papers and thesis
+
+
+
+---
+
