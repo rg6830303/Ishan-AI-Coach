@@ -10,3 +10,7 @@ knowledge/index/
 venv/
 .venv/
 .claude/
+knowledge/sources/
+data/
+__pycache__/
+*.pyc
