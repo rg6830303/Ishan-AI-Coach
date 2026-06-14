@@ -5,7 +5,7 @@ so every feature can be tested independently against synthetic runners.
 """
 
 import streamlit as st
-from coaching.engine import coach
+from coaching.engine_v2 import coach
 from tests.synthetic_runners import get_all_runners, runner_as_profile
 from ui.debug_panel import render_call_debug
 
