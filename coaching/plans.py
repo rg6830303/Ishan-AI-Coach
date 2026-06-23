@@ -3,10 +3,62 @@ import os
 from datetime import datetime, timedelta
 from engine.pace_calculator import calculate_pace_zones
 
-def generate_periodized_plan(profile: dict, goal: str, weeks: int = 12, days_per_week: int = 3) -> dict:
+
+# Persona-specific workout naming and descriptions
+PERSONA_TEMPLATES = {
+    "scientist": {
+        "easy": {"name": "Zone 2 Aerobic", "desc": "Aerobic base development at 60-65% HRmax. Builds mitochondrial density."},
+        "tempo": {"name": "Lactate Threshold", "desc": "LT2 stimulus at {pace}. Physiological target: shift threshold pace."},
+        "interval": {"name": "VO2max Intervals", "desc": "4-6x {reps} at {pace} (95-100% VO2max). Full recovery between."},
+        "long": {"name": "Long Aerobic Endurance", "desc": "Time on feet for capillarization and fat oxidation. Target: {dist}km at {pace}."},
+        "recovery": {"name": "Active Recovery", "desc": "Sub-aerobic threshold movement for lactate clearance. HR < 120bpm."},
+        "deload": "Planned deload: reduce volume 25%, maintain one quality session at reduced intensity.",
+        "taper": "Taper protocol: volume -{pct}%, intensity maintained. Neural sharpening.",
+    },
+    "energizer": {
+        "easy": {"name": "Adventure Run", "desc": "Easy and joyful! Pick a new route, enjoy the scenery. Just keep it conversational."},
+        "tempo": {"name": "Speed Play", "desc": "Feel the POWER! Warm up, then hold {pace} — you'll feel amazing after this one!"},
+        "interval": {"name": "Lightning Rounds", "desc": "Fast and fun! {reps} quick bursts at {pace} with easy jog between. Chase the wind!"},
+        "long": {"name": "Explorer Run", "desc": "Your long run adventure! {dist}km of discovering how far your legs can take you."},
+        "recovery": {"name": "Recharge Day", "desc": "Shake-out jog or fun cross-training. Your body EARNED this easy day!"},
+        "deload": "Easy week! You've been crushing it — time to recharge so next week feels AMAZING.",
+        "taper": "Race week energy! Keep it light, stay excited. You're ready for this!",
+    },
+    "warrior": {
+        "easy": {"name": "Discipline Miles", "desc": "Execute at {pace}. No faster. Controlled effort builds the engine."},
+        "tempo": {"name": "Threshold Mission", "desc": "Warm up. Then hold {pace} for the prescribed distance. No excuses. No shortcuts."},
+        "interval": {"name": "Speed Drill", "desc": "{reps} at {pace}. Full effort. Full recovery. Execute each one like it's the last."},
+        "long": {"name": "Endurance Test", "desc": "{dist}km. Prove you can sustain. Mental toughness is built here, not in the easy sessions."},
+        "recovery": {"name": "Tactical Rest", "desc": "Recovery earned through hard work. Light movement only. Prepare for what's next."},
+        "deload": "Strategic pullback. Warriors rest smart — you attack harder next block.",
+        "taper": "Sharpening the blade. Volume drops, intensity stays. You're battle-ready.",
+    },
+    "sage": {
+        "easy": {"name": "Easy Run", "desc": "Run at the pace your body chooses today. No watch pressure. Just movement."},
+        "tempo": {"name": "Steady Effort", "desc": "Find a sustainable rhythm at {pace}. Not racing — practicing patience under effort."},
+        "interval": {"name": "Quick Feet", "desc": "Brief faster efforts at {pace}. Then return to easy. Speed comes in its own time."},
+        "long": {"name": "Long & Slow", "desc": "{dist}km. The long run teaches patience. Walk if you need to. The miles will come."},
+        "recovery": {"name": "Rest", "desc": "Rest without guilt. The body heals in stillness. The miles will be there tomorrow."},
+        "deload": "The seasons teach us: growth needs rest. Ease back. Trust the process.",
+        "taper": "You've done the work. Now let the body absorb it. Less is more.",
+    },
+}
+
+
+def get_persona_desc(persona: str, run_type: str, pace: str = "", dist: float = 0, reps: str = "400m") -> dict:
+    """Get persona-flavored workout name and description."""
+    templates = PERSONA_TEMPLATES.get(persona, PERSONA_TEMPLATES["scientist"])
+    template = templates.get(run_type, templates.get("easy"))
+    if isinstance(template, str):
+        return {"name": run_type.title(), "desc": template}
+    name = template["name"]
+    desc = template["desc"].format(pace=pace, dist=f"{dist:.1f}", reps=reps)
+    return {"name": name, "desc": desc}
+
+def generate_periodized_plan(profile: dict, goal: str, weeks: int = 12, days_per_week: int = 3, persona: str = "scientist") -> dict:
     """
     Generates a structured, periodized training plan based on Daniels VDOT paces,
-    the runner's profile, training volume tier, and selection parameters.
+    the runner's profile, training volume tier, and persona coaching style.
     """
     # 1. Calculate training paces
     zones = calculate_pace_zones(profile)
@@ -93,40 +145,37 @@ def generate_periodized_plan(profile: dict, goal: str, weeks: int = 12, days_per
             dist = 0.0
             pace = easy_pace
             pace_sec = easy_sec
-            desc = ""
-            
+
             if run_category == "quality":
-                # Alternate Tempo and Interval weeks
                 if w % 2 == 1:
                     run_type = "tempo"
                     dist = round(weekly_volume * 0.25, 1)
                     pace = tempo_pace
                     pace_sec = tempo_sec
-                    desc = f"Threshold endurance building. Warm up 1km, then run {dist-1:.1f}km at Tempo pace, cool down 1km." if dist > 2 else f"Tempo run of {dist}km."
                 else:
                     run_type = "interval"
                     dist = round(weekly_volume * 0.20, 1)
                     pace = interval_pace
                     pace_sec = interval_sec
-                    desc = f"Aerobic capacity intervals. Warm up 1km, then perform 4-6x 400m intervals at Interval pace with 2 min walk recovery, cool down 1km."
             elif run_category == "long":
                 run_type = "long"
                 dist = round(weekly_volume * 0.45, 1)
                 pace = easy_pace
                 pace_sec = easy_sec
-                desc = f"Long aerobic endurance run. Focus on breathing and building time on feet."
             elif run_category == "recovery":
                 run_type = "recovery"
                 dist = round(weekly_volume * 0.10, 1)
                 pace = easy_pace
                 pace_sec = easy_sec
-                desc = f"Active recovery run. Keep the heart rate low and muscles moving."
-            else:  # easy
+            else:
                 run_type = "easy"
                 dist = round(weekly_volume * (0.35 if days_per_week == 3 else 0.20), 1)
                 pace = easy_pace
                 pace_sec = easy_sec
-                desc = f"Aerobic base easy run. Conversational pace, relaxed breathing."
+
+            persona_info = get_persona_desc(persona, run_type, pace=pace, dist=dist)
+            desc = persona_info["desc"]
+            workout_name = persona_info["name"]
                 
             if dist < 1.0:
                 dist = 1.0
@@ -136,6 +185,7 @@ def generate_periodized_plan(profile: dict, goal: str, weeks: int = 12, days_per
             workouts.append({
                 "id": workout_id,
                 "day": day_name,
+                "name": workout_name,
                 "type": run_type,
                 "distance_km": dist,
                 "duration_minutes": dur_mins,

@@ -262,13 +262,14 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "generate_training_plan",
-            "description": "Generate a periodized training plan based on goals, current fitness, and available time. Returns a week-by-week structure.",
+            "description": "Generate a full periodized training plan with specific daily workouts, paces, and persona-flavored descriptions. Returns week-by-week structured sessions.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "goal": {"type": "string", "description": "What the plan is for (e.g., '5K in 25 min')"},
-                    "weeks": {"type": "integer", "description": "Number of weeks for the plan"},
-                    "days_per_week": {"type": "integer", "description": "Training days available per week"},
+                    "goal": {"type": "string", "description": "What the plan is for (e.g., '5K', '10K', 'half', 'marathon', 'base')"},
+                    "weeks": {"type": "integer", "description": "Number of weeks for the plan (8-24)"},
+                    "days_per_week": {"type": "integer", "description": "Training days available per week (3-6)"},
+                    "persona": {"type": "string", "enum": ["scientist", "energizer", "warrior", "sage"], "description": "Coaching persona for workout naming style"},
                 },
                 "required": ["goal", "weeks"],
             },
@@ -354,6 +355,18 @@ TOOL_DEFINITIONS = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_wellness_check",
+            "description": "Get the runner's morning wellness self-report (replaces HRV for readiness). Returns sleep quality, energy, soreness, stress, and motivation on 1-5 scales.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
 ]
 
 
@@ -382,6 +395,8 @@ def execute_tool(tool_name: str, arguments: dict, user_id: int, thread_id: int |
             return _get_current_plan(user_id)
         elif tool_name == "get_memory_insights":
             return _get_memory_insights(user_id)
+        elif tool_name == "get_wellness_check":
+            return _get_wellness_check(user_id)
         elif tool_name == "calculate_pace_zones":
             return _calculate_pace_zones(user_id, arguments)
         elif tool_name == "estimate_vo2max":
@@ -536,6 +551,60 @@ def _get_memory_insights(user_id: int) -> str:
     if not insights:
         return json.dumps({"insights": [], "message": "No stored insights yet"})
     return json.dumps({"insights": insights})
+
+
+def _get_wellness_check(user_id: int) -> str:
+    """Get the runner's latest morning wellness self-report.
+
+    This replaces HRV-based readiness for users without wearables.
+    Sprint Society app prompts users each morning with 5 quick sliders (1-5).
+    """
+    # In production, reads from Sprint Society's wellness_checks table
+    # For now, returns most recent check or indicates no data
+    try:
+        from integration.sprint_society_adapter import DATA_SOURCE
+        if DATA_SOURCE == "supabase":
+            from integration.sprint_society_adapter import _get_supabase_client
+            client = _get_supabase_client()
+            result = (
+                client.table("wellness_checks")
+                .select("*")
+                .eq("user_id", user_id)
+                .order("created_at", desc=True)
+                .limit(1)
+                .execute()
+            )
+            if result.data:
+                row = result.data[0]
+                return json.dumps({
+                    "sleep_quality": row.get("sleep_quality", 3),
+                    "energy_level": row.get("energy_level", 3),
+                    "muscle_soreness": row.get("muscle_soreness", 3),
+                    "stress_level": row.get("stress_level", 3),
+                    "motivation": row.get("motivation", 3),
+                    "readiness_score": _calc_readiness_from_wellness(row),
+                    "date": row.get("created_at", ""),
+                })
+    except (ImportError, RuntimeError):
+        pass
+
+    return json.dumps({
+        "message": "No wellness check recorded today",
+        "suggestion": "Ask the runner how they slept, their energy level, and any soreness",
+        "readiness_score": None,
+    })
+
+
+def _calc_readiness_from_wellness(wellness: dict) -> float:
+    """Calculate readiness 1-5 from wellness self-report."""
+    sleep = wellness.get("sleep_quality", 3)
+    energy = wellness.get("energy_level", 3)
+    soreness = 6 - wellness.get("muscle_soreness", 3)  # Invert: high soreness = low readiness
+    stress = 6 - wellness.get("stress_level", 3)  # Invert: high stress = low readiness
+    motivation = wellness.get("motivation", 3)
+    # Weighted: sleep 30%, energy 25%, soreness 20%, stress 15%, motivation 10%
+    score = (sleep * 0.30 + energy * 0.25 + soreness * 0.20 + stress * 0.15 + motivation * 0.10)
+    return round(score, 1)
 
 
 # --- COMPUTE ---
@@ -739,27 +808,45 @@ def _set_goal(user_id: int, args: dict) -> str:
 
 
 def _generate_plan(user_id: int, args: dict) -> str:
-    """Generate plan structure (the LLM fills in the narrative)."""
-    profile = get_profile(user_id)
+    """Generate a full periodized plan with specific daily workouts and paces."""
+    from coaching.plans import generate_periodized_plan
+
+    profile = get_profile(user_id) or {}
     weeks = args.get("weeks", 12)
     days = args.get("days_per_week", profile.get("training_days", 4) if profile else 4)
     goal = args.get("goal", "general fitness")
 
-    plan = {
-        "goal": goal,
-        "weeks": weeks,
-        "days_per_week": days,
-        "phases": [
-            {"name": "Base", "weeks": int(weeks * 0.4), "focus": "aerobic volume, easy running"},
-            {"name": "Build", "weeks": int(weeks * 0.3), "focus": "introduce quality, tempo + intervals"},
-            {"name": "Peak", "weeks": int(weeks * 0.15), "focus": "race-specific intensity"},
-            {"name": "Taper", "weeks": max(1, int(weeks * 0.15)), "focus": "reduce volume, maintain sharpness"},
-        ],
-        "generated": True,
-        "note": "LLM will fill session details based on tier and pace zones",
+    persona = args.get("persona", profile.get("coach_style", "scientist"))
+    plan = generate_periodized_plan(profile, goal, weeks=weeks, days_per_week=days, persona=persona)
+    personalization_store.log_event(user_id, "plan_generated", {
+        "goal": goal, "weeks": weeks, "days_per_week": days,
+        "vdot": plan.get("vdot"), "paces": plan.get("paces"),
+    })
+
+    summary = {
+        "goal": plan["goal"],
+        "total_weeks": plan["total_weeks"],
+        "days_per_week": plan["days_per_week"],
+        "paces": plan["paces"],
+        "vdot": plan["vdot"],
+        "week_summaries": [],
     }
-    personalization_store.log_event(user_id, "plan_generated", plan)
-    return json.dumps(plan)
+    for week in plan["weeks"]:
+        runs = [s for s in week["schedule"] if s["type"] != "rest"]
+        summary["week_summaries"].append({
+            "week": week["week_number"],
+            "volume_km": week["target_volume_km"],
+            "deload": week["is_deload"],
+            "taper": week["is_taper"],
+            "sessions": [
+                {"day": r["day"], "name": r.get("name", r["type"].title()),
+                 "type": r["type"], "km": r["distance_km"],
+                 "pace": r["target_pace"], "desc": r["description"]}
+                for r in runs
+            ],
+        })
+
+    return json.dumps(summary, default=str)
 
 
 def _adjust_plan(user_id: int, args: dict) -> str:
