@@ -58,7 +58,7 @@ PRIORITY = {
 
 # Timing constants (seconds)
 MIN_GAP_S = 60.0            # default minimum gap between spoken cues
-SAFETY_COOLDOWN_S = 30.0    # safety can re-fire faster, but not spam
+SAFETY_COOLDOWN_S = 45.0    # safety re-fires (still escalating) — urgent but not spam
 REACTIVE_COOLDOWN_S = 100.0  # same coaching nudge won't repeat inside this window
 
 
@@ -90,6 +90,7 @@ class CuePlanner:
         self.fired_km: set = set()            # km markers already spoken
         self.last_by_trigger: dict = {}       # trigger -> last t_s it fired
         self.count_by_trigger: dict = {}      # trigger -> times spoken (rotation + back-off)
+        self.safety_seen = False              # a redline happened -> no aggressive push later
 
     # -- timing helpers ----------------------------------------------------- #
     def _gap_ok(self, t_s: float) -> bool:
@@ -137,9 +138,11 @@ class CuePlanner:
                 "phase": state.phase,
             }
 
-        # 1) SAFETY — bypasses the spacing gate, has its own short cooldown.
+        # 1) SAFETY — bypasses the spacing gate; re-fires on a sustained redline
+        #    but escalates + rotates wording so it urges caution without spamming.
         if state.need == rs.NEED_SAFETY:
-            if self._cooldown_ok(CUE_HR_SAFETY, t, SAFETY_COOLDOWN_S):
+            self.safety_seen = True  # a redline occurred -> suppress aggressive push later
+            if self._reactive_ready(CUE_HR_SAFETY, t, SAFETY_COOLDOWN_S):
                 return self._commit(CueEvent(
                     CUE_HR_SAFETY, PRIORITY[CUE_HR_SAFETY], t, state.phase, state.need,
                     payload(), reason="heart rate in safety zone"))
@@ -168,7 +171,9 @@ class CuePlanner:
             candidates.append((CUE_KM_MILESTONE, True))
         if CUE_HALFWAY not in self.fired_once and state.progress >= 0.5:
             candidates.append((CUE_HALFWAY, True))
-        if CUE_FINAL_PUSH not in self.fired_once and state.phase == rs.PHASE_FINAL_PUSH:
+        # Final push is an effort-UP cue — never give it after a redline this run.
+        if CUE_FINAL_PUSH not in self.fired_once and state.phase == rs.PHASE_FINAL_PUSH \
+                and not self.safety_seen:
             candidates.append((CUE_FINAL_PUSH, True))
 
         # 5) Reactive coaching cues — suppressed entirely when in flow (need NONE),

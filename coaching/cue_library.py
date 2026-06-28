@@ -89,18 +89,22 @@ CUE_TEMPLATES = {
         "scientist": [
             "About {pace_delta_abs}s/km fast. Ease back toward {target_pace} to protect the finish.",
             "You're ahead of target pace. Dial back to {target_pace} - bank energy, not seconds.",
+            "Pace is hot. Settle to {target_pace}; the even effort wins this run.",
         ],
         "energizer": [
             "Whoa, flying a bit! Reel it back to {target_pace} so you finish strong and happy!",
             "Easy tiger - that's quick! Settle to {target_pace}, save that fire for later!",
+            "Loving the energy - just ease to {target_pace} so it lasts the whole way!",
         ],
         "warrior": [
             "Too hot. Rein it in to {target_pace}. Discipline now, glory later.",
             "Slow the start. {target_pace} is the order. Don't burn the mission early.",
+            "Check the pace. Back to {target_pace}. Control wins, not bravado.",
         ],
         "sage": [
             "Gently - you're rushing. Drift back to {target_pace}. Patience is your ally today.",
             "Ease the pace toward {target_pace}. The eager start fades; the steady one endures.",
+            "No need to hurry. Float back to {target_pace} and let the run come to you.",
         ],
     },
     rc.CUE_HOLD_PACE: {
@@ -149,36 +153,48 @@ CUE_TEMPLATES = {
     },
     rc.CUE_WALL_SUPPORT: {
         "scientist": [
-            "This is glycogen territory. Shorten stride, steady breathing - small fuel sip if you carry it.",
-            "Deep fatigue zone now. Break it into one minute at a time. Maintain cadence, not force.",
+            "Glycogen territory. Shorten stride, steady breathing, small fuel sip if you have it.",
+            "Deep fatigue zone. One minute at a time. Maintain cadence, not force.",
+            "Energy is low now. Relax the effort, keep turnover light, stay patient.",
         ],
         "energizer": [
-            "This is the legendary part - push through! One block at a time, you're so close!",
-            "The wall's just a story you rewrite! Small steps, big heart - keep going, champion!",
+            "This is the legendary part - one block at a time, you're so close!",
+            "The wall's just a story you rewrite! Small steps, big heart, keep going!",
+            "You're in the deep end now - and you're still moving. That's heroic!",
         ],
         "warrior": [
-            "The wall. This is who you are now. One minute at a time. Do not stop.",
-            "Pain is information, not a command. Shorten stride, breathe, advance. Hold.",
+            "The wall. This is who you are now. One minute at a time.",
+            "Pain is information, not a command. Shorten stride, breathe, advance.",
+            "This is the forge. Hold your form, keep moving, do not stop.",
         ],
         "sage": [
-            "The hardest stretch teaches the most. One breath, one step. Let it pass through you.",
-            "Here the mountain steepens. Slow, steady, patient. You have walked harder paths.",
+            "The hardest stretch teaches the most. One breath, one step.",
+            "Here the mountain steepens. Slow, steady, patient. Keep walking the path.",
+            "Tiredness is a passing season. Light feet, calm breath, stay with it.",
         ],
     },
     # Safety cue: persona only softens the TONE - the instruction (ease off) is
     # identical and non-negotiable across all four.
     rc.CUE_HR_SAFETY: {
         "scientist": [
-            "Heart rate is very high. Ease to a jog or walk now and let it recover before continuing.",
+            "Heart rate very high. Ease to a walk and let it recover.",
+            "Still redlining. Slow down now; let the heart rate come back.",
+            "Effort is too high. Back off to a jog and recover.",
         ],
         "energizer": [
-            "Heart's redlining - let's protect you. Ease right down to a walk and let it settle.",
+            "Heart's redlining - let's protect you. Ease to a walk now.",
+            "Still too high! Slow it right down and let it settle.",
+            "Take care of yourself - gentle walk, let that heart recover.",
         ],
         "warrior": [
-            "Heart rate too high. Back off now - a smart runner protects the body. Walk it down.",
+            "Heart rate too high. Back off now. Smart runners protect the body.",
+            "Still redlining. Ease down - this is discipline, not weakness.",
+            "Too hard. Walk it down and let the heart recover.",
         ],
         "sage": [
-            "Your heart is working too hard. Slow to a walk, breathe, and let it come back down.",
+            "Your heart works too hard. Slow to a walk and breathe.",
+            "Still too high. Ease back gently; let it settle.",
+            "Honour the body - slow down and let the heart calm.",
         ],
     },
     rc.CUE_FINAL_PUSH: {
