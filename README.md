@@ -1,10 +1,78 @@
 # 🏃 Sprint Society — AI Running Coach
 
-An **agentic RAG** running coach built with Streamlit and the **Groq API**. It ships
-**4 distinct coach personalities** and adapts to **4 runner tiers**, learns about you
-continuously from every message, and remembers it all in local JSON/JSONL files.
+A **headless** AI running coach library, ready to wire into a host app (e.g. the
+Sprint Society application) with its own frontend. It ships the **₹9 one-way plan**:
+the coach analyses the runner's data and speaks to them before, during, and after a
+run — the runner never has to type or talk back.
 
-> Four personalities × four levels × continuous personalization.
+> **One-way by design.** Engines do the math, the coach does the words. During-run
+> cues are templated and filled only with engine numbers, so the coach can never
+> invent a pace, distance, or heart rate — and they're verified by an evaluation
+> harness (12/12 metrics passing across 56 scenario×persona checks).
+
+> ⚠️ The Streamlit app (`app.py`, `ui/`) has been **removed** — this repo is now a
+> library. Bring your own UI; the coach returns text + audio bytes.
+
+---
+
+## ⚡ Quickstart — the ₹9 one-way coach
+
+```python
+from engine.pace_calculator import calculate_pace_zones
+from engine.run_state import RunSnapshot, infer_state
+from engine.run_cues import CuePlanner
+from coaching import cue_library as lib
+from coaching.one_way_coach import pre_run_brief, post_run_report
+
+profile = {"age": 30, "gender": "male", "recent_5k_time": 24.0, "level": "intermediate", "max_hr": 191}
+zones   = calculate_pace_zones(profile)
+planned = {"type": "easy", "target_distance_m": 5000, "target_pace_s_per_km": zones["easy_pace_per_km"]}
+persona = "scientist"   # scientist | energizer | warrior | sage
+
+# 1) Before the run
+print(pre_run_brief(planned, zones, profile, persona))
+
+# 2) DURING the run — feed each live telemetry tick to ONE planner; it returns the
+#    cue to speak now, or None (silence). This is the real-time integration point.
+planner = CuePlanner(planned, zones, profile)
+def on_tick(snap: RunSnapshot):
+    ev = planner.evaluate(snap, infer_state(snap, planned, profile))
+    return lib.render_cue(ev, persona) if ev else None   # speak it, or stay quiet
+
+# 3) After the run
+print(post_run_report(planned, samples, zones, profile, history=[], persona=persona))
+```
+
+### Speak it (optional, headless TTS)
+
+```python
+from voice.tts import synthesize          # -> WAV bytes for any player
+wav = synthesize("One kilometre done at 6:00/km. Stay smooth.", "scientist")
+```
+Backends auto-select: **Kokoro-82M** (offline, Apache-2.0; put the model in `models/`)
+→ **pyttsx3** (offline OS voices) → null. See `requirements-coach.txt`.
+
+## ✅ Evaluation
+
+```bash
+python eval/run_eval.py --show      # scores the coach over the scenario matrix
+python tests/test_one_way_coach.py  # 7 behavior tests
+```
+Deterministic metrics (no API key): grounding (no invented numbers), one-way (no
+questions), safety recall, no-unsafe-advice, spacing, in-flow silence, anti-repetition,
+persona consistency, brevity, trigger coverage, split accuracy, pre-run grounding.
+
+## 🔌 Integration surface (for the host app)
+
+| Call | In | Out |
+|------|----|-----|
+| `pre_run_brief(planned, zones, profile, persona)` | plan + profile | brief text |
+| `CuePlanner(...).evaluate(snap, state)` per telemetry tick | live `RunSnapshot` | a `CueEvent` or `None` |
+| `cue_library.render_cue(event, persona)` | cue event | spoken line |
+| `post_run_report(planned, samples, zones, profile, history, persona)` | logged run | recap text |
+| `voice.tts.synthesize(text, persona)` | text | WAV bytes |
+
+The full design + feature catalog is in [`docs/`](docs/README.md).
 
 ---
 
