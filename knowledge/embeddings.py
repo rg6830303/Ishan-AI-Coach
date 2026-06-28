@@ -4,14 +4,42 @@ import numpy as np
 from config import CORPUS_PATH, INDEX_PATH
 
 
+def _meta_for(rel_path: str):
+    """Derive (tier_tag, file_key) from a corpus-relative path.
+
+    Recurses subfolders so the whole corpus is indexed:
+      pace.md                          -> tier_tag 'pace'
+      personas/scientist/daniels.md    -> tier_tag 'coach_scientist'  (boosts for that persona)
+      coaching/persona_nutrition.md    -> tier_tag 'coaching'
+    file_key is a collision-free id base (slashes -> underscores).
+    """
+    rel = rel_path.replace(os.sep, "/")
+    parts = rel.split("/")
+    if parts[0] == "personas" and len(parts) >= 3:
+        tier_tag = f"coach_{parts[1]}"
+    elif len(parts) >= 2:
+        tier_tag = parts[0]
+    else:
+        tier_tag = parts[0][:-3] if parts[0].endswith(".md") else parts[0]
+    file_key = rel[:-3].replace("/", "_").replace(" ", "_") if rel.endswith(".md") else rel
+    return tier_tag, file_key
+
+
 def load_and_chunk_corpus() -> list[dict]:
-    """Load all corpus .md files and chunk by ## headers, splitting large sections with overlap."""
+    """Load ALL corpus .md files (recursively, including subfolders) and chunk by
+    ## headers, splitting large sections with overlap. Every file is represented."""
     chunks = []
-    for filename in os.listdir(CORPUS_PATH):
-        if not filename.endswith(".md"):
-            continue
-        tier_tag = filename.replace(".md", "")
-        filepath = os.path.join(CORPUS_PATH, filename)
+    md_files = []
+    for root, _dirs, files in os.walk(CORPUS_PATH):
+        for filename in files:
+            if filename.endswith(".md"):
+                md_files.append(os.path.join(root, filename))
+    md_files.sort()
+
+    for filepath in md_files:
+        rel = os.path.relpath(filepath, CORPUS_PATH)
+        tier_tag, file_key = _meta_for(rel)
+        source = rel.replace(os.sep, "/")
 
         with open(filepath, "r", encoding="utf-8") as f:
             content = f.read()
@@ -44,9 +72,9 @@ def load_and_chunk_corpus() -> list[dict]:
                         continue
 
                     # If the sub_body is very large, chunk it with overlap
-                    _add_chunks(chunks, sub_body, f"{title} > {sub_title}", tier_tag, filename, f"{tier_tag}_{i}_{j}")
+                    _add_chunks(chunks, sub_body, f"{title} > {sub_title}", tier_tag, source, f"{file_key}_{i}_{j}")
             else:
-                _add_chunks(chunks, body, title, tier_tag, filename, f"{tier_tag}_{i}")
+                _add_chunks(chunks, body, title, tier_tag, source, f"{file_key}_{i}")
 
     return chunks
 

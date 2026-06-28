@@ -30,6 +30,7 @@ from coaching import cue_library as lib  # noqa: E402
 from coaching.one_way_coach import pre_run_brief, post_run_report  # noqa: E402
 from eval.scenarios import build_scenarios, PERSONAS  # noqa: E402
 from eval import metrics as M  # noqa: E402
+from eval.knowledge_eval import evaluate_knowledge  # noqa: E402
 
 HISTORY = os.path.join(os.path.dirname(__file__), "eval_history.jsonl")
 
@@ -66,6 +67,10 @@ def run_once():
     by_id = {s["id"]: s for s in scenarios}
     results = [run_scenario(s, p) for s in scenarios for p in PERSONAS]
     report = M.aggregate(results, by_id)
+    # Merge in the knowledge-retrieval + guardrails-scope metrics (the new additions).
+    kmetrics, kpass = evaluate_knowledge()
+    report["metrics"].update(kmetrics)
+    report["overall_pass"] = report["overall_pass"] and kpass
     return scenarios, results, report
 
 
